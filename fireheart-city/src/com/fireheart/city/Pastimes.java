@@ -263,7 +263,14 @@ public final class Pastimes {
             r.particles(ParticleTypes.HEART, 3);
             return Lines.pick(rnd, "I saw this and thought of you - here, " + Economy.label(gift) + "!", "Got you a little something: " + Economy.label(gift) + ". Don't make it weird.", "For my favourite visitor! " + Economy.label(gift) + ".");
         }
-        if (rnd.nextFloat() < 0.3f) return heldRemark(pl.getMainHandItem(), rnd);
+        if (rnd.nextFloat() < 0.3f) {
+            String h = heldRemark(pl.getMainHandItem(), rnd);
+            if (h != null) return h;
+        }
+        String act = r.activityName();
+        long tod = Math.floorMod(r.level().getDayTime(), 24000L);
+        if (act.equals("evening") && tod > 12400 && rnd.nextFloat() < 0.4f) return Lines.pick(rnd, "I'm heading home - good night, " + pn + "!", "Long day. Sleep well, " + pn + "!", "Night! Don't stay out too late.");
+        if (act.equals("morning") && rnd.nextFloat() < 0.35f) return Lines.pick(rnd, "Up early too, huh? Off to work soon.", "Morning! Coffee first, then work.", "Early bird catches the worm!");
         return null;
     }
 

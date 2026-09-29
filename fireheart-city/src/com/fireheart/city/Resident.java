@@ -826,6 +826,14 @@ public class Resident extends PathfinderMob {
         boolean early = tod > 22500 || tod < 1500;
         int w = getWeather();
         float r = getRandom().nextFloat();
+        if (r < 0.15f) {
+            String th = thought(p);
+            if (th != null) {
+                gesture(G_THINK, 50);
+                say("(" + th + ")", 80);
+                return;
+            }
+        }
         if ((w & W_SHIVER) != 0) {
             gesture(G_HUGSELF, 60);
         } else if ((late || early) && r < 0.45f) {
@@ -840,6 +848,26 @@ public class Resident extends PathfinderMob {
             getLookControl().setLookAt(getX() + getRandom().nextGaussian() * 4, getEyeY() + 3 + getRandom().nextInt(6), getZ() + getRandom().nextGaussian() * 4);
             gesture(G_THINK, 40);
         }
+    }
+
+    /** A passing inner thought shown in the speech bubble. */
+    private String thought(CityData.Profile p) {
+        Mind m = p.mind;
+        CityData d = data();
+        if (!m.intent.isEmpty() && m.intentDay == day() && getRandom().nextBoolean()) return "I really want to " + m.intent + " today...";
+        if (p.hunger < 35) return "I could really go for some " + Economy.label(Memory.favourite(p)) + "...";
+        if (p.social < 30) return "It's been ages since I talked to anyone properly.";
+        if (p.fun < 30) return "So... bored...";
+        CityData.Profile q = p.partner.isEmpty() ? null : d.profiles.get(p.partner);
+        if (q != null && getRandom().nextBoolean()) return "I wonder what " + q.name + " is up to right now.";
+        if (!p.goal.isEmpty() && getRandom().nextBoolean()) return "Only a bit more saving and I can get " + p.goal + ".";
+        return switch (getRandom().nextInt(5)) {
+            case 0 -> "Did I leave the stove on?";
+            case 1 -> "What should I have for dinner...";
+            case 2 -> "I should call my family more.";
+            case 3 -> "This city really is something.";
+            default -> null;
+        };
     }
 
     private long lastSorry = -100000;
@@ -907,6 +935,7 @@ public class Resident extends PathfinderMob {
                     case "jog" -> "jogging around ";
                     case "yoga" -> "doing morning yoga at ";
                     case "lantern" -> "sending up lanterns at ";
+                    case "wedding" -> "at a wedding at ";
                     case "sunbathe" -> sunTicks > 0 ? "sunbathing at " : "enjoying the sunshine at ";
                     case "party" -> "at " + star + " birthday party at ";
                     case "dance" -> "dancing at the Sky Organ party at ";
@@ -937,6 +966,7 @@ public class Resident extends PathfinderMob {
                     case "jog" -> "jogging over to ";
                     case "yoga" -> "heading to morning yoga at ";
                     case "lantern" -> "on the way to Lantern Night at ";
+                    case "wedding" -> "on the way to a wedding at ";
                     case "date" -> "on the way to a date at ";
                     case "bank" -> "popping over to ";
                     case "lottery" -> "heading to the lottery draw at ";

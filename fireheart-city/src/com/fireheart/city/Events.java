@@ -230,6 +230,7 @@ public final class Events {
             Hobbies.tick(sl, CityData.get(sl));
             Letters.tick(sl, CityData.get(sl));
             Moments.tick(sl, CityData.get(sl));
+            Finale.tick(sl, CityData.get(sl));
             Skies.tick(sl, CityData.get(sl));
             if (sl.getGameTime() % 100 == 73) FireDept.buildBunks(sl, CityData.get(sl));
             if (sl.getGameTime() % 100 == 71) Police.buildBunks(sl, CityData.get(sl));

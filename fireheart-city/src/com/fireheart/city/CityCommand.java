@@ -19,7 +19,10 @@ import net.minecraft.world.phys.HitResult;
 
 public class CityCommand {
     public static void register(CommandDispatcher<CommandSourceStack> d) {
-        d.register(Commands.literal("sol")
+        d.register(Commands.literal("sol").executes(c -> { msg(c, Finale.help()); return 1; })
+                .then(Commands.literal("help").executes(c -> { msg(c, Finale.help()); return 1; }))
+                .then(Commands.literal("report").executes(c -> { msg(c, Finale.report(c.getSource().getLevel(), CityData.get(c.getSource().getLevel()))); return 1; }))
+                .then(Commands.literal("diary").then(Commands.argument("name", StringArgumentType.word()).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Finale.diary(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "name"))); return 1; })))
                 .then(Commands.literal("daily").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.daily(pl, CityData.get(pl.serverLevel()), true)); return 1; }))
                 .then(Commands.literal("achievements").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.achievements(pl, CityData.get(pl.serverLevel()))); return 1; }))
                 .then(Commands.literal("friends").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.friends(pl, CityData.get(pl.serverLevel()))); return 1; }))

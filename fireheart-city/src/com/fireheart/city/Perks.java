@@ -99,6 +99,9 @@ public final class Perks {
             new Ach("penpal", "Pen Pal", "Send 5 letters to residents", 15),
             new Ach("lucky", "Lucky Find", "Find something hidden in the city's grass or flowers", 5),
             new Ach("nightowl", "Night Owl", "Be outside in Solaris at midnight", 10),
+            new Ach("wedding", "Wedding Guest", "Attend a resident wedding at the plaza", 25),
+            new Ach("architect", "Architect", "Place 500 blocks around Solaris", 30),
+            new Ach("confidant", "Confidant", "Be trusted enough to read a resident's diary", 20),
     };
 
     public static boolean unlock(ServerPlayer pl, CityData d, String id) {

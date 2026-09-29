@@ -2,6 +2,22 @@
 
 This file carries the project into a new chat. Read this file first. The older, much longer `Fireheart_Project_Handoff.md` in this folder has the full history, the toolchain derivation, the block-ID lists and the generator code from earlier sessions. Use it as a reference when you need detail.
 
+## 000000000. v1.18.0 - batch 5, features 93-100 (2026-09-29, source only, not compiled)
+New file `Finale.java`; `/sol` with no arguments now prints help.
+93. **Resident weddings**: on a weekend morning a couple (partners on both sides, romance >= 60, not yet married, at most one wedding a week, city-side homes) announces a wedding. Banner + news, and everyone in the city plans to be at Solaris Plaza. From 16:54 (tod 10900) the mayor (or a guest) officiates in 8 steps two in-game minutes apart: welcome, vows, "I do" x2, pronounced married (hugs, hearts, guests clap and cheer, fireworks, city event, memories, diary, romance 100), finale fireworks. Postponed if the couple isn't at the plaza by 18:12. State in settings under `~city` (`wedPlan`, `wedLast`, `wed:<pair>`).
+94. **`/sol diary <name>`**: read a close friend's diary (affection >= 50): yesterday, today, what they're thinking and hoping to do.
+95. **Build reactions**: every 25 blocks a player places around the city, a free resident nearby comments on the build (counts saved every 50).
+96. **`/sol report`**: weekly city report (residents, average mood, season, money in the city, richest, couples, friendships, event counts by kind, top headlines).
+97. **`/sol help`** (and plain `/sol`): all player commands and chat ideas.
+98. **Thought bubbles**: idle residents sometimes show a thought in brackets (their intent for the day, hunger for their favourite food, loneliness, boredom, their partner, their savings goal, stray thoughts).
+99. **Time-of-day greetings**: residents say good night on their way home in the evening and morning lines before work.
+100. **3 final achievements**: Wedding Guest, Architect (500 blocks), Confidant (read a diary). 30 achievements in total.
+
+### Before shipping 1.13-1.18
+1. Rebuild the toolchain and compile; fix any errors in Minecraft/Forge API calls (only the project-side calls were checked here).
+2. `/city test player`.
+3. In the client: gesture blending and the 19 new poses (tune angles), rainbow/aurora/lanterns visibility, fireflies, snowballs, weddings (`/time set` to a weekend morning with a couple at romance >= 60).
+
 ## 00000000. v1.17.0 - batch 4: animations + realism (2026-09-29, source only, not compiled)
 **Animation system** (`client/ResidentModel`): gestures no longer snap. The model records the pose before the gesture, and when the gesture changes it blends from the previous gesture's pose to the new one over 5 ticks with smoothstep (`Resident.cGest/cGestPrev/cGestAt`, client-only fields). `pose(e, g, t, lt)` gets `lt` = ticks since the gesture started, for timed moves (sneeze, throw, sigh).
 Realism:
