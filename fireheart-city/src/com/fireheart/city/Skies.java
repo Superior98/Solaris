@@ -238,7 +238,7 @@ public final class Skies {
         for (Resident r : residents(sl, d)) {
             if (r.distanceToSqr(pl) > 60 * 60 || r.isSleeping() || !r.isFree() || !r.level().canSeeSky(r.blockPosition().above()) || rnd.nextFloat() > (shower ? 0.1f : 0.4f)) continue;
             r.getLookControl().setLookAt(start.x, start.y, start.z);
-            r.gesture(Resident.G_POINT, 40);
+            r.gesture(Resident.G_LOOKUP, 50);
             r.say(r.pick("A shooting star! Make a wish!", "Did you see that?! A shooting star!", "Quick, everyone make a wish!", "*closes eyes and wishes*"), 60);
         }
     }

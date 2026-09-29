@@ -47,7 +47,9 @@ public class Resident extends PathfinderMob {
     public static final int G_NONE = 0, G_WAVE = 1, G_EAT = 2, G_GIVE = 3, G_CHEER = 4, G_ANGRY = 5, G_THINK = 6, G_PHONE = 7, G_CALL = 8,
             G_DANCE = 9, G_LAUGH = 10, G_SAD = 11, G_SHRUG = 12, G_POINT = 13, G_CLAP = 14, G_FACEPALM = 15, G_STRETCH = 16, G_YAWN = 17, G_HUGSELF = 18,
             G_THUMBS = 19, G_SURPRISED = 20, G_NOD = 21, G_HEADSHAKE = 22, G_BOW = 23, G_HEADPHONES = 24, G_REMOTE = 25, G_PETTING = 26,
-            G_GUARD = 27, G_JAB_R = 28, G_JAB_L = 29, G_UPPERCUT = 30, G_KICK = 31, G_SLAM = 32, G_DASH = 33, G_TASER = 34, G_VICTORY = 35, G_AIM = 36, G_ULT = 37, G_HAMMER = 38, G_HOSE = 39, G_COOK = 40;
+            G_GUARD = 27, G_JAB_R = 28, G_JAB_L = 29, G_UPPERCUT = 30, G_KICK = 31, G_SLAM = 32, G_DASH = 33, G_TASER = 34, G_VICTORY = 35, G_AIM = 36, G_ULT = 37, G_HAMMER = 38, G_HOSE = 39, G_COOK = 40,
+            G_READ = 41, G_SIP = 42, G_HIGHFIVE = 43, G_HUG = 44, G_JOG = 45, G_YOGA_TREE = 46, G_YOGA_WARRIOR = 47, G_SNEEZE = 48, G_FAN = 49, G_THROW = 50,
+            G_CARDS = 51, G_LOOKUP = 52, G_HOWL = 53, G_SIGH = 54, G_FEED = 55, G_PHOTO = 56, G_SING = 57, G_ARGUE = 58, G_WINDED = 59;
     private static final EntityDataAccessor<Integer> SKIN = SynchedEntityData.defineId(Resident.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<String> SPEECH = SynchedEntityData.defineId(Resident.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> GESTURE = SynchedEntityData.defineId(Resident.class, EntityDataSerializers.INT);
@@ -122,6 +124,8 @@ public class Resident extends PathfinderMob {
         return tickCount - cSkyStart + pt;
     }
     public String cPrev = "";
+    public int cGest = -1, cGestPrev;
+    public float cGestAt;
     public float cStart;
     public float cEnd = -100;
     public int cBlip;
@@ -780,6 +784,23 @@ public class Resident extends PathfinderMob {
             say(pick("Wait up, " + cp.name + "!", "Walk with me, " + cp.name + "?", "Oh, you're going to " + dest.label + " too?", "Race you there, " + cp.name + "!"), 50);
         }
         return companion;
+    }
+
+    /** Personal walking pace: some residents stride, some amble. */
+    public double gait() {
+        CityData.Profile p = profile();
+        double g = 0.92 + Math.floorMod(profileId.hashCode(), 17) / 17.0 * 0.16;
+        if (p == null) return g;
+        if (p.trait == Trait.ADVENTUROUS || p.trait == Trait.CHEERFUL) g += 0.04;
+        if (p.trait == Trait.LAIDBACK || p.trait == Trait.DREAMY) g -= 0.05;
+        if (p.hunger < 20) g -= 0.08;
+        String a = activityName();
+        if (a.equals("evening") || a.equals("sleep")) g -= 0.08;
+        if (a.equals("work") && !work.busy()) {
+            Place wp = workPlace();
+            if (wp != null && distanceToSqr(Vec3.atCenterOf(wp.pos)) > 40 * 40) g += 0.12;
+        }
+        return g;
     }
 
     public boolean jogging() {

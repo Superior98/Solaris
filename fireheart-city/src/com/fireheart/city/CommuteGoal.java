@@ -108,7 +108,8 @@ public class CommuteGoal extends Goal {
     }
 
     private double baseSpeed() {
-        double s = mob.emergencyTarget() != null ? 1.6D : mob.activityName().equals("leisure") ? 0.8D : 1.0D;
+        if (mob.emergencyTarget() != null) return 1.6D;
+        double s = (mob.activityName().equals("leisure") ? 0.8D : 1.0D) * mob.gait();
         if (mob.level().isRaining() && mob.level().canSeeSky(mob.blockPosition())) s *= 1.2D;
         return s;
     }

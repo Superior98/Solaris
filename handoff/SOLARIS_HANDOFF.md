@@ -2,6 +2,41 @@
 
 This file carries the project into a new chat. Read this file first. The older, much longer `Fireheart_Project_Handoff.md` in this folder has the full history, the toolchain derivation, the block-ID lists and the generator code from earlier sessions. Use it as a reference when you need detail.
 
+## 00000000. v1.17.0 - batch 4: animations + realism (2026-09-29, source only, not compiled)
+**Animation system** (`client/ResidentModel`): gestures no longer snap. The model records the pose before the gesture, and when the gesture changes it blends from the previous gesture's pose to the new one over 5 ticks with smoothstep (`Resident.cGest/cGestPrev/cGestAt`, client-only fields). `pose(e, g, t, lt)` gets `lt` = ticks since the gesture started, for timed moves (sneeze, throw, sigh).
+Realism:
+63. Smooth blending between all gestures (in and out).
+64. Idle weight shifting: standing residents slowly move their weight from one leg to the other, with hip and head counter-tilt.
+65. Breathing: subtle chest movement.
+66. Running lean: body tilts forward at high speed.
+67. Three talking styles picked per sentence (casual, open palms, emphatic beat).
+68. Personal walking pace (`Resident.gait()`): 0.92-1.08 per person, livelier traits faster, laid-back/dreamy slower, slower when hungry or in the evening, hurrying when late and far from work.
+69. Dripping water for ~45 s after coming in from the rain.
+70. Visible breath outdoors in winter and on Neon Heights at night.
+71. Sweat drops in the summer heat.
+72. Occasional slip on wet ground when moving in the rain.
+73. Conversation personal space: residents step back if they end up too close while chatting.
+New gestures (41-59), used by existing features:
+74. READ (holds book, turns pages) - bench reading.
+75. SIP (cup to mouth) - morning coffee.
+76. HIGHFIVE - high fives.
+77. HUG (arms wrap, sway) - hugs.
+78. JOG (pumping bent arms, lean) - jogging.
+79. YOGA_TREE and 80. YOGA_WARRIOR - yoga cycle (stretch, tree, warrior, bow).
+81. SNEEZE (wind-up then jerk forward) - spring sneezes.
+82. FAN (fanning face) - heat.
+83. THROW (overhead wind-up, release) - snowballs.
+84. CARDS (holding hand, plays a card) - card games (both players).
+85. LOOKUP (shading eyes, looking up) - sunsets, shooting stars, full moon.
+86. HOWL - full moon.
+87. SIGH (shoulders drop) - sad moods.
+88. FEED (leaning down, offering food) - animals.
+89. PHOTO (phone held up with both hands) - selfies (shows the phone item).
+90. SING (hand on chest, arm out) - singing.
+91. ARGUE (finger jabbing, hand on hip) - rival arguments.
+92. WINDED (hands on knees, heavy breathing) - jog breaks.
+Checked here with javac without MC jars: no syntax errors, no missing project methods/wrong arities. Client animation angles are untested; tune in game.
+
 ## 0000000. v1.16.0 - feature batch 3 of 5 (2026-09-29, source only, not compiled)
 New files `Letters.java` (player) and `Moments.java` (residents/ambient); new intents in `Pastimes.chat`; listeners `Letters::onBreak` and `Letters::onJoin`; `/sol mail|horoscope|stats`.
 42. **Letters**: `/sol mail <name> <message>` (5 a day). Kind, rude, sorry, love, miss and thank-you letters change affection and memories; the resident writes back 1-3 in-game hours later (chat + a named paper). Pending replies are in memory only (lost on restart).

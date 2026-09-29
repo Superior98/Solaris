@@ -40,6 +40,9 @@ public final class Hobbies {
         RandomSource rnd = sl.getRandom();
         boolean winter = Skies.seasonIndex(day) == 3;
         for (Resident r : Skies.residents(sl, d)) {
+            if (!r.isSleeping() && !r.inShuttle() && r.profile() != null) body(sl, r, gt, tod, winter, rnd);
+        }
+        for (Resident r : Skies.residents(sl, d)) {
             CityData.Profile p = r.profile();
             if (p == null || r.isSleeping() || r.inShuttle() || !r.isFree() || r.isSpeaking()) continue;
             if (passingHello(sl, d, r, p, gt, rnd)) continue;
@@ -49,6 +52,33 @@ public final class Hobbies {
             if (!sl.isRaining() && tod < 11500 && picnic(sl, d, r, p, day, rnd)) continue;
             if (selfie(sl, d, r, p, day, rnd)) continue;
             mood(sl, r, p, gt, rnd);
+        }
+    }
+
+    /* ------------------------------------------------------------ Body realism */
+
+    static final Map<String, Long> WET = new HashMap<>();
+
+    /** Dripping after rain, visible breath in the cold, and the odd slip on wet ground. */
+    static void body(ServerLevel sl, Resident r, long now, long tod, boolean winter, RandomSource rnd) {
+        String id = r.profileId();
+        boolean out = outside(r);
+        if (sl.isRaining() && out) WET.put(id, now + 900);
+        else {
+            Long w = WET.get(id);
+            if (w != null && w > now && rnd.nextFloat() < 0.35f) sl.sendParticles(ParticleTypes.DRIPPING_WATER, r.getX(), r.getY() + 1.2 + rnd.nextFloat() * 0.6, r.getZ(), 1, 0.2, 0.2, 0.2, 0);
+            else if (w != null && w <= now) WET.remove(id);
+        }
+        boolean cold = winter || r.onIsland() && (tod > 13000 && tod < 23000);
+        if (cold && out && rnd.nextFloat() < 0.3f) {
+            Vec3 look = r.getLookAngle();
+            sl.sendParticles(ParticleTypes.CLOUD, r.getX() + look.x * 0.35, r.getEyeY() - 0.1, r.getZ() + look.z * 0.35, 1, 0.02, 0.02, 0.02, 0.004);
+        }
+        if (sl.isRaining() && out && r.getDeltaMovement().horizontalDistanceSqr() > 0.03 && rnd.nextFloat() < 0.004f && ready("slip:" + id, now, 6000)) {
+            r.gesture(Resident.G_SURPRISED, 20);
+            r.setDeltaMovement(r.getDeltaMovement().multiply(0.2, 1, 0.2).add(0, 0.25, 0));
+            r.say(r.pick("Whoa! Slippery!", "Woah-oh-oh! ...Phew.", "Nearly went flying there!"), 40);
+            sl.sendParticles(ParticleTypes.SPLASH, r.getX(), r.getY() + 0.1, r.getZ(), 10, 0.3, 0.05, 0.3, 0.1);
         }
     }
 
@@ -122,6 +152,7 @@ public final class Hobbies {
 
     static void throwAt(ServerLevel sl, Resident from, Resident to) {
         from.getLookControl().setLookAt(to, 40, 40);
+        from.gesture(Resident.G_THROW, 16);
         from.swing(InteractionHand.MAIN_HAND);
         Snowball sb = new Snowball(sl, from);
         sb.setItem(new ItemStack(Items.SNOWBALL));
@@ -183,7 +214,9 @@ public final class Hobbies {
         Place here = r.destination();
         if (here == null || here.key.equals(p.home) || here.key.startsWith("apt") || !r.blockPosition().closerThan(here.pos, 8)) return false;
         if (!ready("selfie:" + p.id + ":" + day, sl.getGameTime(), 24000)) return false;
-        r.usePhone(1, 50, "taking a photo at " + here.label, null);
+        r.showItem("fireheartcity:phone", 50);
+        r.getNavigation().stop();
+        r.gesture(Resident.G_PHOTO, 45);
         r.say(r.pick("Say cheese!", "*snap*", "One for SolFeed!", "Hold on, the lighting is perfect..."), 40);
         sl.sendParticles(ParticleTypes.FLASH, r.getX(), r.getEyeY(), r.getZ(), 1, 0, 0, 0, 0);
         sl.playSound(null, r.blockPosition(), SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.NEUTRAL, 0.4f, 1.6f);
@@ -204,7 +237,7 @@ public final class Hobbies {
             sl.sendParticles(ParticleTypes.NOTE, r.getX(), r.getY() + 2.2, r.getZ(), 2, 0.3, 0.1, 0.3, 1.0);
             r.say(r.pick("♪ la la la ♪", "*hums happily*", "What a day!", "Life is good."), 40);
         } else if (m <= 25 && ready("mood:" + p.id, now, 2400)) {
-            r.gesture(Resident.G_SAD, 50);
+            r.gesture(Resident.G_SIGH, 40);
             r.say(r.pick("*sigh*", "Could today just be over?", "...", "I need a hug."), 50);
         }
     }
@@ -217,7 +250,7 @@ public final class Hobbies {
         long phase = (r.level().getGameTime() / 100) % 4;
         r.setYRot(Math.floorMod(dest.key.hashCode(), 4) * 90f);
         r.yBodyRot = r.getYRot();
-        int g = phase == 0 ? Resident.G_STRETCH : phase == 1 ? Resident.G_BOW : phase == 2 ? Resident.G_HUGSELF : Resident.G_CHEER;
+        int g = phase == 0 ? Resident.G_STRETCH : phase == 1 ? Resident.G_YOGA_TREE : phase == 2 ? Resident.G_YOGA_WARRIOR : Resident.G_BOW;
         r.gesture(g, 45);
         p.fun = Math.min(100, p.fun + 1);
         p.social = Math.min(100, p.social + 1);

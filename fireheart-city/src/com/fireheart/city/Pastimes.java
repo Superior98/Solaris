@@ -114,7 +114,7 @@ public final class Pastimes {
                 return Lines.pick(rnd, "Uh... maybe a handshake. From a distance.", "I'm good, thanks.");
             }
             r.getLookControl().setLookAt(pl, 30, 30);
-            r.gesture(Resident.G_HUGSELF, 50);
+            r.gesture(Resident.G_HUG, 50);
             r.particles(ParticleTypes.HEART, 5);
             rel.aff = Math.min(100, rel.aff + (rel.aff < 40 ? 2 : 1));
             d.setDirty();
@@ -122,7 +122,7 @@ public final class Pastimes {
         }
         if (any(t, " high five ", " highfive ", " hi five ", " up top ", " fist bump ")) {
             r.getLookControl().setLookAt(pl, 30, 30);
-            r.gesture(Resident.G_CHEER, 30);
+            r.gesture(Resident.G_HIGHFIVE, 30);
             r.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
             r.level().playSound(null, r.blockPosition(), SoundEvents.PLAYER_ATTACK_WEAK, SoundSource.NEUTRAL, 0.8f, 1.5f);
             return Lines.pick(rnd, "*SLAP* Yeah!", "Up top! ...Nailed it.", "*fist bump* Boom.");
@@ -159,7 +159,7 @@ public final class Pastimes {
             };
         }
         if (any(t, " sing ", " sing me ", " sing a song ", " sing something ")) {
-            r.gesture(Resident.G_DANCE, 60);
+            r.gesture(Resident.G_SING, 90);
             if (r.level() instanceof ServerLevel sl) {
                 sl.sendParticles(ParticleTypes.NOTE, r.getX(), r.getY() + 2.2, r.getZ(), 8, 0.5, 0.3, 0.5, 1.0);
                 for (int i = 0; i < 3; i++) sl.playSound(null, r.blockPosition(), SoundEvents.NOTE_BLOCK_FLUTE.value(), SoundSource.NEUTRAL, 0.6f, 0.8f + i * 0.2f + rnd.nextFloat() * 0.1f);
@@ -225,6 +225,13 @@ public final class Pastimes {
             if (to != null && to.distanceToSqr(Vec3.atCenterOf(dest.pos)) < 20 * 20) r.getNavigation().moveTo(to.x, to.y, to.z, 1.25);
         }
         if (r.level() instanceof ServerLevel sl && r.getRandom().nextFloat() < 0.3f) sl.sendParticles(ParticleTypes.CLOUD, r.getX(), r.getY() + 0.1, r.getZ(), 1, 0.1, 0.0, 0.1, 0.0);
+        if (r.getRandom().nextFloat() < 0.06f) {
+            r.getNavigation().stop();
+            r.gesture(Resident.G_WINDED, 60);
+            r.say(r.pick("*pant* *pant* ...okay, breather.", "Hands on knees... just a sec...", "Whew! Stitch!"), 50);
+            return;
+        }
+        r.gesture(Resident.G_JOG, 50);
         p.fun = Math.min(100, p.fun + 1);
         if (r.getRandom().nextFloat() < 0.04f) r.say(r.pick("*huff* *puff* ...one more lap!", "Feel the burn!", "Morning run! Best way to start the day.", "My legs hate me right now.", "Runner's high, baby!"), 50);
         DayLog lg = p.log(r.routineDay());

@@ -49,8 +49,8 @@ public final class Moments {
             CityData.Profile op = o.profile();
             r.getLookControl().setLookAt(o, 30, 30);
             o.getLookControl().setLookAt(r, 30, 30);
-            r.gesture(Resident.G_ANGRY, 60);
-            o.gesture(rnd.nextBoolean() ? Resident.G_ANGRY : Resident.G_FACEPALM, 60);
+            r.gesture(Resident.G_ARGUE, 70);
+            o.gesture(rnd.nextBoolean() ? Resident.G_ARGUE : Resident.G_FACEPALM, 70);
             r.sayTo(r.pick("Oh great, it's " + op.name + ".", "You still owe me an apology, " + op.name + ".", "Don't even start, " + op.name + ".", "Nice of you to finally show up, " + op.name + "."), 70);
             o.sayTo(o.pick("Whatever, " + p.name + ".", "I'm not doing this today.", "Keep walking, " + p.name + ".", "Says YOU."), 70);
             r.particles(ParticleTypes.ANGRY_VILLAGER, 3);
@@ -86,8 +86,9 @@ public final class Moments {
             r.getLookControl().setLookAt(o, 30, 30);
             o.getLookControl().setLookAt(r, 30, 30);
             r.showItem(game.equals("cards") ? "minecraft:paper" : "minecraft:stone_button", 120);
-            r.gesture(Resident.G_THINK, 80);
-            o.gesture(Resident.G_THINK, 80);
+            r.gesture(Resident.G_CARDS, 160);
+            o.gesture(Resident.G_CARDS, 160);
+            o.showItem(game.equals("cards") ? "minecraft:paper" : "minecraft:stone_button", 120);
             r.say(r.pick("Fancy a game of " + game + ", " + op.name + "?", "Rematch at " + game + "? I've been practising.", game.substring(0, 1).toUpperCase() + game.substring(1) + "? You're on."), 60);
             boolean iWin = rnd.nextBoolean();
             Resident w = iWin ? r : o, l = iWin ? o : r;
@@ -133,7 +134,7 @@ public final class Moments {
         boolean curious = p.trait == Trait.CURIOUS || p.trait == Trait.SHY || p.trait == Trait.DREAMY;
         if (!curious && rnd.nextFloat() > 0.3f) return false;
         r.showItem("minecraft:book", 400);
-        r.gesture(Resident.G_THINK, 80);
+        r.gesture(Resident.G_READ, 380);
         if (rnd.nextFloat() < 0.5f) r.say(r.pick("*turns page*", "Ooh, plot twist!", "Just one more chapter...", "Reading " + BOOKS[rnd.nextInt(BOOKS.length)] + ". It's good!"), 50);
         p.fun = Math.min(100, p.fun + 3);
         return true;
@@ -144,7 +145,7 @@ public final class Moments {
     static boolean coffee(Resident r, CityData.Profile p, long now, long day, RandomSource rnd) {
         if (!r.activityName().equals("morning") || r.isEating() || rnd.nextFloat() > 0.3f || !ready("coffee:" + p.id + ":" + day, now, 24000)) return false;
         r.showItem("minecraft:honey_bottle", 160);
-        r.gesture(Resident.G_EAT, 40);
+        r.gesture(Resident.G_SIP, 150);
         r.say(r.pick("*sips coffee* Okay. NOW I'm awake.", "Coffee first, talking later.", "Mmm, morning coffee.", "Is it too early for a second cup?"), 60);
         p.fun = Math.min(100, p.fun + 2);
         return true;
@@ -159,7 +160,7 @@ public final class Moments {
             String name = a.hasCustomName() ? a.getCustomName().getString() : a.getType().getDescription().getString().toLowerCase(java.util.Locale.ROOT);
             r.getLookControl().setLookAt(a, 30, 30);
             r.showItem("minecraft:wheat_seeds", 60);
-            r.gesture(Resident.G_PETTING, 50);
+            r.gesture(Resident.G_FEED, 60);
             sl.sendParticles(ParticleTypes.HEART, a.getX(), a.getY() + a.getBbHeight() + 0.3, a.getZ(), 2, 0.2, 0.1, 0.2, 0);
             r.say(r.pick("Aww, hello little " + name + "!", "Who's a good " + name + "? You are!", "Here, have a snack.", "I could watch " + (a.hasCustomName() ? name : "this " + name) + " all day."), 60);
             p.fun = Math.min(100, p.fun + 4);
@@ -173,13 +174,14 @@ public final class Moments {
     static boolean seasonal(ServerLevel sl, Resident r, CityData.Profile p, long now, int season, long tod, RandomSource rnd) {
         boolean out = Hobbies.outside(r);
         if (season == 0 && out && rnd.nextFloat() < 0.04f && ready("sneeze:" + p.id, now, 3600)) {
-            r.gesture(Resident.G_SURPRISED, 20);
+            r.gesture(Resident.G_SNEEZE, 24);
             r.say(r.pick("Ah... ah... ACHOO!", "*sneezes* Stupid pollen!", "ACHOO! ...Excuse me."), 40);
             sl.sendParticles(ParticleTypes.POOF, r.getX(), r.getEyeY(), r.getZ(), 3, 0.1, 0.1, 0.1, 0.02);
             return true;
         }
         if (season == 1 && out && tod > 4000 && tod < 9000 && !sl.isRaining() && r.idleHere() && rnd.nextFloat() < 0.05f && ready("heat:" + p.id, now, 4800)) {
-            r.gesture(Resident.G_FACEPALM, 40);
+            r.gesture(Resident.G_FAN, 90);
+            sl.sendParticles(ParticleTypes.FALLING_WATER, r.getX(), r.getEyeY() + 0.2, r.getZ(), 3, 0.2, 0.05, 0.2, 0);
             r.say(r.pick("Phew, it's a scorcher today!", "Is it just me or is it boiling?", "I'd kill for an ice cream right now.", "Beach. Now. Who's coming?"), 60);
             return true;
         }
@@ -198,7 +200,7 @@ public final class Moments {
         if (tod > 11600 && tod < 12700 && rnd.nextFloat() < 0.15f && ready("sunset:" + p.id + ":" + day, now, 24000)) {
             r.getLookControl().setLookAt(r.getX() - 100, r.getEyeY() + 8, r.getZ());
             r.say(r.pick("Look at that sunset...", "The sky's on fire tonight. Gorgeous.", "Best view in Solaris, right here.", "Every sunset's different, you know?"), 70);
-            r.gesture(Resident.G_POINT, 40);
+            r.gesture(Resident.G_LOOKUP, 90);
             p.log(r.routineDay()).note("I watched the sunset");
             return true;
         }
@@ -211,7 +213,7 @@ public final class Moments {
         if (sl.getMoonPhase() == 0 && tod > 13500 && tod < 22000 && rnd.nextFloat() < 0.08f && ready("moon:" + p.id + ":" + day, now, 24000)) {
             r.getLookControl().setLookAt(r.getX(), r.getEyeY() + 50, r.getZ() + 20);
             boolean silly = p.trait == Trait.CHEERFUL || p.trait == Trait.ADVENTUROUS;
-            r.gesture(silly ? Resident.G_LAUGH : Resident.G_POINT, 40);
+            r.gesture(silly ? Resident.G_HOWL : Resident.G_LOOKUP, 60);
             r.say(silly ? r.pick("Awoooooo! ...What? It's a full moon!", "Full moon! Everyone act normal.") : r.pick("What a full moon tonight.", "The moon's so bright you could read by it."), 60);
             return true;
         }
