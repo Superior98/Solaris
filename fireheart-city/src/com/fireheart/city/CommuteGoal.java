@@ -32,7 +32,7 @@ public class CommuteGoal extends Goal {
     @Override
     public boolean canUse() {
         if (mob.emergencyTarget() != null) return true;
-        if (mob.convo != null || mob.inShuttle() || mob.isEating() || Elevator.controls(mob) || mob.sunbathing() || mob.dancing() || mob.listening()) return false;
+        if (mob.convo != null || mob.inShuttle() || mob.isEating() || Elevator.controls(mob) || mob.sunbathing() || mob.dancing() || mob.listening() || mob.jogging()) return false;
         BlockPos t = mob.navTarget();
         return t != null && dist(t) > 9.0D;
     }
@@ -40,7 +40,7 @@ public class CommuteGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         if (mob.emergencyTarget() != null) return true;
-        if (mob.convo != null || mob.inShuttle() || mob.isEating() || Elevator.controls(mob) || mob.listening()) return false;
+        if (mob.convo != null || mob.inShuttle() || mob.isEating() || Elevator.controls(mob) || mob.listening() || mob.jogging()) return false;
         BlockPos t = mob.navTarget();
         return t != null && dist(t) > 2.0D;
     }

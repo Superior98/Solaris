@@ -135,7 +135,7 @@ public final class Chat {
     }
 
     static boolean useAi(String t, Ctx c) {
-        if (c.topic.startsWith("meet") || c.topic.equals("follow")) return false;
+        if (c.topic.startsWith("meet") || c.topic.equals("follow") || c.topic.equals("rps") || Pastimes.noAi(t)) return false;
         return !any(t, " follow ", " come with ", " come here ", " walk with me ", " lets go ", " let's go ", " stop following ", " wait here ", " stay here ", " go home ",
                 " meet ", " check in ", " checkin ", " check me in ", " checking in ", " room ", " key ", " sorry ", " apologi", " forgive ", " my bad ");
     }
@@ -195,6 +195,8 @@ public final class Chat {
             String rom = Romance.chat(pl, r, t, rnd);
             if (rom != null) return rom;
         }
+        String fun = Pastimes.chat(pl, r, t, c);
+        if (fun != null) return fun;
         d.setDirty();
         if (any(t, " sorry ", " apologi", " my bad ", " forgive ")) {
             if (trust < 0) {

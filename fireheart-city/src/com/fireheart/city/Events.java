@@ -123,6 +123,7 @@ public final class Events {
             if (e.getEntity() instanceof net.minecraft.server.level.ServerPlayer sp) {
                 VoiceServer.announce(sp);
                 Romance.onLogin(sp, d);
+                Perks.onLogin(sp, d);
                 if (!d.setting(sp.getName().getString(), "toured", "0").equals("1")) Tour.offer(sp);
                 long wd = Calendar.worldDay(sl);
                 Calendar.show(sp, wd, Calendar.weekend(wd) ? "It's the weekend - the city is off work." : "It's a workday in Solaris.");
@@ -224,6 +225,8 @@ public final class Events {
             if (sl.getGameTime() % 40 == 23) Traders.scan(sl, CityData.get(sl));
             if (sl.getGameTime() % 100 == 57) Romance.tick(sl, CityData.get(sl));
             Tour.tick(sl);
+            Perks.tick(sl, CityData.get(sl));
+            Skies.tick(sl, CityData.get(sl));
             if (sl.getGameTime() % 100 == 73) FireDept.buildBunks(sl, CityData.get(sl));
             if (sl.getGameTime() % 100 == 71) Police.buildBunks(sl, CityData.get(sl));
             if (sl.getGameTime() % 20 == 3) for (net.minecraft.server.level.ServerPlayer sp : sl.players()) DeviceItem.tickWorn(sp);

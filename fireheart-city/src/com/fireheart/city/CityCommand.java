@@ -20,6 +20,16 @@ import net.minecraft.world.phys.HitResult;
 public class CityCommand {
     public static void register(CommandDispatcher<CommandSourceStack> d) {
         d.register(Commands.literal("sol")
+                .then(Commands.literal("daily").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.daily(pl, CityData.get(pl.serverLevel()), true)); return 1; }))
+                .then(Commands.literal("achievements").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.achievements(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("friends").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.friends(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("top").executes(c -> { msg(c, Perks.top(CityData.get(c.getSource().getLevel()))); return 1; }))
+                .then(Commands.literal("forecast").executes(c -> { msg(c, "§6Solaris forecast: " + Perks.forecast(c.getSource().getLevel()) + " §7(" + Skies.season(Calendar.worldDay(c.getSource().getLevel())) + ")"); return 1; }))
+                .then(Commands.literal("courier").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.courier(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("whereis").then(Commands.argument("name", StringArgumentType.word()).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.whereis(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "name"))); return 1; })))
+                .then(Commands.literal("bulletin")
+                        .then(Commands.literal("on").executes(c -> { var pl = c.getSource().getPlayerOrException(); CityData.get(pl.serverLevel()).setSetting(pl.getName().getString(), "bulletinOff", "0"); msg(c, "§6Morning bulletin on."); return 1; }))
+                        .then(Commands.literal("off").executes(c -> { var pl = c.getSource().getPlayerOrException(); CityData.get(pl.serverLevel()).setSetting(pl.getName().getString(), "bulletinOff", "1"); msg(c, "§6Morning bulletin off. §7(/sol bulletin on to re-enable)"); return 1; })))
                 .then(Commands.literal("garage")
                         .then(Commands.literal("give").executes(c -> { msg(c, Vehicles.give(c.getSource().getPlayerOrException(), 0)); return 1; })
                                 .then(Commands.argument("paint", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0, 5)).executes(c -> { msg(c, Vehicles.give(c.getSource().getPlayerOrException(), com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "paint"))); return 1; })))

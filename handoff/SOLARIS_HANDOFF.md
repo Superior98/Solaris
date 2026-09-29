@@ -2,6 +2,31 @@
 
 This file carries the project into a new chat. Read this file first. The older, much longer `Fireheart_Project_Handoff.md` in this folder has the full history, the toolchain derivation, the block-ID lists and the generator code from earlier sessions. Use it as a reference when you need detail.
 
+## 00000. v1.14.0 - feature batch 1 of 5 (2026-09-29, source only, not compiled)
+Goal: 100 new features in batches of ~20. Batch 1 (21 features). New files `Perks.java` (player), `Skies.java` (world/sky), `Pastimes.java` (residents). Hooks: `Events.onLogin/onLevelTick`, `Chat.reply0` (after Romance), `Chat.useAi` (games skip Groq), `Resident` (dreams, greet extras, courier delivery, jog leisure), `/sol` subcommands.
+1. **Daily bonus** with 7-day streak (5-35 coins; bank savings if the player has an account, otherwise gold nuggets). `/sol daily`.
+2. **Achievements** (12, coin rewards, title banner + toast sound), checked every 10 s. `/sol achievements`.
+3. **`/sol whereis <name>`**: what a resident is doing, distance and compass direction.
+4. **`/sol friends`**: residents you've met with heart ratings.
+5. **`/sol top`**: richest, most friends, top anglers, happiest, game high scores.
+6. **Morning bulletin** (once per day around 06:30-08:30): date, season, weather, yesterday's headlines, holidays. `/sol bulletin on|off`.
+7. **Weather forecast** from real rain/thunder timers. `/sol forecast`.
+8. **Courier jobs**: `/sol courier` gives a named parcel for a resident 25-180 blocks away; right-click them to deliver. Pay scales with distance, half pay after 10 in-game hours, 5 per day.
+9. **Jogging**: new leisure choice before 15:00 (adventurous/cheerful love it), laps around the park/boardwalk/gardens with dust puffs and lines.
+10. **Gifts from close friends**: residents with affection >= 60 sometimes give you a flower or their favourite food when greeting (once per day each).
+11. **Held-item remarks** when greeting (swords, diamonds, TNT, flint and steel, cake, books, phones, food...).
+12. **Coin flip and dice** in chat ("flip a coin", "roll a dice").
+13. **Rock-paper-scissors** in chat (two-step: "rock paper scissors" -> "rock"), resident shows their pick as an item.
+14. **Hugs, high fives, fist bumps and "dance for me"** with gestures, hearts and sounds.
+15. **Stories, fun facts, compliments and roasts** on request.
+16. **Sleep-talking**: sleeping residents mumble dreams about their job, favourite food, partner, games.
+17. **Rainbows**: when rain stops before sunset a 7-band particle rainbow appears north of the city (~80 s); residents point at it.
+18. **Shooting stars** on clear nights (~1 per minute of night while someone is outside); residents say "make a wish".
+19. **Seasons** (7 days each): shown in the bulletin/forecast; snowflakes around outdoor players in winter, cherry petals in spring; residents answer "what season is it".
+20. **Lantern Night** (every 28 days, day%28==10): everyone plans to meet at the plaza at sunset, residents hold lanterns and glowing lanterns float up from them and from players.
+21. **Kindness Day** (day%28==20): residents give each other small gifts and compliments (affection +3), and give players one gift each.
+Checked here with javac without MC jars: no syntax errors, no missing project methods/wrong arities.
+
 ## 0000. v1.13.0 - resident AI & behaviour (2026-09-29, source only)
 Source in the repo's `fireheart-city/` is ahead of the zip here. **Not compiled yet**: the cloud container had no access to Mojang/Forge Maven, so rebuild with the usual toolchain before shipping (only `javac` syntax-checked).
 - **Per-tick decision cache** (`Resident.activityName/destination`): computed once per game tick (keyed on game time + day time) instead of dozens of times per resident per tick. `rethink()` invalidates; called from `replan`, `doneErrand` and the bank/skydive `leisureKey` switches.

@@ -598,6 +598,11 @@ public class Resident extends PathfinderMob {
             String k = bestOf(p, d, spots);
             opts.add(new Mind.Choice(k, "sunbathe", "the sun's out", -0.2 + (weekendNow() ? 0.5 : 0) + (p.trait == Trait.DREAMY ? 0.5 : 0)));
         }
+        if (!rain && timeOfDay() < 9000) {
+            String k = isle ? "gardens" : getRandom().nextBoolean() ? "park" : "boardwalk";
+            double sc = -0.5 + (p.trait == Trait.ADVENTUROUS || p.trait == Trait.CHEERFUL ? 0.9 : p.trait == Trait.LAIDBACK || p.trait == Trait.GRUMPY ? -0.6 : 0.2) + (p.fun < 40 ? 0.3 : 0) - (resting ? 2 : 0);
+            opts.add(new Mind.Choice(k, "jog", "a good run clears my head", sc));
+        }
         if (!rain && !isle) opts.add(new Mind.Choice(getRandom().nextFloat() < 0.7f ? "boardwalk" : "pier", "fishing", "the fish are biting", -0.1 + (p.trait == Trait.SHY ? 0.8 : 0) + (weekendNow() ? 0.3 : 0)));
         String boardKey = Gazette.nearestBoardKey(d, isle, blockPosition(), 200);
         if (boardKey != null) opts.add(new Mind.Choice(boardKey, "news", "catching up on the news", -0.6 + (p.trait == Trait.CURIOUS ? 0.6 : 0)));
@@ -772,6 +777,12 @@ public class Resident extends PathfinderMob {
         return companion;
     }
 
+    public boolean jogging() {
+        if (!"jog".equals(leisureWhy) || !activityName().equals("leisure") || fleeTicks > 0) return false;
+        Place dest = destination();
+        return dest != null && dest.island == onIsland() && distanceToSqr(Vec3.atCenterOf(dest.pos)) < 22 * 22;
+    }
+
     public boolean idleHere() {
         if (!isFree() || !getNavigation().isDone() || pcUsing != null || phoneMode > 0 || sunTicks > 0 || dancing() || listenTicks > 0 || eatTicks > 0 || fleeTicks > 0) return false;
         if (isFollowing() || emergencyTarget() != null || Elevator.isQueued(this)) return false;
@@ -867,6 +878,8 @@ public class Resident extends PathfinderMob {
                     case "date" -> "on a date at ";
                     case "shopping" -> "shopping at ";
                     case "fishing" -> "fishing at ";
+                    case "jog" -> "jogging around ";
+                    case "lantern" -> "sending up lanterns at ";
                     case "sunbathe" -> sunTicks > 0 ? "sunbathing at " : "enjoying the sunshine at ";
                     case "party" -> "at " + star + " birthday party at ";
                     case "dance" -> "dancing at the Sky Organ party at ";
@@ -894,6 +907,8 @@ public class Resident extends PathfinderMob {
                     case "party" -> "on the way to " + star + " birthday party at ";
                     case "dance" -> "on the way to the Sky Organ party at ";
                     case "fishing" -> "going fishing at ";
+                    case "jog" -> "jogging over to ";
+                    case "lantern" -> "on the way to Lantern Night at ";
                     case "date" -> "on the way to a date at ";
                     case "bank" -> "popping over to ";
                     case "lottery" -> "heading to the lottery draw at ";
@@ -1159,7 +1174,7 @@ public class Resident extends PathfinderMob {
         if (now % 10 == phase % 10) danceTick(p, now);
         if (now % 40 == (phase + 20) % 40) fidget(p, now);
         if (activityName().equals("sleep") && now % 400 == phase && getRandom().nextFloat() < 0.3f && (isSleeping() || homePos() != null && blockPosition().closerThan(homePos(), 4))) {
-            this.entityData.set(SPEECH, "Zzz...");
+            this.entityData.set(SPEECH, Pastimes.dream(this, p));
             this.speechTicks = 360;
         }
     }
@@ -1530,6 +1545,7 @@ public class Resident extends PathfinderMob {
             else if (leisureWhy.equals("party")) partyTick(p, d);
         }
         if (act.equals("leisure") && there && convo == null && eatTicks <= 0 && listenTicks <= 0) civicTick(p, d, dest, now);
+        if (jogging() && convo == null && eatTicks <= 0) Pastimes.jogTick(this, p, dest);
         long tod = timeOfDay();
         if ((tod > 13000 && tod < 23000) && !asleep && !isSleeping() && eatTicks <= 0 && heldTicks <= 40 && level().canSeeSky(blockPosition())) showItem("minecraft:lantern", 80);
 
@@ -2740,6 +2756,8 @@ public class Resident extends PathfinderMob {
                     this.getLookControl().setLookAt(pl, 30, 30);
                     gesture(G_WAVE, 40);
                     String extra = pr.fam > 40 ? " Good to see you again." : "";
+                    String bonus = Pastimes.greetExtra(this, me, pl, pr);
+                    if (bonus != null) extra = " " + bonus;
                     CityData.Event fresh = Events.freshestUnshared(d, me, pn);
                     String memo = Mind.playerLine(me, pn, day, getRandom());
                     String postSeen = Extras.postLine(d, me, pn, day);
@@ -2845,6 +2863,7 @@ public class Resident extends PathfinderMob {
             Computers.openFor(sp3, TechStore.KIOSK);
             return InteractionResult.SUCCESS;
         }
+        if (player instanceof ServerPlayer sp4 && Perks.deliver(sp4, this, d)) return InteractionResult.SUCCESS;
         if (pr.met && player instanceof ServerPlayer sp2) {
             this.getLookControl().setLookAt(player, 30, 30);
             if (Favours.tryComplete((ServerLevel) level(), d, this, p, sp2)) return InteractionResult.SUCCESS;
