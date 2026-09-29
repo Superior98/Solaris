@@ -32,6 +32,10 @@ public final class ClientPc {
             com.fireheart.city.client.TourHud.handle(line);
             return;
         }
+        if (line.startsWith("#gps|")) {
+            com.fireheart.city.client.GpsHud.handle(line);
+            return;
+        }
         if (line.startsWith("#stalk|")) {
             com.fireheart.city.client.Stalker.handle(line);
             return;

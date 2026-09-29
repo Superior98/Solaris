@@ -1,5 +1,7 @@
 package com.fireheart.city.client.pc;
 
+import net.minecraft.client.Minecraft;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -222,21 +224,31 @@ class EatsApp extends App {
             g.drawCenteredString(f, "§8Hungry? Pick a shop!", x + w / 2, yy + 22, 0xFF000000);
             return yy + 40;
         }
-        String[] steps = {"Preparing your food", "Out for delivery with Pip", "At your door - open the box!"};
+        String[] steps = {"Order received", "Cooking", "Packed", "On the way", "Delivered!"};
         for (int i = os.data.orders.size() - 1; i >= 0; i--) {
             String[] p = os.data.orders.get(i).split("\\|");
             if (p.length < 4) continue;
-            int st = Math.max(0, Math.min(2, ClientPc.parse(p[3])));
+            int st = Math.max(0, Math.min(4, ClientPc.parse(p[3])));
+            String detail = p.length > 5 ? p[5] : steps[st];
             PhoneScreen.roundRect(g, x + 4, yy, x + w - 4, yy + 48, 6, 0xFFFFFFFF);
             g.drawString(f, "§l" + p[1], x + 9, yy + 4, 0xFF222222, false);
+            String badge = st == 4 ? "§2✔ " + steps[st] : "§6" + steps[st];
+            g.drawString(f, badge, x + w - 9 - f.width(badge.replaceAll("§.", "")), yy + 4, 0xFF222222, false);
             g.drawString(f, f.plainSubstrByWidth("§8" + p[2], w - 18), x + 9, yy + 14, 0xFF666666, false);
             int bx = x + 12, bw = w - 24;
-            for (int k = 0; k < 3; k++) {
-                int sx = bx + k * bw / 2;
-                if (k < 2) g.fill(sx + 3, yy + 29, sx + bw / 2 - 3, yy + 31, k < st ? 0xFF2DC653 : 0xFFDDDDDD);
-                g.fill(sx - 3, yy + 27, sx + 3, yy + 33, k <= st ? 0xFF2DC653 : 0xFFDDDDDD);
+            long tk = Minecraft.getInstance().level == null ? 0 : Minecraft.getInstance().level.getGameTime();
+            for (int k = 0; k < 5; k++) {
+                int sx = bx + k * bw / 4;
+                if (k < 4) g.fill(sx + 3, yy + 29, sx + bw / 4 - 3, yy + 31, k < st ? 0xFF2DC653 : 0xFFDDDDDD);
+                boolean pulse = k == st && st < 4 && tk / 8 % 2 == 0;
+                g.fill(sx - 3, yy + 27, sx + 3, yy + 33, k < st || st == 4 ? 0xFF2DC653 : k == st ? (pulse ? 0xFFF77F00 : 0xFFFFB45C) : 0xFFDDDDDD);
             }
-            g.drawString(f, f.plainSubstrByWidth("§2" + steps[st], w - 18), x + 9, yy + 37, 0xFF222222, false);
+            if (st > 0 && st < 4) {
+                String ic = st == 1 ? "♨" : st == 2 ? "▣" : "➜";
+                int ix = bx + st * bw / 4 - f.width(ic) / 2;
+                g.drawString(f, ic, ix, yy + 18, 0xFFF77F00, false);
+            }
+            g.drawString(f, f.plainSubstrByWidth((st == 4 ? "§2" : "§0") + detail, w - 18), x + 9, yy + 37, 0xFF222222, false);
             yy += 52;
         }
         return yy;

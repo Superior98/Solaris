@@ -32,7 +32,12 @@ public class ConversationGoal extends Goal {
             return;
         }
         double d = mob.distanceToSqr(other);
-        if (d > 6.0D) {
+        if (d < 1.3D * 1.3D && mob.getNavigation().isDone()) {
+            net.minecraft.world.phys.Vec3 away = mob.position().subtract(other.position());
+            if (away.lengthSqr() < 1.0E-4) away = new net.minecraft.world.phys.Vec3(mob.getRandom().nextGaussian(), 0, mob.getRandom().nextGaussian());
+            away = away.normalize();
+            mob.getMoveControl().setWantedPosition(mob.getX() + away.x * 0.9, mob.getY(), mob.getZ() + away.z * 0.9, 0.45D);
+        } else if (d > 6.0D) {
             if (mob.getNavigation().isDone() || mob.tickCount % 20 == 0) mob.getNavigation().moveTo(other, 0.8D);
         } else {
             mob.getNavigation().stop();

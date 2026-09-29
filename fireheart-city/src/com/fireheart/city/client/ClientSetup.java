@@ -70,6 +70,7 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void onOverlays(RegisterGuiOverlaysEvent event) {
+        event.registerAboveAll("gps_hud", (gui, g, pt, w, h) -> com.fireheart.city.client.GpsHud.hud(g, w, h));
         event.registerAboveAll("vehicle_hud", (gui, g, pt, w, h) -> VehicleClient.hud(g, w, h));
         event.registerAboveAll("tour_hud", (gui, g, pt, w, h) -> com.fireheart.city.client.TourHud.hud(g, w, h, pt));
         event.registerAboveAll("stalker_fx", (gui, g, pt, w, h) -> com.fireheart.city.client.Stalker.hud(g, w, h));

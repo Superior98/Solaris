@@ -47,6 +47,7 @@ public final class Chat {
         if (pl == null || msg == null || msg.startsWith("/")) return;
         pl.getServer().execute(() -> {
             try {
+                if (Happenings.quizAnswer(pl, msg)) return;
                 handle(pl, msg);
             } catch (Throwable t) {
                 FireheartCity.LOG.error("Resident chat reply failed", t);
@@ -114,6 +115,7 @@ public final class Chat {
         r.getLookControl().setLookAt(pl, 30, 30);
         if (r.convo != null) r.leaveConversation("Oh, one sec - " + pl.getName().getString() + " is talking to me.");
         Resident.addressed(r.level(), pl.getName().getString());
+        if (fresh) Quests.bump(r.data(), pl.getName().getString(), "talk");
         if (useAi(t, c) && Groq.available()) {
             String pn = pl.getName().getString();
             String convoKey = pn + "|" + r.profileId();
@@ -135,7 +137,7 @@ public final class Chat {
     }
 
     static boolean useAi(String t, Ctx c) {
-        if (c.topic.startsWith("meet") || c.topic.equals("follow")) return false;
+        if (c.topic.startsWith("meet") || c.topic.equals("follow") || c.topic.equals("rps") || Pastimes.noAi(t)) return false;
         return !any(t, " follow ", " come with ", " come here ", " walk with me ", " lets go ", " let's go ", " stop following ", " wait here ", " stay here ", " go home ",
                 " meet ", " check in ", " checkin ", " check me in ", " checking in ", " room ", " key ", " sorry ", " apologi", " forgive ", " my bad ");
     }
@@ -171,6 +173,8 @@ public final class Chat {
     }
 
     static String reply0(ServerPlayer pl, Resident r, String t, boolean named, Ctx c, long now) {
+        String vow = Bonds.vowChat(pl, t);
+        if (vow != null) return vow;
         CityData d = r.data();
         CityData.Profile p = r.profile();
         String pn = pl.getName().getString();
@@ -195,6 +199,8 @@ public final class Chat {
             String rom = Romance.chat(pl, r, t, rnd);
             if (rom != null) return rom;
         }
+        String fun = Pastimes.chat(pl, r, t, c);
+        if (fun != null) return fun;
         d.setDirty();
         if (any(t, " sorry ", " apologi", " my bad ", " forgive ")) {
             if (trust < 0) {

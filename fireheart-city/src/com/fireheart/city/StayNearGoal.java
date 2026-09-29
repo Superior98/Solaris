@@ -15,7 +15,7 @@ public class StayNearGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (mob.convo != null || mob.inShuttle() || mob.isEating() || Elevator.controls(mob) || mob.activityName().equals("sleep") || mob.workBusy() || mob.sunbathing() || mob.dancing() || mob.listening() || mob.playingMusic()) return false;
+        if (mob.convo != null || mob.inShuttle() || mob.isEating() || Elevator.controls(mob) || mob.activityName().equals("sleep") || mob.workBusy() || mob.sunbathing() || mob.dancing() || mob.listening() || mob.playingMusic() || mob.jogging() || mob.onErrand()) return false;
         BlockPos t = mob.navTarget();
         if (t == null || mob.getRandom().nextInt(100) != 0) return false;
         boolean tower = Elevator.floorOfPos(t) >= 0;

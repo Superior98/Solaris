@@ -27,6 +27,7 @@ public enum Job {
     RECEPTIONIST("Receptionist", "reception", Items.TRIPWIRE_HOOK, "Welcome to Ember Heights, make yourself at home.", "Can I get my room key?", "Here you go, no rush."),
     POLICE("Police Officer", "police", Items.LIGHTNING_ROD, "Solaris PD - keeping you safe!", "Anything to report, officer?", "All quiet on my beat."),
     FIREFIGHTER("Firefighter", "fire", Items.WATER_BUCKET, "Solaris Fire Dept - always ready!", "Any fires today?", "Not on my watch. All quiet."),
+    CONCIERGE("Hotel Concierge", "hotel_desk", Items.TRIPWIRE_HOOK, "Welcome to magmagamer9's hotel!", "Got a room for tonight?", "Room 4's free - here's your key."),
     REPAIR("Repair Technician", "garage", Items.IRON_PICKAXE, "If it's broken, I'll fix it!", "Can you fix something for me?", "Point me at it - I'll have it good as new.");
 
     public final String title;

@@ -27,5 +27,6 @@
  "item.fireheartcity.dish": "SolEats Dish",
  "entity.fireheartcity.vehicle": "Solaris Vehicle",
  "key.fireheartcity.horn": "Vehicle horn",
- "key.fireheartcity.lights": "Vehicle headlights"
+ "key.fireheartcity.lights": "Vehicle headlights",
+ "item.fireheartcity.gps": "SolNav GPS"
 }

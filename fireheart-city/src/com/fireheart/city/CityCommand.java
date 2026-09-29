@@ -19,7 +19,47 @@ import net.minecraft.world.phys.HitResult;
 
 public class CityCommand {
     public static void register(CommandDispatcher<CommandSourceStack> d) {
-        d.register(Commands.literal("sol")
+        d.register(Commands.literal("sol").executes(c -> { Finale.sendHelp(c.getSource()); return 1; })
+                .then(Commands.literal("help").executes(c -> { Finale.sendHelp(c.getSource()); return 1; }))
+                .then(Commands.literal("propose").executes(c -> { var pl = c.getSource().getPlayerOrException(); String r = Bonds.propose(pl, CityData.get(pl.serverLevel())); if (!r.isEmpty()) msg(c, r); return 1; }))
+                .then(Commands.literal("home").executes(c -> { var pl = c.getSource().getPlayerOrException(); BlockPos h = Errands.home(CityData.get(pl.serverLevel()), pl.getName().getString()); msg(c, h == null ? "§7No home set. §f/sol home set §7while standing at your front door." : "§6Your home: §f" + h.toShortString()); return 1; })
+                        .then(Commands.literal("set").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Errands.setHome(pl, CityData.get(pl.serverLevel()))); return 1; })))
+                .then(Commands.literal("quests").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Quests.quests(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("wishlist").then(Commands.argument("name", StringArgumentType.word()).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Quests.wishlist(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "name"))); return 1; })))
+                .then(Commands.literal("donate").then(Commands.argument("amount", com.mojang.brigadier.arguments.IntegerArgumentType.integer(1, 10000)).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Quests.donate(pl, CityData.get(pl.serverLevel()), com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "amount"))); return 1; })))
+                .then(Commands.literal("calendar").executes(c -> { msg(c, Info.calendar(c.getSource().getLevel(), CityData.get(c.getSource().getLevel()))); return 1; }))
+                .then(Commands.literal("who").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Info.who(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("couples").executes(c -> { msg(c, Info.couples(c.getSource().getLevel(), CityData.get(c.getSource().getLevel()))); return 1; }))
+                .then(Commands.literal("gossip").executes(c -> { msg(c, Info.gossip(CityData.get(c.getSource().getLevel()))); return 1; }))
+                .then(Commands.literal("memories").then(Commands.argument("name", StringArgumentType.word()).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Info.memories(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "name"))); return 1; })))
+                .then(Commands.literal("selfie").then(Commands.argument("name", StringArgumentType.word()).executes(c -> { var pl = c.getSource().getPlayerOrException(); String r = Info.selfie(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "name")); if (!r.isEmpty()) msg(c, r); return 1; })))
+                .then(Commands.literal("album").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Info.album(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("report").executes(c -> { msg(c, Finale.report(c.getSource().getLevel(), CityData.get(c.getSource().getLevel()))); return 1; }))
+                .then(Commands.literal("diary").then(Commands.argument("name", StringArgumentType.word()).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Finale.diary(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "name"))); return 1; })))
+                .then(Commands.literal("daily").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.daily(pl, CityData.get(pl.serverLevel()), true)); return 1; }))
+                .then(Commands.literal("achievements").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.achievements(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("friends").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.friends(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("top").executes(c -> { msg(c, Perks.top(CityData.get(c.getSource().getLevel()))); return 1; }))
+                .then(Commands.literal("forecast").executes(c -> { msg(c, "§6Solaris forecast: " + Perks.forecast(c.getSource().getLevel()) + " §7(" + Skies.season(Calendar.worldDay(c.getSource().getLevel())) + ")"); return 1; }))
+                .then(Commands.literal("courier").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.courier(pl, CityData.get(pl.serverLevel()))); return 1; })
+                        .then(Commands.literal("cancel").executes(c -> { msg(c, Perks.cancelCourier(c.getSource().getPlayerOrException())); return 1; })))
+                .then(Commands.literal("whereis").then(Commands.argument("name", StringArgumentType.word()).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Perks.whereis(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "name"))); return 1; })))
+                .then(Commands.literal("profile").then(Commands.argument("name", StringArgumentType.word()).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Quests.profile(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "name"))); return 1; })))
+                .then(Commands.literal("tip").then(Commands.argument("name", StringArgumentType.word()).then(Commands.argument("amount", com.mojang.brigadier.arguments.IntegerArgumentType.integer(1, 500)).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Quests.tip(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "name"), com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "amount"))); return 1; }))))
+                .then(Commands.literal("emote").executes(c -> { msg(c, "§7Emotes: wave, cheer, dance, bow, clap, laugh"); return 1; })
+                        .then(Commands.argument("what", StringArgumentType.word()).executes(c -> { var pl = c.getSource().getPlayerOrException(); String r = Quests.emote(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "what")); if (!r.isEmpty()) msg(c, r); return 1; })))
+                .then(Commands.literal("rep").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Quests.rep(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("treasure").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Quests.treasure(pl, CityData.get(pl.serverLevel()))); return 1; })
+                        .then(Commands.literal("hint").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Quests.hint(pl, CityData.get(pl.serverLevel()))); return 1; })))
+                .then(Commands.literal("settings").executes(c -> { var pl = c.getSource().getPlayerOrException(); Perks.settings(pl, CityData.get(pl.serverLevel()), null); return 1; })
+                        .then(Commands.argument("option", StringArgumentType.word()).executes(c -> { var pl = c.getSource().getPlayerOrException(); String r = Perks.settings(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "option")); if (!r.isEmpty()) msg(c, r); return 1; })))
+                .then(Commands.literal("birthday").then(Commands.argument("day", com.mojang.brigadier.arguments.IntegerArgumentType.integer(1, 28)).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Quests.setBirthday(pl, CityData.get(pl.serverLevel()), com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "day"))); return 1; })))
+                .then(Commands.literal("mail").then(Commands.argument("name", StringArgumentType.word()).then(Commands.argument("message", StringArgumentType.greedyString()).executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Letters.send(pl, CityData.get(pl.serverLevel()), StringArgumentType.getString(c, "name"), StringArgumentType.getString(c, "message"))); return 1; }))))
+                .then(Commands.literal("horoscope").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Letters.horoscope(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("stats").executes(c -> { var pl = c.getSource().getPlayerOrException(); msg(c, Letters.stats(pl, CityData.get(pl.serverLevel()))); return 1; }))
+                .then(Commands.literal("bulletin")
+                        .then(Commands.literal("on").executes(c -> { var pl = c.getSource().getPlayerOrException(); CityData.get(pl.serverLevel()).setSetting(pl.getName().getString(), "bulletinOff", "0"); msg(c, "§6Morning bulletin on."); return 1; }))
+                        .then(Commands.literal("off").executes(c -> { var pl = c.getSource().getPlayerOrException(); CityData.get(pl.serverLevel()).setSetting(pl.getName().getString(), "bulletinOff", "1"); msg(c, "§6Morning bulletin off. §7(/sol bulletin on to re-enable)"); return 1; })))
                 .then(Commands.literal("garage")
                         .then(Commands.literal("give").executes(c -> { msg(c, Vehicles.give(c.getSource().getPlayerOrException(), 0)); return 1; })
                                 .then(Commands.argument("paint", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0, 5)).executes(c -> { msg(c, Vehicles.give(c.getSource().getPlayerOrException(), com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "paint"))); return 1; })))
@@ -57,9 +97,37 @@ public class CityCommand {
                                     c.getSource().sendSuccess(() -> net.minecraft.network.chat.Component.literal("§8The Watcher leaves " + t.getName().getString() + " alone."), false);
                                     return 1;
                                 })))));
+        d.register(Commands.literal("sol")
+                .then(Commands.literal("gps").executes(c -> { Gps.menu(c.getSource().getPlayerOrException()); return 1; })
+                        .then(Commands.literal("off").executes(c -> { Gps.clear(c.getSource().getPlayerOrException(), true); return 1; }))
+                        .then(Commands.literal("here").executes(c -> { msg(c, Gps.here(c.getSource().getPlayerOrException())); return 1; }))
+                        .then(Commands.literal("player").then(Commands.argument("target", net.minecraft.commands.arguments.EntityArgument.player()).executes(c -> {
+                            msg(c, Gps.toPlayer(c.getSource().getPlayerOrException(), net.minecraft.commands.arguments.EntityArgument.getPlayer(c, "target")));
+                            return 1;
+                        })))
+                        .then(Commands.literal("xyz").then(Commands.argument("pos", net.minecraft.commands.arguments.coordinates.BlockPosArgument.blockPos()).executes(c -> {
+                            BlockPos p = net.minecraft.commands.arguments.coordinates.BlockPosArgument.getBlockPos(c, "pos");
+                            Gps.set(c.getSource().getPlayerOrException(), p, p.getX() + " " + p.getY() + " " + p.getZ());
+                            return 1;
+                        })))
+                        .then(Commands.argument("place", StringArgumentType.greedyString()).suggests((c, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(Gps.keys(), b)).executes(c -> {
+                            msg(c, Gps.to(c.getSource().getPlayerOrException(), StringArgumentType.getString(c, "place")));
+                            return 1;
+                        })))
+                .then(Commands.literal("base").executes(c -> { msg(c, StellarHome.baseInfo(c.getSource().getPlayerOrException())); return 1; })));
         d.register(Commands.literal("city").requires(s -> s.hasPermission(2))
+                .then(Commands.literal("garage")
+                        .then(Commands.literal("give").executes(c -> { msg(c, Vehicles.give(c.getSource().getPlayerOrException(), 0)); return 1; })
+                                .then(Commands.argument("paint", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0, 5)).executes(c -> { msg(c, Vehicles.give(c.getSource().getPlayerOrException(), com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "paint"))); return 1; })))
+                        .then(Commands.literal("park").executes(c -> { msg(c, Vehicles.park(c.getSource().getPlayerOrException())); return 1; }))
+                        .then(Commands.literal("replace").executes(c -> { msg(c, Vehicles.replace(c.getSource().getPlayerOrException())); return 1; })))
+                .then(Commands.literal("hotel").executes(c -> { msg(c, Hotel.status(c.getSource().getLevel())); return 1; })
+                        .then(Commands.literal("movein").executes(c -> { msg(c, Hotel.moveIn(c.getSource().getLevel(), true)); return 1; })))
                 .then(Commands.literal("spawnall").executes(CityCommand::spawnAll))
                 .then(Commands.literal("census").executes(CityCommand::census))
+                .then(Commands.literal("event").executes(c -> { msg(c, Happenings.force(c.getSource().getLevel(), CityData.get(c.getSource().getLevel()), "")); return 1; })
+                        .then(Commands.argument("name", StringArgumentType.word()).executes(c -> { msg(c, Happenings.force(c.getSource().getLevel(), CityData.get(c.getSource().getLevel()), StringArgumentType.getString(c, "name"))); return 1; })))
+                .then(Commands.literal("stuck").executes(c -> { msg(c, Nav.stuckReport()); return 1; }))
                 .then(Commands.literal("elevator").executes(c -> { msg(c, Elevator.describe(c.getSource().getLevel())); return 1; })
                         .then(Commands.literal("debug").executes(c -> { Elevator.debug = !Elevator.debug; msg(c, "Elevator debug " + Elevator.debug); return 1; }))
                         .then(Commands.literal("repair").executes(c -> { boolean ok = Elevator.repair(c.getSource().getLevel()); msg(c, ok ? "Elevator repair started. " + Elevator.lastInfo : "Repair failed: " + Elevator.lastInfo); return ok ? 1 : 0; })))

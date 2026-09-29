@@ -216,6 +216,7 @@ public final class Economy {
             case POLICE -> List.of("minecraft:paper");
             case FIREFIGHTER -> List.of("minecraft:bucket");
             case REPAIR -> List.of("minecraft:bricks");
+            case CONCIERGE -> List.of("minecraft:tripwire_hook");
         };
     }
 

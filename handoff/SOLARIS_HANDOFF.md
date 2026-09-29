@@ -1,6 +1,292 @@
-# SOLARIS (formerly Fireheart City): Project Handoff, v1.12.0 (2026-09-29)
+# SOLARIS (formerly Fireheart City): Project Handoff, v1.20.1 (2026-09-29 15:10 AEST)
 
 This file carries the project into a new chat. Read this file first. The older, much longer `Fireheart_Project_Handoff.md` in this folder has the full history, the toolchain derivation, the block-ID lists and the generator code from earlier sessions. Use it as a reference when you need detail.
+
+## START HERE - current state (v1.20.1)
+- **Source of truth:** GitHub `Superior98/Solaris`, branch `claude/sharp-euler-yhclm1` (PR #1), folder `fireheart-city/` (`src/`, `res/`, `tools/`). Local build workspace was `/tmp/modbuild` (git master mirrors the branch). `build.sh`/`check.sh` need `cp.txt`, `srg2named.srg` and the named jars (see section 3 and the old handoff).
+- **Installed:** `fireheartcity-0.1.0.jar` v1.20.1 (3,284,779 bytes; mods.toml still reads 1.20.0) is in `mods\` of the "Create_ Remastered" profile. magmagamer9 needs the same jar.
+- **Tests:** `/city test player` 82/83 on a fresh copy (the group-chat check fails only because of broken phones in the save). Re-running on a non-fresh world can also fail "phone invites" and "player TNT" (state already exists) - not bugs.
+- **Nothing client-visual since v1.13 has been seen by me in the real client except the hotel lobby/sauna fix.** Needs his feedback: the v1.14-v1.19 animations/sky effects, the new vehicle physics/visuals, GPS HUD, SolEats tracker.
+- **Useful commands:** player `/sol` (help), `/sol gps`, `/sol base`, `/sol garage give|park`, `/sol tutorial`; admin `/city garage replace`, `/city hotel`, `/city event <name>`, `/city repair`, `/city test player`.
+- **Secret base:** Stellar House study, 3x3 spruce hatch at 71 85 10 - sneak on it (owners StellarFox1, magmagamer9, Fireheart_4743); stand on the pad (no sneak) to go up. `/sol base` prints this and points the GPS there.
+
+## v1.20.1 - vehicles overhaul + fixes (built, server-booted, installed)
+- **Wheel spin fixed** (spun backwards): `wp.xRot = spin`, spin += moved / wheel radius (car 0.3125, bike 0.375). Direction from movement vs heading.
+- **Steering visuals fixed** (were mirrored): model space is post-yaw space rotated 180 deg about Z by `scale(-1,-1,1)`, so model +X is the vehicle's LEFT. Front wheels `yRot = +steerVis`, steering wheel `zRot = -steer*2.4`, indicator group `ind_l` (model -X) = right side. Yaw itself was always correct (D = +yaw = right turn).
+- **Drivetrain** (`Vehicle.input`): automatic gears `GEARS` (car 5, bike 6, boat 1), rpm per gear, upshift at rpm>0.94 with a 3-5 tick torque cut (shift sound, 45% backfire from 3rd), downshift at 68% of the lower gear top; torque curve 0.72+0.5*sin(pi*rpm) x sqrt(gear ratio); aero drag, engine braking, strong braking on S, reverse after holding S 5 ticks at a stop (30% of top speed). Top speeds: car 1.25, bike 1.45, boat 0.95 blocks/tick.
+- **Handling:** bicycle model yaw = v/wheelbase*tan(steer angle) with steer angle 36/30/28 deg / (1+1.5v) and understeer /(1+0.35v^2); steering ramps (0.12/tick in, 0.2 back). Lateral grip: car 0.45, bike 0.6, boat 0.1; Space = handbrake drift (grip 0.045, yaw x1.55, tyre smoke + skid loop). Slope gravity from ground height under both axles (only with a driver - parked cars don't roll). Airborne: no steering/throttle; landing thud + suspension dip.
+- **Crashes:** horizontal collision above 0.5 b/t -> crash sound, sparks, bounce back 22%.
+- **Visuals** (`VehicleRenderer`): car body pitches (accel/brake/slope), rolls in turns, absorbs kerbs (bodyY), wheels rendered separately so they stay planted; bike leans into turns and wheelies on hard launches in 1st; boat planes (bow up then levels), rolls, bigger wake/spray. New parts: steering wheel, dash, twin exhausts, plates, door handles, reverse lights (white when reversing), indicators (blink + tick when steering hard below 0.5 b/t), bike mirrors/disc/plate. Layers: paint, trim, glass, lamp, tail, rev, ind(ind_l/ind_r), wheels.
+- **Audio/HUD** (`VehicleClient`): engine pitch/volume from rpm and throttle, dip on shifts; looping skid (`vehicle.skid_loop`); new sounds crash/backfire/shift/indicator/land (`tools/sfx_vehicles.py`). HUD: rev arc, km/h, gear (R/N/1-6, F for boat), rpm, DRIFT/BRAKE flags. FOV widens up to 12% with speed. Remote vehicles derive speed/steer/gear/brake lights from movement.
+- **Sauna (live world, 2026-09-29):** his `sauna.zip` datapack (`sauna:build` builds relative to a `marker` tagged `sauna`) had been placed overlapping the hotel. Fixed in the live world with datapack `saves/Create!/datapacks/solaris_fix` (`solaris_fix:run`): restored every hotel block from the 09:54 world copy and moved the sauna +11 x, -6 z to x61..78 z30..43, marker to 59.7 72 37.6. `solaris_fix:undo` reverts. The datapack can be deleted.
+- Hotel: residents knocking at magmagamer9's house use `G_KNOCK`.
+
+## Missing from older sections (local work on v1.12, now merged)
+- **Watcher** (`client/Stalker.java`): phases WAITING > OMENS (footsteps, whispers, screen dims) > GLIMPSE x3 (closer each time) > WATCHING (creeps closer, breathing) > NOTICED (twitch, head crack, jaw drop, camera pulled to it, heartbeat, red pulse) > LUNGE > fade. The permanent black screen is fixed (afterT/dim/heart count down before returning to IDLE). Sounds stalker.step/heart/whisper/static/sting (`tools/sfx_stalker*.py`).
+- **Gus** (`Repair.java`): places blocks like a player - walks within 4.6 reach, holds the block item, swings, places; door/bed halves together; `canSurvive` check; `giveUp` retries 4 times with growing delay then ignores the spot. No more flying block displays.
+- **Stellar House cosy interior** (`StellarHome.cozy`, applied once via `CityData.stellarCozy`): wood floors/ceiling with beams, mushroom-stem partitions with labelled doorways, real staircase in the study (x69-73 z12-13), brick fireplace (88,85,18), sofas, rugs, lamps, TV nook, dining table, bedroom; warm ochre froglight room lights.
+
+## v1.20.0 - merge (built and tested)
+This branch merges the cloud session's v1.13-v1.19 work with the local session's parallel work, which was built on v1.12.0 (cbaa322): the Watcher black-screen fix and scarier Watcher, Gus placing blocks like a player, the cosy Stellar House interior, and the hotel/GPS/SolEats work below. Version is 1.20.0. It compiles against MC 1.20.1/Forge 47 without changes. `/city test player`: 82/83 (the group chat check depends on the save's broken phones), all lifeTests pass, `/city event` works for every event, and a full day soak logged no tick exceptions.
+
+### Local-session features included
+- **Hotel** (`Hotel.java`): magmagamer9's hotel at x44..56 z25..38, lobby floor y72, entrance (49,72,38), service bell (46,73,33), desk stand (44,72,33), guest spot (47,72,33). Places hotel (lobby), hotel_desk, hotel1..5 (rooms: 1 (46,78,27), 2 (52,78,31), 3 (52,84,30), 4 (46,84,27), 5 (52,90,37)). New cast: Marco (Job.CONCIERGE, hotel5, shift t6000-18000), Finn (GARDENER, hotel1), Priya (CLERK, hotel2), Mateo (DOCKMASTER, hotel3). Residents heading to a room are routed through the lobby (also on catch-up teleports) and check in at the bell with Marco (self check-in when he's off). Daily booking of Room 4 (a resident, plus partner), 12 coins each paid to magmagamer9's bank (`biz:hotel` if no account); `CityData.Profile.homePlace()` returns the stay room. Right-clicking the bell gets a room key (master key for magmagamer9). `/city hotel [movein]`.
+- **Visits to magmagamer9's house** (place magma_house (-48,71,42)): leisure option, weighted by whether he is online and home; greet him or knock and leave a letter. Knowledge facts added.
+- **SolNav GPS** (`Gps.java`, `client/GpsHud.java`, item fireheartcity:gps given once on login): `/sol gps` clickable menu, `/sol gps <place>`, `player <name>` (live), `xyz`, `here`, `off`; `/sol base` explains the secret base and points the GPS at the hatch (71,85,10). HUD compass with distance, direction, and ETA in vehicles; particle trail on the ground. Msg `#gps|x|y|z|p/d|label` / `#gps|off`.
+- **SolEats tracking**: Letter has placed/ready/out/cook/notified. `Extras.eatsTick` advances received > cooking > packed > on the way > delivered, sends toasts and refreshes the phone; a rider delivers directly after 1200 ticks if Pip hasn't. The EatsApp shows a 5-step tracker with detail text.
+- **Repair**: player-lit TNT and explosions are now queued too (previously ignored).
+- `/city garage give|park|replace` alias (op). Tutorial typing ticks stop exactly when the text finishes.
+
+## 0000000000. v1.19.0 - 50 improvements + 50 features (2026-09-29, source only, not compiled)
+New files: `Crowd` (per-tick resident cache), `Bonds` (friendship milestones, nicknames, anniversaries, proposals, goodnight texts), `Applause`, `Errands` (hide and seek, races, guiding, home visits, litter; uses the new `Resident.errand(...)` override), `Health` (colds), `Streets` (street life), `Happenings` (scheduled events + `/city event`), `Info` (calendar/who/couples/gossip/memories/selfie/album). New config section `[life]` in fireheartcity-common.toml. Checked here with javac without MC jars (no syntax errors, no missing project symbols) plus an audit of every Minecraft/Forge name not used before v1.13.
+
+### Improvements
+1. `Crowd`: loaded residents looked up once per tick for all ambient systems.
+2. Ambient moments only run for residents within `ambientRange` (default 96) of a player.
+3. Cooldowns expire individually instead of the whole map being cleared.
+4. Static event state resets on server stop (switching worlds in singleplayer).
+5. Pending letter replies are saved in the world (settings `~post|pending`).
+6. `/sol courier cancel`; parcels for missing residents or a day overdue are taken back.
+7. Speech bubbles stay up long enough to read (30 + 2 ticks per character, max 200).
+8. Config `[life]`: ambientMoments, ambientRange, weddings, festivals, skyEffects, chimes, snowballs, luckyFinds.
+9. `/city event <name>` forces wedding, rainbow, sick, meteor, lantern, kindness, spooky, starlight, blossom, quiz, karaoke, movie, fishing, run, beach (prints the /time to use).
+10. `/city test player` gains 11 checks (resident cache, daily bonus, achievements, quest counters, distinct quests, no-repeat stories, letters, sick-day schedule, wishlist, calendar, nicknames, seasons).
+11. `/sol settings`: clickable per-player toggles (chimes, sky effects, bulletin, gifts, action-bar hints, home visits, goodnight texts).
+12. `/sol whereis` also finds online players.
+13. `/sol achievements` shows progress (e.g. 3/5 couriers).
+14. Daily streak: one missed day a week is forgiven.
+15. Courier compass on the action bar while holding a parcel (distance, direction, time left).
+16. `/sol treasure hint`: warmer/colder and rough distance.
+17. Horoscope lucky resident: gifts to them count double that day.
+18. Rock-paper-scissors win/loss record per resident.
+19. Jokes, stories, fun facts and compliments don't repeat until you've heard them all.
+20. Hugs raise affection once per resident per day.
+21. Tips give less affection each extra time the same day.
+22. Letter replies sometimes mention what the resident is doing right now.
+23. 20% of rainbows are double rainbows.
+24. Shooting stars have coloured trails (white/gold/blue/green) that fade.
+25. Aurora strength and colours vary night to night.
+26. Lanterns drift on a shared nightly wind and shrink as they rise.
+27. On the first day of each season residents greet you with it.
+28. Chimes respect settings and are quieter indoors.
+29. Bulletin: all today's events, birthdays, sick count, clickable Quests/Treasure/Calendar/Horoscope.
+30. Joggers run laps through 4 waypoints around the place.
+31. Yoga: the first resident there becomes the instructor, faces the class and calls out each pose.
+32. Picnics: food crumbs and eating sounds.
+33. Hit a free, friendly resident with a snowball and they throw one back (grumpy ones complain; no longer counted as punching).
+34. Selfie posts tag friends standing nearby.
+35. Partners greet each other with pet names and a blown kiss.
+36. Happy humming plays harp notes.
+37. Card games: curious residents are better at them; wins are counted.
+38. Bystanders react to rival arguments.
+39. Morning coffee gives a pace boost for 2.5 minutes.
+40. Fireflies only appear over grass, flowers and leaves.
+41. Quick gestures (throw, high five, sneeze, salute, punches) blend in 2 ticks; naps/reading/sighs in 9.
+42. Standing residents glance around now and then (client).
+43. Seated residents lean back and relax (client).
+44. Idle residents step out of the way of moving vehicles.
+45. `/city stuck`: where residents get stuck most (4x4 areas), to find map problems.
+46. When rain starts, joggers, yoga, sunbathers and anglers change plans.
+47. Monster scares go in residents' diaries.
+48. Residents comment on armour (elytra, netherite, diamond, turtle helmet, pumpkin head).
+49. Every 10 achievements: +50 coin milestone bonus.
+50. `/sol` and `/sol help` show a clickable, grouped command list.
+Also fixed: greeting gifts/birthday lines were being overwritten by other greeting text; residents on errands no longer sit down mid-trip; residents at work turn down games; game/guide replies bypass Groq.
+
+### Features
+1. **Home visits**: `/sol home set`; close friends (affection 60+) sometimes walk over during leisure, knock, visit with a small gift, or text you if you're out.
+2. **Daily quests**: `/sol quests`, 3 of 12 tasks a day, 15 coins each, +20 for all three.
+3. **Sunday fishing tournament** at the boardwalk (09:00-14:00), residents and players, 30-coin prize.
+4. **Friendship milestones**: at affection 50 a Friendship Bracelet, at 80 a Best Friends Locket (named keepsakes; texted if they're not nearby).
+5. **Nicknames**: fond residents give you one and use it.
+6. **`/sol wishlist <name>`**.
+7. **Quiz night** (Thursdays 17:24, library): 5 questions, answer in chat, residents compete, 25-coin prize.
+8. **Karaoke night** (Fridays, Magma Beach Bar).
+9. **Movie night** (Saturdays, cinema) with reactions and snacks.
+10. **Fun Run** (every 14 days, 08:30 plaza -> old pier): join by standing at the plaza; placings and prizes.
+11. **Beach days** on summer weekends.
+12. **Spooky Night** (autumn, day 18): jack o'lanterns, soul particles, treats.
+13. **Starlight Festival** (winter, day 25): gift exchange, presents for you, a star over the plaza.
+14. **Blossom Day** (spring, day 3): flowers and petals.
+15. **Colds**: residents get sick (more in winter), stay home coughing, a friend brings soup; give them soup to cure them.
+16. **Litter**: residents pick up items left on the ground and hand them to the nearest player.
+17. **Comforting**: friends hug residents who are feeling low.
+18. **Applause**: residents nearby cheer when you unlock an achievement.
+19. **Hungry residents** ask for a bite when you hold food.
+20. **Constellations**: a named constellation in the northern sky each clear night; residents point them out.
+21. **`/sol donate`**: City Fund; every 250 coins city-wide triggers a plaza celebration.
+22. **`/sol calendar`**: next 14 days of events, weddings and birthdays.
+23. **`/sol who`**.
+24. **`/sol couples`**.
+25. **`/sol gossip`**.
+26. **`/sol memories <name>`**: what a resident remembers about you, and their trust.
+27. Handshake on first meeting (G_SHAKE).
+28. Police salute players with good reputation (G_SALUTE).
+29. Sweethearts and partners blow kisses (G_BLOW_KISS).
+30. Bench naps in the evening (G_NAP).
+31. Whistling while walking (G_WHISTLE).
+32. Confetti at weddings, fun runs and City Fund milestones (G_CONFETTI).
+33. Knocking at your door (G_KNOCK).
+34. Coughing (G_COUGH).
+35. Picking things up (G_PICKUP).
+36. Welcome back after 3+ days away.
+37. Reactions when you ride past on a horse, boat, minecart or Solaris vehicle.
+38. **`/sol selfie <name>`**: posted to SolFeed.
+39. Thank-you letters the next morning after big gifts, tips or on-time deliveries.
+40. Anniversaries every 28 days for married couples (a date) and your sweetheart (a text).
+41. **Proposals**: `/sol propose` to your sweetheart (romance 80+); plaza wedding with vows (type "I do").
+42. Shy and dreamy residents go home during thunderstorms.
+43. **Hide and seek**: say "hide and seek"; they hide out of sight, 3 minutes to find them.
+44. **Races**: "race me to the pier".
+45. **Guides**: "show me the way to the library" - they walk you there and wait if you fall behind.
+46. **`/sol album`**: SolFeed posts that mention you.
+47. First snow and first blossoms days.
+48. Umbrella sharing between partners and friends walking together.
+49. Residents dance near jukeboxes that are playing.
+50. Goodnight texts from your sweetheart around 20:15.
+10 new achievements (40 total).
+
+## 000000000. v1.18.0 - batch 5, features 93-100 (2026-09-29, source only, not compiled)
+New file `Finale.java`; `/sol` with no arguments now prints help.
+93. **Resident weddings**: on a weekend morning a couple (partners on both sides, romance >= 60, not yet married, at most one wedding a week, city-side homes) announces a wedding. Banner + news, and everyone in the city plans to be at Solaris Plaza. From 16:54 (tod 10900) the mayor (or a guest) officiates in 8 steps two in-game minutes apart: welcome, vows, "I do" x2, pronounced married (hugs, hearts, guests clap and cheer, fireworks, city event, memories, diary, romance 100), finale fireworks. Postponed if the couple isn't at the plaza by 18:12. State in settings under `~city` (`wedPlan`, `wedLast`, `wed:<pair>`).
+94. **`/sol diary <name>`**: read a close friend's diary (affection >= 50): yesterday, today, what they're thinking and hoping to do.
+95. **Build reactions**: every 25 blocks a player places around the city, a free resident nearby comments on the build (counts saved every 50).
+96. **`/sol report`**: weekly city report (residents, average mood, season, money in the city, richest, couples, friendships, event counts by kind, top headlines).
+97. **`/sol help`** (and plain `/sol`): all player commands and chat ideas.
+98. **Thought bubbles**: idle residents sometimes show a thought in brackets (their intent for the day, hunger for their favourite food, loneliness, boredom, their partner, their savings goal, stray thoughts).
+99. **Time-of-day greetings**: residents say good night on their way home in the evening and morning lines before work.
+100. **3 final achievements**: Wedding Guest, Architect (500 blocks), Confidant (read a diary). 30 achievements in total.
+
+### Before shipping 1.13-1.18
+1. Rebuild the toolchain and compile; fix any errors in Minecraft/Forge API calls (only the project-side calls were checked here).
+2. `/city test player`.
+3. In the client: gesture blending and the 19 new poses (tune angles), rainbow/aurora/lanterns visibility, fireflies, snowballs, weddings (`/time set` to a weekend morning with a couple at romance >= 60).
+
+## 00000000. v1.17.0 - batch 4: animations + realism (2026-09-29, source only, not compiled)
+**Animation system** (`client/ResidentModel`): gestures no longer snap. The model records the pose before the gesture, and when the gesture changes it blends from the previous gesture's pose to the new one over 5 ticks with smoothstep (`Resident.cGest/cGestPrev/cGestAt`, client-only fields). `pose(e, g, t, lt)` gets `lt` = ticks since the gesture started, for timed moves (sneeze, throw, sigh).
+Realism:
+63. Smooth blending between all gestures (in and out).
+64. Idle weight shifting: standing residents slowly move their weight from one leg to the other, with hip and head counter-tilt.
+65. Breathing: subtle chest movement.
+66. Running lean: body tilts forward at high speed.
+67. Three talking styles picked per sentence (casual, open palms, emphatic beat).
+68. Personal walking pace (`Resident.gait()`): 0.92-1.08 per person, livelier traits faster, laid-back/dreamy slower, slower when hungry or in the evening, hurrying when late and far from work.
+69. Dripping water for ~45 s after coming in from the rain.
+70. Visible breath outdoors in winter and on Neon Heights at night.
+71. Sweat drops in the summer heat.
+72. Occasional slip on wet ground when moving in the rain.
+73. Conversation personal space: residents step back if they end up too close while chatting.
+New gestures (41-59), used by existing features:
+74. READ (holds book, turns pages) - bench reading.
+75. SIP (cup to mouth) - morning coffee.
+76. HIGHFIVE - high fives.
+77. HUG (arms wrap, sway) - hugs.
+78. JOG (pumping bent arms, lean) - jogging.
+79. YOGA_TREE and 80. YOGA_WARRIOR - yoga cycle (stretch, tree, warrior, bow).
+81. SNEEZE (wind-up then jerk forward) - spring sneezes.
+82. FAN (fanning face) - heat.
+83. THROW (overhead wind-up, release) - snowballs.
+84. CARDS (holding hand, plays a card) - card games (both players).
+85. LOOKUP (shading eyes, looking up) - sunsets, shooting stars, full moon.
+86. HOWL - full moon.
+87. SIGH (shoulders drop) - sad moods.
+88. FEED (leaning down, offering food) - animals.
+89. PHOTO (phone held up with both hands) - selfies (shows the phone item).
+90. SING (hand on chest, arm out) - singing.
+91. ARGUE (finger jabbing, hand on hip) - rival arguments.
+92. WINDED (hands on knees, heavy breathing) - jog breaks.
+Checked here with javac without MC jars: no syntax errors, no missing project methods/wrong arities. Client animation angles are untested; tune in game.
+
+## 0000000. v1.16.0 - feature batch 3 of 5 (2026-09-29, source only, not compiled)
+New files `Letters.java` (player) and `Moments.java` (residents/ambient); new intents in `Pastimes.chat`; listeners `Letters::onBreak` and `Letters::onJoin`; `/sol mail|horoscope|stats`.
+42. **Letters**: `/sol mail <name> <message>` (5 a day). Kind, rude, sorry, love, miss and thank-you letters change affection and memories; the resident writes back 1-3 in-game hours later (chat + a named paper). Pending replies are in memory only (lost on restart).
+43. **`/sol horoscope`**: daily sign, luck stars, omen, lucky resident, place and number.
+44. **`/sol stats`**: reputation, residents met, achievements, streak, deliveries, treasures, fish, letters, lucky finds, savings, birthday.
+45. **Lucky finds**: breaking grass/flowers within 220 blocks of the plaza has a 1-in-40 chance (max 3 a day) to drop gold nuggets, cookies, berries or an emerald.
+46. **Lightning reactions**: residents within 40 blocks of a strike flinch and shout.
+47. **Rival arguments**: rivals who meet trade barbs; 15% chance they call a truce (clears the rivalry, city event).
+48. **Card and board games**: acquaintances idling together at the plaza, library, diner, park, arcade or home play cards/chess/dominoes/checkers; winner cheers, diary notes.
+49. **Jokes**: cheerful/talkative/friendly residents tell each other jokes; grumpy listeners facepalm.
+50. **Bench reading**: seated residents (especially curious, shy and dreamy ones) read books.
+51. **Morning coffee** before work.
+52. **Animals**: residents fuss over nearby animals (seeds, hearts, uses pet names).
+53. **Spring sneezes** (pollen).
+54. **Summer heat** complaints at midday.
+55. **Autumn** pumpkin pie and cosy-weather lines.
+56. **Sunsets and sunrises**: residents stop to watch and note it in their diary.
+57. **Full moon** nights (moon phase 0): residents remark on it; cheerful ones howl.
+58. **Fireflies** around outdoor players on summer nights.
+59. **"Sing"**: residents sing a line with flute notes.
+60. **"What should I build?"**: build ideas for the city.
+61. **"Rate me" / "are we friends?"**: honest answer from affection and trust.
+62. **3 more achievements**: Pen Pal, Lucky Find, Night Owl.
+Checked here with javac without MC jars: no syntax errors, no missing project methods/wrong arities.
+
+## 000000. v1.15.0 - feature batch 2 of 5 (2026-09-29, source only, not compiled)
+New files `Quests.java` (player) and `Hobbies.java` (residents); additions to `Skies`, `Perks.ACHS`, `Resident` (yoga leisure, birthday greeting), `FireheartCity` (ItemFishedEvent listener), `/sol` commands.
+22. **`/sol profile <name>`**: a resident's card (job, personality, mood, hunger, favourite food and hobby, home once you know them, partner, friends, savings goal, what they're doing, your friendship).
+23. **`/sol tip <name> <amount>`**: pay a nearby resident from the gold you carry; raises affection and they remember it.
+24. **`/sol emote wave|cheer|dance|bow|clap|laugh`**: nearby residents react (wave back, dance along, applaud); other players see the emote in chat.
+25. **`/sol rep`**: city reputation rank (Stranger -> Solaris Legend) from how residents feel about you.
+26. **Daily treasure hunt**: `/sol treasure` gives a riddle about a place; stand there to claim 15-30 coins plus a bonus item.
+27. **Player fishing**: residents nearby cheer your catches; your fish are counted.
+28. **Player birthdays**: `/sol birthday <1-28>`; on the day you get a banner, cake, 25 coins, fireworks, a news item, and every resident you meet wishes you happy birthday.
+29. **Picnics**: friends/partners idling together at the park, plaza, gardens, beach or pier share food (hunger, fun, affection, diary, news).
+30. **Selfies**: residents with phones take photos at places (flash, shutter sound) and post them on SolFeed, once per day.
+31. **Rain dancing**: cheerful, adventurous and dreamy residents sometimes dance in the rain.
+32. **Snowball fights**: in winter, free residents outdoors throw real snowballs at each other and throw back.
+33. **Morning yoga**: new early-morning leisure choice at the park/gardens; everyone there moves through the same poses in sync.
+34. **Passing hellos**: residents who know each other wave and greet by name when they pass, without stopping for a full chat.
+35. **Flying players**: residents point and shout when a player flies over with an elytra.
+36. **Mood moments**: very happy residents hum with music notes; very unhappy ones sigh.
+37. **Meteor showers** every 14 days (day%14==6): many more shooting stars; in the bulletin.
+38. **Aurora**: green/cyan/purple curtains in the northern sky on clear winter nights.
+39. **Clock tower chimes**: the bell rings the hour from 07:00 to 22:00 for players within 160 blocks of the clock tower.
+40. **Morning mist** drifting over the marina at dawn.
+41. **6 more achievements**: Crowd Pleaser, Solaris Legend, Treasure Hunter, Angler, Another Year, Northern Lights.
+Checked here with javac without MC jars: no syntax errors, no missing project methods/wrong arities.
+
+## 00000. v1.14.0 - feature batch 1 of 5 (2026-09-29, source only, not compiled)
+Goal: 100 new features in batches of ~20. Batch 1 (21 features). New files `Perks.java` (player), `Skies.java` (world/sky), `Pastimes.java` (residents). Hooks: `Events.onLogin/onLevelTick`, `Chat.reply0` (after Romance), `Chat.useAi` (games skip Groq), `Resident` (dreams, greet extras, courier delivery, jog leisure), `/sol` subcommands.
+1. **Daily bonus** with 7-day streak (5-35 coins; bank savings if the player has an account, otherwise gold nuggets). `/sol daily`.
+2. **Achievements** (12, coin rewards, title banner + toast sound), checked every 10 s. `/sol achievements`.
+3. **`/sol whereis <name>`**: what a resident is doing, distance and compass direction.
+4. **`/sol friends`**: residents you've met with heart ratings.
+5. **`/sol top`**: richest, most friends, top anglers, happiest, game high scores.
+6. **Morning bulletin** (once per day around 06:30-08:30): date, season, weather, yesterday's headlines, holidays. `/sol bulletin on|off`.
+7. **Weather forecast** from real rain/thunder timers. `/sol forecast`.
+8. **Courier jobs**: `/sol courier` gives a named parcel for a resident 25-180 blocks away; right-click them to deliver. Pay scales with distance, half pay after 10 in-game hours, 5 per day.
+9. **Jogging**: new leisure choice before 15:00 (adventurous/cheerful love it), laps around the park/boardwalk/gardens with dust puffs and lines.
+10. **Gifts from close friends**: residents with affection >= 60 sometimes give you a flower or their favourite food when greeting (once per day each).
+11. **Held-item remarks** when greeting (swords, diamonds, TNT, flint and steel, cake, books, phones, food...).
+12. **Coin flip and dice** in chat ("flip a coin", "roll a dice").
+13. **Rock-paper-scissors** in chat (two-step: "rock paper scissors" -> "rock"), resident shows their pick as an item.
+14. **Hugs, high fives, fist bumps and "dance for me"** with gestures, hearts and sounds.
+15. **Stories, fun facts, compliments and roasts** on request.
+16. **Sleep-talking**: sleeping residents mumble dreams about their job, favourite food, partner, games.
+17. **Rainbows**: when rain stops before sunset a 7-band particle rainbow appears north of the city (~80 s); residents point at it.
+18. **Shooting stars** on clear nights (~1 per minute of night while someone is outside); residents say "make a wish".
+19. **Seasons** (7 days each): shown in the bulletin/forecast; snowflakes around outdoor players in winter, cherry petals in spring; residents answer "what season is it".
+20. **Lantern Night** (every 28 days, day%28==10): everyone plans to meet at the plaza at sunset, residents hold lanterns and glowing lanterns float up from them and from players.
+21. **Kindness Day** (day%28==20): residents give each other small gifts and compliments (affection +3), and give players one gift each.
+Checked here with javac without MC jars: no syntax errors, no missing project methods/wrong arities.
+
+## 0000. v1.13.0 - resident AI & behaviour (2026-09-29, source only)
+Source in the repo's `fireheart-city/` is ahead of the zip here. **Not compiled yet**: the cloud container had no access to Mojang/Forge Maven, so rebuild with the usual toolchain before shipping (only `javac` syntax-checked).
+- **Per-tick decision cache** (`Resident.activityName/destination`): computed once per game tick (keyed on game time + day time) instead of dozens of times per resident per tick. `rethink()` invalidates; called from `replan`, `doneErrand` and the bank/skydive `leisureKey` switches.
+- **Personal arrival spots** (`Resident.arrivalSpot`, `Nav`): for leisure/lunch/morning places each resident gets a stable walkable spot 1.5-3.7 blocks from the place centre (seeded by resident + place, line-of-sight checked so it never lands behind a wall), re-validated every 5 s. Skipped for homes, the tower, ATM/bank, SolTech, Sky Launch, Sky Organ and the skyports.
+- **Stuck recovery** (`CommuteGoal`): 3 s without progress -> hop + re-path; 7 s -> sidestep detour; 13 s -> if the goal is unreachable, walk to a reachable spot near it; 20 s -> teleport only if no player is within 12 blocks or can see the resident or the landing spot (was: any player within 24 blocks blocked it forever, even behind walls).
+- **Walking together** (`Resident.companion`): partners/friends heading to the same place within 10 blocks pace each other (slow down / catch up) and glance at each other; occasional "Wait up!" line.
+- **Make way** (`MakeWayGoal`, priority 2): idle/free residents step 1.8 blocks aside (walkable, clear) when a player walks into them or stands within 1.1 blocks, with an occasional "After you!"; residents overlapping another resident step apart. Not while working a task, seated, on duty, seeking/following a player, fleeing or in an emergency.
+- **Mingling & fidgets** (`MingleGoal`, `Resident.fidget`): idle residents at a hangout turn to face nearby residents (prefer whoever is speaking); every ~45 s+ they may yawn (late/early), hug themselves (cold), check their phone, stretch, think, dance a little (cheerful/laid-back) or look up at the sky.
+- **Fleeing** (`Resident.flee`): runs to a pathable spot away from the threat (`DefaultRandomPos.getPosAway`), picks the nearest monster, surprised gesture instead of cheering, and panic spreads to free residents within 10 blocks who can see the one fleeing. Firefighters no longer flee (like police).
+- mods.toml version 1.13.0.
+
+### Check in the real client (v1.13)
+1. Build + `/city test player` (64 checks).
+2. Watch a busy hangout (plaza, park, diner): residents should spread out and face each other rather than stack.
+3. Walk into an idle resident in a corridor; they should step aside.
+4. Couples/friends leaving together should walk side by side.
 
 ## 000. v1.12.0 - newest (2026-09-29)
 Player-facing commands moved to a no-op-needed root **/sol** (tutorial, gender, romance, stalk, garage). Admin stays under /city (root requires op).

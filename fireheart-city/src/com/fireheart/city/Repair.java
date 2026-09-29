@@ -49,6 +49,7 @@ public final class Repair {
         final String state;
         final boolean build;
         long seen;
+        int tries;
 
         Job(BlockPos pos, String state, boolean build, long seen) {
             this.pos = pos;
@@ -253,11 +254,6 @@ public final class Repair {
 
     public static void onExplosion(ServerLevel sl, net.minecraft.world.level.Explosion ex, List<BlockPos> blocks) {
         if (sl.dimension() != net.minecraft.world.level.Level.OVERWORLD) return;
-        Entity src = ex.getIndirectSourceEntity();
-        Entity direct = ex.getExploder();
-        if (src instanceof Player || direct instanceof Player) return;
-        if (direct instanceof net.minecraft.world.entity.projectile.Projectile pr && pr.getOwner() instanceof Player) return;
-        if (direct instanceof net.minecraft.world.entity.item.PrimedTnt tnt && tnt.getOwner() instanceof Player) return;
         Vec3 c = ex.getPosition();
         if (Math.abs(c.x) > 400 || Math.abs(c.z) > 400) return;
         Store st = store(sl);
@@ -291,21 +287,22 @@ public final class Repair {
 
     static final class Crew {
         BlockPos site;
-        final List<Flying> flying = new ArrayList<>();
         int placed;
-        boolean building;
+        boolean building, holding;
+        Job current;
+        long since;
+        int swing;
+        net.minecraft.world.item.ItemStack saved;
         long lastWork;
         boolean announced;
     }
-
-    record Flying(UUID display, BlockPos pos, BlockState state, long landAt) {}
 
     static final Map<UUID, Crew> CREW = new HashMap<>();
 
     public static BlockPos target(Resident r) {
         Crew c = CREW.get(r.getUUID());
-        if (c == null || c.site == null) return null;
-        return r.distanceToSqr(Vec3.atCenterOf(c.site)) > 100 ? c.site : null;
+        if (c == null || c.current == null) return null;
+        return r.getEyePosition().distanceTo(Vec3.atCenterOf(c.current.pos)) > 4.3 ? c.current.pos : r.blockPosition();
     }
 
     public static int pending(ServerLevel sl) {
@@ -316,6 +313,7 @@ public final class Repair {
         Job best = null;
         double bd = max * max;
         for (Job j : st.jobs.values()) {
+            if (now < j.seen) continue;
             if (!j.build && now - j.seen < (j.state.startsWith("{") ? 60 : 1200)) continue;
             double dd = j.pos.distSqr(from) + j.pos.getY() * 0.01;
             if (dd < bd) { bd = dd; best = j; }
@@ -329,89 +327,108 @@ public final class Repair {
         Store st = store(sl);
         long now = sl.getGameTime();
         Crew c = CREW.computeIfAbsent(r.getUUID(), k -> new Crew());
-        land(sl, c, st, now);
-        if (!st.enabled || r.isSleeping() || r.skyPhase() != 0 || r.isPassenger() || r.onIsland() && !c.flying.isEmpty()) return !c.flying.isEmpty();
-        if (st.jobs.isEmpty()) {
+        if (!st.enabled || r.isSleeping() || r.skyPhase() != 0 || r.isPassenger()) { holster(r, c); return false; }
+        if (st.jobs.isEmpty() && c.current == null) {
             if (c.site != null) finish(r, p, c, sl);
-            return !c.flying.isEmpty();
+            holster(r, c);
+            return false;
         }
-        if (c.site == null || now - c.lastWork > 200) {
-            Job j = nearest(st, r.blockPosition(), 600, now);
-            if (j == null) return false;
+        if (c.current == null) {
+            Job j = nearest(st, c.site != null ? c.site : r.blockPosition(), c.site != null ? 24 : 600, now);
+            if (j == null && c.site != null) j = nearest(st, r.blockPosition(), 600, now);
+            if (j == null) {
+                if (c.site != null) finish(r, p, c, sl);
+                holster(r, c);
+                return false;
+            }
+            st.jobs.remove(j.pos.asLong());
+            st.setDirty();
+            c.current = j;
+            c.since = now;
+            c.swing = 0;
             c.site = j.pos;
-            c.lastWork = now;
             if (!c.announced) {
                 c.announced = true;
                 if (r.convo != null) r.leaveConversation("Something needs fixing - be right back!");
                 r.sayTo(j.build ? Lines.pick(r.getRandom(), "New build today - let's get to work!", "Hard hat on. Time to build!", "Blueprints are in. Let's make it happen!")
-                        : Lines.pick(r.getRandom(), "Something got wrecked - I'm on it!", "Uh oh, damage report. Tools, go!", "Don't worry, I'll have that patched up in no time!"), 50);
+                        : Lines.pick(r.getRandom(), "Something got wrecked - I'm on it!", "Uh oh, damage report. On my way!", "Don't worry, I'll have that patched up in no time!"), 50);
             }
         }
-        double dist = Math.sqrt(r.distanceToSqr(Vec3.atCenterOf(c.site)));
-        if (dist > 11) {
-            if (now % 10 == 0) r.getNavigation().moveTo(c.site.getX() + 0.5, c.site.getY(), c.site.getZ() + 0.5, 1.3);
-            if (now - c.lastWork > 1200) c.site = null;
+        Job j = c.current;
+        BlockState want = state(sl, j.state);
+        BlockState cur = sl.getBlockState(j.pos);
+        if (want == null || (!j.build && (!missing(cur) || cur.is(want.getBlock()))) || (j.build && cur.equals(want))) {
+            c.current = null;
+            return true;
+        }
+        Vec3 target = Vec3.atCenterOf(j.pos);
+        double reach = r.getEyePosition().distanceTo(target);
+        if (reach > 4.6) {
+            if (now % 10 == 0 || r.getNavigation().isDone()) r.getNavigation().moveTo(j.pos.getX() + 0.5, j.pos.getY(), j.pos.getZ() + 0.5, 1.05);
+            if (now - c.since > 400) giveUp(st, c, j, now);
             return true;
         }
         r.getNavigation().stop();
-        if (now % 4 != 0) return true;
-        Job j = nearest(st, r.blockPosition(), 16, now);
-        if (j == null) {
-            c.site = null;
+        r.getLookControl().setLookAt(target.x, target.y, target.z, 40, 40);
+        if (!sl.getEntitiesOfClass(net.minecraft.world.entity.LivingEntity.class, new AABB(j.pos), e -> !e.isSpectator()).isEmpty() && want.isCollisionShapeFullBlock(sl, j.pos)) {
+            if (now - c.since > 200) giveUp(st, c, j, now);
             return true;
         }
-        c.lastWork = now;
-        c.site = j.pos;
+        if (!want.canSurvive(sl, j.pos)) {
+            giveUp(st, c, j, now);
+            return true;
+        }
+        hold(r, c, want);
+        if (c.swing++ < 5) return true;
+        r.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
+        place(sl, j.pos, want);
+        c.current = null;
+        c.placed++;
         c.building |= j.build;
-        st.jobs.remove(j.pos.asLong());
+        st.fixed++;
         st.setDirty();
-        BlockState want = state(sl, j.state);
-        BlockState cur = sl.getBlockState(j.pos);
-        if (want == null || (!j.build && (!missing(cur) || cur.is(want.getBlock()))) || (j.build && cur.equals(want))) return true;
-        if (!sl.getEntitiesOfClass(Player.class, new AABB(j.pos), e -> !e.isSpectator()).isEmpty()) {
-            j.seen = now;
-            st.jobs.put(j.pos.asLong(), j);
-            return true;
-        }
-        r.getLookControl().setLookAt(Vec3.atCenterOf(j.pos));
-        r.gesture(Resident.G_HAMMER, 10);
-        launch(sl, r, c, j.pos, want, now);
         return true;
     }
 
-    static void launch(ServerLevel sl, Resident r, Crew c, BlockPos pos, BlockState want, long now) {
-        Vec3 from = r.position().add(0, 1.2, 0);
-        Vec3 off = from.subtract(Vec3.atLowerCornerOf(pos));
-        int dur = (int) Math.max(5, Math.min(14, from.distanceTo(Vec3.atCenterOf(pos)) * 0.9));
-        CompoundTag t = new CompoundTag();
-        t.putString("id", "minecraft:block_display");
-        t.put("block_state", NbtUtils.writeBlockState(want));
-        t.put("transformation", transform((float) off.x + 0.3f, (float) off.y + 0.3f, (float) off.z + 0.3f, 0.35f));
-        Entity e = EntityType.loadEntityRecursive(t, sl, en -> {
-            en.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
-            return en;
-        });
-        if (e != null) {
-            e.getPersistentData().putBoolean("fhcKitchenProp", true);
-            sl.addFreshEntity(e);
-            UUID id = e.getUUID();
-            sl.getServer().tell(new net.minecraft.server.TickTask(sl.getServer().getTickCount() + 1, () -> {
-                Entity en = sl.getEntity(id);
-                if (en == null) return;
-                CompoundTag u = en.saveWithoutId(new CompoundTag());
-                u.put("transformation", transform(0, 0, 0, 1));
-                u.putInt("interpolation_duration", dur);
-                u.putInt("start_interpolation", 0);
-                en.load(u);
-            }));
-            c.flying.add(new Flying(id, pos, want, now + dur + 2));
-        } else c.flying.add(new Flying(null, pos, want, now + 4));
-        sl.playSound(null, r.blockPosition(), SoundEvents.ARMOR_EQUIP_IRON, SoundSource.NEUTRAL, 0.5f, 1.4f);
-        for (int i = 0; i < 6; i++) {
-            double k = i / 6.0;
-            Vec3 q = from.lerp(Vec3.atCenterOf(pos), k).add(0, Math.sin(k * Math.PI) * 0.8, 0);
-            sl.sendParticles(ParticleTypes.WAX_ON, q.x, q.y, q.z, 1, 0.05, 0.05, 0.05, 0);
+    static void giveUp(Store st, Crew c, Job j, long now) {
+        j.tries++;
+        j.seen = now + 400L * j.tries;
+        if (j.tries < 4) st.jobs.put(j.pos.asLong(), j);
+        else if (!j.build) st.ignored.add(j.pos.asLong());
+        st.setDirty();
+        c.current = null;
+    }
+
+    static void hold(Resident r, Crew c, BlockState want) {
+        net.minecraft.world.item.Item it = want.getBlock().asItem();
+        if (it == net.minecraft.world.item.Items.AIR) it = net.minecraft.world.item.Items.BRICKS;
+        if (!c.holding) {
+            c.saved = r.getMainHandItem().copy();
+            c.holding = true;
         }
+        if (r.getMainHandItem().getItem() != it) r.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, new net.minecraft.world.item.ItemStack(it));
+    }
+
+    static void holster(Resident r, Crew c) {
+        if (!c.holding) return;
+        r.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND, c.saved == null ? net.minecraft.world.item.ItemStack.EMPTY : c.saved);
+        c.holding = false;
+        c.saved = null;
+    }
+
+    static void place(ServerLevel sl, BlockPos pos, BlockState want) {
+        sl.setBlock(pos, want, 3);
+        if (want.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.DOUBLE_BLOCK_HALF)
+                && want.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.DOUBLE_BLOCK_HALF) == net.minecraft.world.level.block.state.properties.DoubleBlockHalf.LOWER) {
+            BlockPos up = pos.above();
+            if (sl.getBlockState(up).canBeReplaced()) sl.setBlock(up, want.setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.DOUBLE_BLOCK_HALF, net.minecraft.world.level.block.state.properties.DoubleBlockHalf.UPPER), 3);
+        }
+        if (want.getBlock() instanceof net.minecraft.world.level.block.BedBlock && want.getValue(net.minecraft.world.level.block.BedBlock.PART) == net.minecraft.world.level.block.state.properties.BedPart.FOOT) {
+            BlockPos head = pos.relative(want.getValue(net.minecraft.world.level.block.BedBlock.FACING));
+            if (sl.getBlockState(head).canBeReplaced()) sl.setBlock(head, want.setValue(net.minecraft.world.level.block.BedBlock.PART, net.minecraft.world.level.block.state.properties.BedPart.HEAD), 3);
+        }
+        var snd = want.getSoundType();
+        sl.playSound(null, pos, snd.getPlaceSound(), SoundSource.BLOCKS, (snd.getVolume() + 1) / 2f, snd.getPitch() * 0.8f);
     }
 
     static CompoundTag transform(float x, float y, float z, float s) {
@@ -427,26 +444,6 @@ public final class Repair {
         ListTag l = new ListTag();
         for (float f : v) l.add(FloatTag.valueOf(f));
         return l;
-    }
-
-    static void land(ServerLevel sl, Crew c, Store st, long now) {
-        for (int i = c.flying.size() - 1; i >= 0; i--) {
-            Flying f = c.flying.get(i);
-            if (now < f.landAt()) continue;
-            c.flying.remove(i);
-            Entity fe = f.display() == null ? null : sl.getEntity(f.display());
-            if (fe != null) fe.discard();
-            BlockState cur = sl.getBlockState(f.pos());
-            if (!missing(cur) && !cur.equals(f.state()) && !cur.canBeReplaced()) continue;
-            sl.setBlock(f.pos(), f.state(), 3);
-            var snd = f.state().getSoundType();
-            sl.playSound(null, f.pos(), snd.getPlaceSound(), SoundSource.BLOCKS, (snd.getVolume() + 1) / 2f, snd.getPitch() * 0.9f);
-            sl.sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, f.state()), f.pos().getX() + 0.5, f.pos().getY() + 0.5, f.pos().getZ() + 0.5, 10, 0.35, 0.35, 0.35, 0.1);
-            sl.sendParticles(ParticleTypes.CLOUD, f.pos().getX() + 0.5, f.pos().getY() + 0.2, f.pos().getZ() + 0.5, 2, 0.3, 0.1, 0.3, 0.01);
-            c.placed++;
-            st.fixed++;
-            st.setDirty();
-        }
     }
 
     static void finish(Resident r, CityData.Profile p, Crew c, ServerLevel sl) {

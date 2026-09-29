@@ -314,6 +314,10 @@ public final class Work {
             case POSTMAN -> planPostman(r, l, d, p);
             case MUSICIAN -> planMusician(r, l, d, p);
             case RECEPTIONIST -> planReception(r, l, d, p);
+            case CONCIERGE -> {
+                queue.add(fixed("look after the hotel front desk", Hotel.DESK, Hotel.DESK_STAND, 600, "none", "minecraft:tripwire_hook", (rr, ll, dd, pp) -> "I looked after the front desk at magmagamer9's hotel"));
+                queue.add(fixed(cycle % 2 == 0 ? "sort the room keys" : "polish the service bell", Hotel.DESK, Hotel.DESK_STAND, 100, "tinker", "minecraft:tripwire_hook", null));
+            }
             case POLICE -> planPolice(r, l, d, p);
             case FIREFIGHTER -> planFire(r, l, d, p);
             case REPAIR -> planGeneric(r, l, d, p, new String[]{"anvil", "grindstone", "smithing", "barrel", "scaffolding"}, new String[]{"sort the spare bricks", "sharpen the chisels", "check the city blueprints", "oil the tool belt"}, "tinker");

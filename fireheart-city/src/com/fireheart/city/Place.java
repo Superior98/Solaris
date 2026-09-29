@@ -72,7 +72,15 @@ public final class Place {
         add("tech", "the SolTech store", 35, 71, -1, new BlockPos(30, 71, -1));
         add("reception", "the Ember Heights front desk", 30, 71, 17);
         add("beach_bar", "the Magma Beach Bar", 91, 72, 45);
-        add("hotel", "magmagamer9's hotel", 51, 78, 33);
+        add("hotel", "magmagamer9's hotel", 49, 72, 35, new BlockPos(49, 72, 39));
+        add("hotel_desk", "the front desk at magmagamer9's hotel", 44, 72, 33);
+        add("hotel1", "room 1 at magmagamer9's hotel", 46, 78, 27);
+        add("hotel2", "room 2 at magmagamer9's hotel", 52, 78, 31);
+        add("hotel3", "room 3 at magmagamer9's hotel", 52, 84, 30);
+        add("hotel4", "room 4 at magmagamer9's hotel", 46, 84, 27);
+        add("hotel5", "room 5 at magmagamer9's hotel", 52, 90, 37);
+        add("magma_house", "magmagamer9's house", -48, 71, 42);
+        add("stellar_house", "StellarFox1's Stellar House", 82, 85, 5);
         add("beach", "the beach", 86, 72, 30);
         add("police_bunks", "the police bunkhouse", 67, 71, -46);
         add("fire_bunks", "the fire station bunks", 78, 71, -49);
@@ -116,6 +124,6 @@ public final class Place {
     public static boolean indoor(String key) {
         for (String k : CITY_INDOOR) if (k.equals(key)) return true;
         for (String k : ISLE_INDOOR) if (k.equals(key)) return true;
-        return key.startsWith("apt") || key.startsWith("pod") || key.equals("bakery") || key.equals("factory") || key.equals("garage") || key.equals("library") || key.equals("bank") || key.equals("post");
+        return key.startsWith("apt") || key.startsWith("hotel") || key.startsWith("pod") || key.equals("bakery") || key.equals("factory") || key.equals("garage") || key.equals("library") || key.equals("bank") || key.equals("post");
     }
 }
