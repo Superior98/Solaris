@@ -204,7 +204,7 @@ public class VehicleRenderer extends EntityRenderer<Vehicle> {
             if (!wheels.hasChild(w)) continue;
             ModelPart wp = wheels.getChild(w);
             wp.xRot = spin;
-            wp.yRot = w.endsWith("fl") || w.endsWith("fr") || w.equals("wheel_f") ? -v.steerVis : 0;
+            wp.yRot = w.endsWith("fl") || w.endsWith("fr") || w.equals("wheel_f") ? v.steerVis : 0;
         }
         int ov = OverlayTexture.NO_OVERLAY;
         if (k == Vehicle.BIKE) {
@@ -234,7 +234,7 @@ public class VehicleRenderer extends EntityRenderer<Vehicle> {
         ps.scale(-1, -1, 1);
         if (k != Vehicle.CAR) wheels.render(ps, buf.getBuffer(RenderType.entityCutoutNoCull(TEX)), light, ov);
         ModelPart trim = root.getChild("trim");
-        if (trim.hasChild("steering")) trim.getChild("steering").zRot = v.steer * 2.4f;
+        if (trim.hasChild("steering")) trim.getChild("steering").zRot = -v.steer * 2.4f;
         int c = Vehicle.PAINT_RGB[v.paint()];
         float r = ((c >> 16) & 255) / 255f, g = ((c >> 8) & 255) / 255f, b = (c & 255) / 255f;
         root.getChild("paint").render(ps, buf.getBuffer(RenderType.entityCutoutNoCull(TEX)), light, ov, r, g, b, 1);
@@ -250,7 +250,7 @@ public class VehicleRenderer extends EntityRenderer<Vehicle> {
         boolean flash = (v.tickCount / 5) % 2 == 0 && v.blink > 0;
         for (int s = 0; s < 2; s++) {
             ModelPart side = ind.getChild(s == 0 ? "ind_l" : "ind_r");
-            boolean lit = flash && (s == 0 ? v.steer < -0.5f : v.steer > 0.5f);
+            boolean lit = flash && (s == 0 ? v.steer > 0.5f : v.steer < -0.5f);
             side.render(ps, buf.getBuffer(lit ? RenderType.eyes(TEX) : RenderType.entityCutoutNoCull(TEX)), lit ? 0xF000F0 : light, ov, 1f, lit ? 0.62f : 0.45f, lit ? 0.08f : 0.1f, 1);
         }
         ps.popPose();
