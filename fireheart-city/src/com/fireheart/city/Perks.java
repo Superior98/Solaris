@@ -96,6 +96,9 @@ public final class Perks {
             new Ach("angler", "Angler", "Catch 10 fish", 15),
             new Ach("birthday", "Another Year", "Celebrate your birthday in Solaris", 10),
             new Ach("aurora", "Northern Lights", "See the aurora over Solaris", 15),
+            new Ach("penpal", "Pen Pal", "Send 5 letters to residents", 15),
+            new Ach("lucky", "Lucky Find", "Find something hidden in the city's grass or flowers", 5),
+            new Ach("nightowl", "Night Owl", "Be outside in Solaris at midnight", 10),
     };
 
     public static boolean unlock(ServerPlayer pl, CityData d, String id) {
@@ -130,6 +133,8 @@ public final class Perks {
         if (Bank.savings(d, Bank.playerKey(pn)) >= 250) unlock(pl, d, "rich");
         if (parse(d.setting(pn, "streak", "0")) >= 7) unlock(pl, d, "streak7");
         if (parse(d.setting(pn, "couriers", "0")) >= 5) unlock(pl, d, "courier5");
+        long tod = Math.floorMod(pl.serverLevel().getDayTime(), 24000L);
+        if (tod > 17700 && tod < 18300 && Skies.outside(pl)) unlock(pl, d, "nightowl");
     }
 
     public static String achievements(ServerPlayer pl, CityData d) {

@@ -2,6 +2,31 @@
 
 This file carries the project into a new chat. Read this file first. The older, much longer `Fireheart_Project_Handoff.md` in this folder has the full history, the toolchain derivation, the block-ID lists and the generator code from earlier sessions. Use it as a reference when you need detail.
 
+## 0000000. v1.16.0 - feature batch 3 of 5 (2026-09-29, source only, not compiled)
+New files `Letters.java` (player) and `Moments.java` (residents/ambient); new intents in `Pastimes.chat`; listeners `Letters::onBreak` and `Letters::onJoin`; `/sol mail|horoscope|stats`.
+42. **Letters**: `/sol mail <name> <message>` (5 a day). Kind, rude, sorry, love, miss and thank-you letters change affection and memories; the resident writes back 1-3 in-game hours later (chat + a named paper). Pending replies are in memory only (lost on restart).
+43. **`/sol horoscope`**: daily sign, luck stars, omen, lucky resident, place and number.
+44. **`/sol stats`**: reputation, residents met, achievements, streak, deliveries, treasures, fish, letters, lucky finds, savings, birthday.
+45. **Lucky finds**: breaking grass/flowers within 220 blocks of the plaza has a 1-in-40 chance (max 3 a day) to drop gold nuggets, cookies, berries or an emerald.
+46. **Lightning reactions**: residents within 40 blocks of a strike flinch and shout.
+47. **Rival arguments**: rivals who meet trade barbs; 15% chance they call a truce (clears the rivalry, city event).
+48. **Card and board games**: acquaintances idling together at the plaza, library, diner, park, arcade or home play cards/chess/dominoes/checkers; winner cheers, diary notes.
+49. **Jokes**: cheerful/talkative/friendly residents tell each other jokes; grumpy listeners facepalm.
+50. **Bench reading**: seated residents (especially curious, shy and dreamy ones) read books.
+51. **Morning coffee** before work.
+52. **Animals**: residents fuss over nearby animals (seeds, hearts, uses pet names).
+53. **Spring sneezes** (pollen).
+54. **Summer heat** complaints at midday.
+55. **Autumn** pumpkin pie and cosy-weather lines.
+56. **Sunsets and sunrises**: residents stop to watch and note it in their diary.
+57. **Full moon** nights (moon phase 0): residents remark on it; cheerful ones howl.
+58. **Fireflies** around outdoor players on summer nights.
+59. **"Sing"**: residents sing a line with flute notes.
+60. **"What should I build?"**: build ideas for the city.
+61. **"Rate me" / "are we friends?"**: honest answer from affection and trust.
+62. **3 more achievements**: Pen Pal, Lucky Find, Night Owl.
+Checked here with javac without MC jars: no syntax errors, no missing project methods/wrong arities.
+
 ## 000000. v1.15.0 - feature batch 2 of 5 (2026-09-29, source only, not compiled)
 New files `Quests.java` (player) and `Hobbies.java` (residents); additions to `Skies`, `Perks.ACHS`, `Resident` (yoga leisure, birthday greeting), `FireheartCity` (ItemFishedEvent listener), `/sol` commands.
 22. **`/sol profile <name>`**: a resident's card (job, personality, mood, hunger, favourite food and hobby, home once you know them, partner, friends, savings goal, what they're doing, your friendship).

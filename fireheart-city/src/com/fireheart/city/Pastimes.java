@@ -158,6 +158,29 @@ public final class Pastimes {
                 default -> "Brr. Snowflakes everywhere. I love it, secretly.";
             };
         }
+        if (any(t, " sing ", " sing me ", " sing a song ", " sing something ")) {
+            r.gesture(Resident.G_DANCE, 60);
+            if (r.level() instanceof ServerLevel sl) {
+                sl.sendParticles(ParticleTypes.NOTE, r.getX(), r.getY() + 2.2, r.getZ(), 8, 0.5, 0.3, 0.5, 1.0);
+                for (int i = 0; i < 3; i++) sl.playSound(null, r.blockPosition(), SoundEvents.NOTE_BLOCK_FLUTE.value(), SoundSource.NEUTRAL, 0.6f, 0.8f + i * 0.2f + rnd.nextFloat() * 0.1f);
+            }
+            return Lines.pick(rnd, "♪ Solaris, Solaris, city of light... ♪ Okay that's all I've got.", "♪ Take me up to Neon Heights, where the sky is always bright ♪", "♪ La la la, the ferry's late again ♪", "♪ Oh I'd walk a thousand blocks... ♪ You didn't hear that.");
+        }
+        if (any(t, " what should i build ", " build ideas ", " building ideas ", " idea for a build ", " what to build ")) {
+            String[] ideas = {"a lighthouse on the old pier", "a treehouse in the park", "a cosy café by the marina", "a skybridge between Ember Heights and the library", "an ice cream stand for the beach", "a secret garden behind the bank", "a train station for the Steam Rails", "a bandstand for Remy in the plaza", "a floating fishing hut off the boardwalk", "a rooftop cinema on Ember Heights"};
+            r.gesture(Resident.G_THINK, 40);
+            return "Ooh! How about " + Lines.pick(rnd, ideas) + "? " + Lines.pick(rnd, "I'd visit every day.", "Solaris needs one.", "Just saying.");
+        }
+        if (any(t, " rate me ", " what do you think of me ", " do you trust me ", " are we friends ")) {
+            CityData.Rel rel = d.playerRel(p.id, pn);
+            int trust = p.mind.trustIn(pn);
+            r.gesture(rel.aff >= 50 ? Resident.G_THUMBS : rel.aff >= 0 ? Resident.G_THINK : Resident.G_HEADSHAKE, 40);
+            if (rel.aff >= 80) return "Are you kidding? You're one of my favourite people in Solaris!";
+            if (rel.aff >= 50) return "We're definitely friends. I'm always happy to see you.";
+            if (rel.aff >= 20) return "I like you! We should hang out more.";
+            if (rel.aff >= 0 && trust >= -10) return "You seem nice. I don't know you that well yet, though.";
+            return "Honestly? You've got some making up to do.";
+        }
         if (any(t, " courier ", " any jobs ", " need a job ", " can i help ", " any work ", " need help ")) {
             return "Pip's always looking for couriers! Type /sol courier and you'll get a parcel to deliver around town.";
         }

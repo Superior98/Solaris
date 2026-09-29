@@ -160,6 +160,8 @@ public class FireheartCity {
         MinecraftForge.EVENT_BUS.addListener(Bank::onClick);
         MinecraftForge.EVENT_BUS.addListener(Chat::onChat);
         MinecraftForge.EVENT_BUS.addListener(Quests::onFished);
+        MinecraftForge.EVENT_BUS.addListener(Letters::onBreak);
+        MinecraftForge.EVENT_BUS.addListener(Letters::onJoin);
     }
 
     private void onTabs(net.minecraftforge.event.BuildCreativeModeTabContentsEvent e) {
