@@ -4,7 +4,7 @@ This file carries the project into a new chat. Read this file first. The older, 
 
 ## START HERE - current state (v1.20.1)
 - **Source of truth:** GitHub `Superior98/Solaris`, branch `claude/sharp-euler-yhclm1` (PR #1), folder `fireheart-city/` (`src/`, `res/`, `tools/`). Local build workspace was `/tmp/modbuild` (git master mirrors the branch). `build.sh`/`check.sh` need `cp.txt`, `srg2named.srg` and the named jars (see section 3 and the old handoff).
-- **Installed:** `fireheartcity-0.1.0.jar` v1.20.1 (3,284,779 bytes) is in `mods\` of the "Create_ Remastered" profile. magmagamer9 needs the same jar.
+- **Installed:** `fireheartcity-0.1.0.jar` v1.20.1 (3,284,779 bytes; mods.toml still reads 1.20.0) is in `mods\` of the "Create_ Remastered" profile. magmagamer9 needs the same jar.
 - **Tests:** `/city test player` 82/83 on a fresh copy (the group-chat check fails only because of broken phones in the save). Re-running on a non-fresh world can also fail "phone invites" and "player TNT" (state already exists) - not bugs.
 - **Nothing client-visual since v1.13 has been seen by me in the real client except the hotel lobby/sauna fix.** Needs his feedback: the v1.14-v1.19 animations/sky effects, the new vehicle physics/visuals, GPS HUD, SolEats tracker.
 - **Useful commands:** player `/sol` (help), `/sol gps`, `/sol base`, `/sol garage give|park`, `/sol tutorial`; admin `/city garage replace`, `/city hotel`, `/city event <name>`, `/city repair`, `/city test player`.
