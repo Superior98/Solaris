@@ -2,6 +2,23 @@
 
 This file carries the project into a new chat. Read this file first. The older, much longer `Fireheart_Project_Handoff.md` in this folder has the full history, the toolchain derivation, the block-ID lists and the generator code from earlier sessions. Use it as a reference when you need detail.
 
+## 0000. v1.13.0 - resident AI & behaviour (2026-09-29, source only)
+Source in the repo's `fireheart-city/` is ahead of the zip here. **Not compiled yet**: the cloud container had no access to Mojang/Forge Maven, so rebuild with the usual toolchain before shipping (only `javac` syntax-checked).
+- **Per-tick decision cache** (`Resident.activityName/destination`): computed once per game tick (keyed on game time + day time) instead of dozens of times per resident per tick. `rethink()` invalidates; called from `replan`, `doneErrand` and the bank/skydive `leisureKey` switches.
+- **Personal arrival spots** (`Resident.arrivalSpot`, `Nav`): for leisure/lunch/morning places each resident gets a stable walkable spot 1.5-3.7 blocks from the place centre (seeded by resident + place, line-of-sight checked so it never lands behind a wall), re-validated every 5 s. Skipped for homes, the tower, ATM/bank, SolTech, Sky Launch, Sky Organ and the skyports.
+- **Stuck recovery** (`CommuteGoal`): 3 s without progress -> hop + re-path; 7 s -> sidestep detour; 13 s -> if the goal is unreachable, walk to a reachable spot near it; 20 s -> teleport only if no player is within 12 blocks or can see the resident or the landing spot (was: any player within 24 blocks blocked it forever, even behind walls).
+- **Walking together** (`Resident.companion`): partners/friends heading to the same place within 10 blocks pace each other (slow down / catch up) and glance at each other; occasional "Wait up!" line.
+- **Make way** (`MakeWayGoal`, priority 2): idle/free residents step 1.8 blocks aside (walkable, clear) when a player walks into them or stands within 1.1 blocks, with an occasional "After you!"; residents overlapping another resident step apart. Not while working a task, seated, on duty, seeking/following a player, fleeing or in an emergency.
+- **Mingling & fidgets** (`MingleGoal`, `Resident.fidget`): idle residents at a hangout turn to face nearby residents (prefer whoever is speaking); every ~45 s+ they may yawn (late/early), hug themselves (cold), check their phone, stretch, think, dance a little (cheerful/laid-back) or look up at the sky.
+- **Fleeing** (`Resident.flee`): runs to a pathable spot away from the threat (`DefaultRandomPos.getPosAway`), picks the nearest monster, surprised gesture instead of cheering, and panic spreads to free residents within 10 blocks who can see the one fleeing. Firefighters no longer flee (like police).
+- mods.toml version 1.13.0.
+
+### Check in the real client (v1.13)
+1. Build + `/city test player` (64 checks).
+2. Watch a busy hangout (plaza, park, diner): residents should spread out and face each other rather than stack.
+3. Walk into an idle resident in a corridor; they should step aside.
+4. Couples/friends leaving together should walk side by side.
+
 ## 000. v1.12.0 - newest (2026-09-29)
 Player-facing commands moved to a no-op-needed root **/sol** (tutorial, gender, romance, stalk, garage). Admin stays under /city (root requires op).
 - **Photo/video kick fixed** (`PcNet`): `Blob` was registered twice for one class, so uploads went out with the client-bound id -> Forge "Illegal packet received". Now `BlobUp` (id 3, to server) and `Blob` (id 4, to client). Photo downloads by other players were affected too.

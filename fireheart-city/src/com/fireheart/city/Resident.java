@@ -156,10 +156,12 @@ public class Resident extends PathfinderMob {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new ConversationGoal(this));
         this.goalSelector.addGoal(2, new OpenDoorGoal(this, true));
+        this.goalSelector.addGoal(2, new MakeWayGoal(this));
         this.goalSelector.addGoal(3, new CommuteGoal(this));
         this.goalSelector.addGoal(5, new StayNearGoal(this));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(7, new MingleGoal(this));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
     public void bind(CityData.Profile p) {
@@ -284,7 +286,27 @@ public class Resident extends PathfinderMob {
         return Math.floorMod(profileId.hashCode(), 8) * 330;
     }
 
+    private long actAt = Long.MIN_VALUE, actDayTime = Long.MIN_VALUE, destAt = Long.MIN_VALUE, destDayTime = Long.MIN_VALUE;
+    private String actCache;
+    private Place destCache;
+
     public String activityName() {
+        if (level().isClientSide) return computeActivity();
+        long g = level().getGameTime(), dt = level().getDayTime();
+        if (actCache == null || g != actAt || dt != actDayTime) {
+            actCache = computeActivity();
+            actAt = g;
+            actDayTime = dt;
+        }
+        return actCache;
+    }
+
+    public void rethink() {
+        actCache = null;
+        destAt = Long.MIN_VALUE;
+    }
+
+    private String computeActivity() {
         long t = timeOfDay();
         if (!level().isClientSide && Party.forcedNow((ServerLevel) level())) return "leisure";
         if (!level().isClientSide && Festival.live(profileId)) return "leisure";
@@ -381,6 +403,16 @@ public class Resident extends PathfinderMob {
     }
 
     public Place destination() {
+        long g = level().getGameTime(), dt = level().getDayTime();
+        if (g == destAt && dt == destDayTime) return destCache;
+        Place d = computeDestination();
+        destCache = d;
+        destAt = g;
+        destDayTime = dt;
+        return d;
+    }
+
+    private Place computeDestination() {
         CityData.Profile p = profile();
         if (p == null) return null;
         String a = activityName();
@@ -667,7 +699,122 @@ public class Resident extends PathfinderMob {
         if (dF > 0 && myF != dF) return Elevator.spotFor(this, 0);
         if (activityName().equals("work") && work.target() != null && (dest.entrance == null || dest.key.equals(insideKey)) && (work.target().getY() > 150) == onIsland()) return work.target();
         if (dest.entrance != null && !dest.key.equals(insideKey)) return dest.entrance;
-        return dest.pos;
+        return arrivalSpot(dest);
+    }
+
+    private String spotKey;
+    private BlockPos spot;
+
+    private boolean spreads(Place dest) {
+        String a = activityName();
+        if (!(a.equals("leisure") || a.equals("lunch") || a.equals("morning"))) return false;
+        if (Elevator.floorOfPos(dest.pos) >= 0) return false;
+        CityData.Profile p = profile();
+        if (p != null && dest.key.equals(p.home)) return false;
+        return !(dest.key.equals(Bank.ATM) || dest.key.equals(Bank.KEY) || dest.key.equals(TechStore.KEY) || dest.key.equals(SkyTower.KEY) || dest.key.equals(Party.KEY) || dest.key.equals("skyport") || dest.key.equals("isle_pad"));
+    }
+
+    /** A personal, walkable spot near the place so residents spread out instead of stacking on one block. */
+    private BlockPos arrivalSpot(Place dest) {
+        if (!(level() instanceof ServerLevel sl) || !spreads(dest)) return dest.pos;
+        if (dest.key.equals(spotKey) && spot != null) {
+            if (tickCount % 100 != 0 || spot.equals(dest.pos) || !sl.isLoaded(spot) || Nav.walkable(sl, spot)) return spot;
+            spotKey = null;
+        }
+        if (!sl.isLoaded(dest.pos)) return dest.pos;
+        java.util.Random r = new java.util.Random(profileId.hashCode() * 31L + dest.key.hashCode());
+        BlockPos found = dest.pos;
+        for (int i = 0; i < 14; i++) {
+            double a = r.nextDouble() * Math.PI * 2, rad = 1.5 + r.nextDouble() * 2.2;
+            BlockPos c = dest.pos.offset((int) Math.round(Math.cos(a) * rad), 0, (int) Math.round(Math.sin(a) * rad));
+            BlockPos s = Nav.standable(sl, c);
+            if (s != null && Nav.clear(sl, dest.pos, s, this)) {
+                found = s;
+                break;
+            }
+        }
+        spotKey = dest.key;
+        spot = found;
+        return found;
+    }
+
+    private long companionAt = -1000;
+    private Resident companion;
+
+    /** A partner or friend walking to the same place nearby, so the two can walk together. */
+    public Resident companion() {
+        long now = level().getGameTime();
+        if (now - companionAt < 40 && (companion == null || !companion.isRemoved())) return companion;
+        companionAt = now;
+        Resident prev = companion;
+        companion = null;
+        CityData.Profile p = profile();
+        Place dest = destination();
+        if (p == null || dest == null || convo != null || emergencyTarget() != null) return null;
+        CityData d = data();
+        double best = Double.MAX_VALUE;
+        for (Resident o : level().getEntitiesOfClass(Resident.class, getBoundingBox().inflate(10, 3, 10), x -> x != this && x.profile() != null && x.convo == null && !x.inShuttle())) {
+            Place od = o.destination();
+            if (od == null || !od.key.equals(dest.key) || o.getNavigation().isDone()) continue;
+            boolean partner = o.profileId.equals(p.partner);
+            CityData.Rel r = d.peekRel(p.id, o.profileId);
+            if (!partner && (r == null || !r.friend())) continue;
+            double sc = distanceToSqr(o) - (partner ? 100 : 0);
+            if (sc < best) {
+                best = sc;
+                companion = o;
+            }
+        }
+        if (companion != null && companion != prev && getRandom().nextFloat() < 0.15f && !crowded(4)) {
+            CityData.Profile cp = companion.profile();
+            say(pick("Wait up, " + cp.name + "!", "Walk with me, " + cp.name + "?", "Oh, you're going to " + dest.label + " too?", "Race you there, " + cp.name + "!"), 50);
+        }
+        return companion;
+    }
+
+    public boolean idleHere() {
+        if (!isFree() || !getNavigation().isDone() || pcUsing != null || phoneMode > 0 || sunTicks > 0 || dancing() || listenTicks > 0 || eatTicks > 0 || fleeTicks > 0) return false;
+        if (isFollowing() || emergencyTarget() != null || Elevator.isQueued(this)) return false;
+        String a = activityName();
+        return a.equals("leisure") || a.equals("lunch") || a.equals("morning") || a.equals("evening");
+    }
+
+    private long lastFidget = -100000;
+
+    private void fidget(CityData.Profile p, long now) {
+        if (now - lastFidget < 900 || gestureTicks > 0 || speechTicks > 0 || !idleHere() || getRandom().nextFloat() > 0.18f) return;
+        lastFidget = now;
+        long tod = timeOfDay();
+        boolean late = tod > 12500 || activityName().equals("evening");
+        boolean early = tod > 22500 || tod < 1500;
+        int w = getWeather();
+        float r = getRandom().nextFloat();
+        if ((w & W_SHIVER) != 0) {
+            gesture(G_HUGSELF, 60);
+        } else if ((late || early) && r < 0.45f) {
+            gesture(G_YAWN, 50);
+        } else if (p.ownsPhone && phoneCooldown <= 0 && r < 0.4f && !isSeated()) {
+            usePhone(1, 80 + getRandom().nextInt(120), pick("scrolling SolFeed on their phone", "texting on their phone", "checking their phone"), null);
+        } else if (r < 0.6f) {
+            gesture(isSeated() ? G_THINK : G_STRETCH, 50);
+        } else if (p.trait == Trait.CHEERFUL || p.trait == Trait.LAIDBACK) {
+            gesture(G_DANCE, 40);
+        } else {
+            getLookControl().setLookAt(getX() + getRandom().nextGaussian() * 4, getEyeY() + 3 + getRandom().nextInt(6), getZ() + getRandom().nextGaussian() * 4);
+            gesture(G_THINK, 40);
+        }
+    }
+
+    private long lastSorry = -100000;
+
+    public void excuseMe(Player pl) {
+        long now = level().getGameTime();
+        if (now - lastSorry < 600 || isSpeaking() || getRandom().nextFloat() > 0.35f) return;
+        lastSorry = now;
+        getLookControl().setLookAt(pl, 30, 30);
+        CityData.Profile p = profile();
+        boolean met = p != null && data().playerRel(p.id, pl.getName().getString()).met;
+        say(met ? pick("Oh, sorry " + pl.getName().getString() + "!", "After you!", "Whoops, in your way again?") : pick("Oh, excuse me!", "Sorry, after you.", "Pardon me!"), 40);
     }
 
     public String status() {
@@ -1010,6 +1157,7 @@ public class Resident extends PathfinderMob {
         if (now % 600 == phase && activityName().equals("work") && getRandom().nextFloat() < 0.35f && level().getNearestPlayer(this, 12) != null) say(shout(p), 70);
         if (now % 20 == phase % 20) weatherTick(p, now);
         if (now % 10 == phase % 10) danceTick(p, now);
+        if (now % 40 == (phase + 20) % 40) fidget(p, now);
         if (activityName().equals("sleep") && now % 400 == phase && getRandom().nextFloat() < 0.3f && (isSleeping() || homePos() != null && blockPosition().closerThan(homePos(), 4))) {
             this.entityData.set(SPEECH, "Zzz...");
             this.speechTicks = 360;
@@ -1518,19 +1666,24 @@ public class Resident extends PathfinderMob {
         }
 
         if (now % 400 < 40) refreshLooks(p);
-        if (!asleep && fleeTicks <= 0 && !Elevator.isRider(this) && p.job != Job.POLICE) {
+        if (!asleep && fleeTicks <= 0 && !Elevator.isRider(this) && p.job != Job.POLICE && p.job != Job.FIREFIGHTER) {
             List<Mob> monsters = level().getEntitiesOfClass(Mob.class, getBoundingBox().inflate(9), m -> m instanceof Enemy && m.isAlive() && canSee(m, 9));
             if (!monsters.isEmpty()) {
                 Mob m = monsters.get(0);
-                fleeTicks = 80;
+                for (Mob x : monsters) if (x.distanceToSqr(this) < m.distanceToSqr(this)) m = x;
                 if (convo != null) leaveConversation("Monster! Run!");
-                Vec3 away = position().subtract(m.position()).normalize().scale(10).add(position());
-                fleeTarget = away;
-                getNavigation().moveTo(away.x, away.y, away.z, 1.35);
+                flee(m.position(), 80, 1.35);
                 String what = m.getType().getDescription().getString().toLowerCase();
                 say(pick("A " + what + "! Run!", "Aaah! A " + what + "!", "Nope, nope, nope!"), 50);
-                gesture(G_CHEER, 30);
+                gesture(G_SURPRISED, 30);
                 Events.sighting(d, this, what);
+                Vec3 threat = m.position();
+                for (Resident o : sl.getEntitiesOfClass(Resident.class, getBoundingBox().inflate(10, 3, 10), x -> x != this && x.fleeTicks <= 0 && x.isFree() && x.profile() != null && x.profile().job != Job.POLICE && x.profile().job != Job.FIREFIGHTER)) {
+                    if (getRandom().nextFloat() > 0.7f || !o.hasLineOfSight(this)) continue;
+                    o.flee(threat, 60, 1.25);
+                    if (getRandom().nextFloat() < 0.4f) o.say(o.pick("Wait, what? Run!", "Where?! Where is it?", "Everybody inside!", "Not again!"), 40);
+                    o.gesture(G_SURPRISED, 30);
+                }
             }
         }
         d.setDirty();
@@ -1672,6 +1825,7 @@ public class Resident extends PathfinderMob {
     }
 
     public void doneErrand() {
+        rethink();
         leisureDay = -1;
         leisureKey = null;
         leisureWhy = "";
@@ -1712,6 +1866,7 @@ public class Resident extends PathfinderMob {
         if (!Bank.open(sl, d)) {
             if (!Bank.needs(d, p, routineDay(), false).isEmpty()) {
                 leisureKey = Bank.ATM;
+                rethink();
                 say(pick("Oh, the teller's closed. Cash machine it is.", "Hugo's gone home already? Never mind."), 50);
             } else doneErrand();
             return;
@@ -1729,6 +1884,7 @@ public class Resident extends PathfinderMob {
             }
             if (++bankWait > 30) {
                 leisureKey = Bank.ATM;
+                rethink();
                 say(pick("This queue is taking forever. I'll use the machine outside.", "Too busy in here - cash machine it is."), 50);
             } else if (bankWait % 8 == 4 && getRandom().nextFloat() < 0.4f) say(pick("Busy in here today!", "Still waiting my turn...", "Is the bank always this popular?"), 40);
             return;
@@ -1740,6 +1896,7 @@ public class Resident extends PathfinderMob {
         }
         if (++bankWait > 30) {
             leisureKey = Bank.ATM;
+            rethink();
             say(pick("I'll come back another time.", "Never mind, I'll use the machine outside."), 50);
         } else if (hugo != null && bankWait == 3 && getRandom().nextFloat() < 0.6f) {
             getLookControl().setLookAt(hugo, 30, 30);
@@ -1994,7 +2151,10 @@ public class Resident extends PathfinderMob {
 
     public void setPhoneWhat(String w) { phoneWhat = w; }
 
-    public void replan() { leisureDay = -1; }
+    public void replan() {
+        leisureDay = -1;
+        rethink();
+    }
 
     public int skyPhase() {
         return this.entityData.get(SKY);
@@ -2102,6 +2262,7 @@ public class Resident extends PathfinderMob {
                         leisureKey = "plaza";
                         leisureWhy = "hangout";
                         leisureReason = "still buzzing from my skydive";
+                        rethink();
                     }
                 }
             }
@@ -2136,6 +2297,10 @@ public class Resident extends PathfinderMob {
     }
 
     public void stopSeeking() { seekPlayer = null; seekFollow = false; }
+
+    public boolean seeking() {
+        return seekPlayer != null && level().getGameTime() < seekUntil;
+    }
 
     public void usePhone(int mode, int ticks, String what, Runnable done) {
         CityData.Profile p = profile();
@@ -2408,11 +2573,52 @@ public class Resident extends PathfinderMob {
         }
     }
 
-    public void stuckRescue() {
-        if (Elevator.isRider(this)) return;
+    public boolean stuckRescue() {
+        if (Elevator.isRider(this) || isPassenger()) return false;
         BlockPos t = navTarget();
-        if (t == null || level().getNearestPlayer(this, 24) != null) return;
-        if (((ServerLevel) level()).isPositionEntityTicking(t)) this.teleportTo(t.getX() + 0.5, t.getY(), t.getZ() + 0.5);
+        if (t == null || watched(this, 32)) return false;
+        ServerLevel sl = (ServerLevel) level();
+        if (!sl.isPositionEntityTicking(t)) return false;
+        BlockPos land = Nav.standable(sl, t);
+        if (land == null) land = t;
+        if (watchedAt(Vec3.atBottomCenterOf(land), 32)) return false;
+        this.teleportTo(land.getX() + 0.5, land.getY(), land.getZ() + 0.5);
+        getNavigation().stop();
+        return true;
+    }
+
+    /** True when a player is close by or can actually see this spot, so hidden fixes like teleports would be noticed. */
+    private boolean watched(Entity e, double range) {
+        for (Player pl : level().players()) {
+            if (pl.isSpectator()) continue;
+            double d = pl.distanceToSqr(e);
+            if (d < 12 * 12 || d < range * range && pl.hasLineOfSight(e)) return true;
+        }
+        return false;
+    }
+
+    private boolean watchedAt(Vec3 v, double range) {
+        for (Player pl : level().players()) {
+            if (pl.isSpectator()) continue;
+            double d = pl.distanceToSqr(v);
+            if (d < 12 * 12) return true;
+            if (d < range * range && Nav.sees(level(), pl.getEyePosition(), v.add(0, 1, 0), pl)) return true;
+        }
+        return false;
+    }
+
+    /** Runs to a reachable spot away from the threat, falling back to a straight line if no path is found. */
+    public void flee(Vec3 threat, int ticks, double speed) {
+        if (isSleeping() || isPassenger() || Elevator.isRider(this)) return;
+        fleeTicks = ticks;
+        Vec3 away = net.minecraft.world.entity.ai.util.DefaultRandomPos.getPosAway(this, 12, 5, threat);
+        if (away == null) away = position().subtract(threat).normalize().scale(10).add(position());
+        fleeTarget = away;
+        getNavigation().moveTo(away.x, away.y, away.z, speed);
+    }
+
+    public boolean fleeing() {
+        return fleeTicks > 0;
     }
 
     public boolean canSee(Entity o, double range) {
@@ -2761,9 +2967,7 @@ public class Resident extends PathfinderMob {
             particles(ParticleTypes.ANGRY_VILLAGER, 5);
             Mind.playerEvent(d, p, pn, day(), "{P} kept hitting me", -3, 5 + Math.min(3, hitStreak));
             d.playerRel(p.id, pn).aff -= 4;
-            fleeTicks = 60;
-            fleeTarget = position().subtract(pl.position()).normalize().scale(8).add(position());
-            getNavigation().moveTo(fleeTarget.x, fleeTarget.y, fleeTarget.z, 1.3);
+            flee(pl.position(), 60, 1.3);
             if (hitStreak == 3) d.event(day(), "social", pn + " was seen hitting " + p.name + " near " + Dialogue.here(this), blockPosition(), p.id);
         }
         d.setDirty();
