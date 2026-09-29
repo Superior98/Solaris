@@ -1,0 +1,83 @@
+{
+ "parent": "fireheartcity:item/dish_steak",
+ "overrides": [
+  {
+   "predicate": {
+    "fireheartcity:dish": 1
+   },
+   "model": "fireheartcity:item/dish_baked_potato"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 2
+   },
+   "model": "fireheartcity:item/dish_burger"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 3
+   },
+   "model": "fireheartcity:item/dish_steak_potatoes"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 4
+   },
+   "model": "fireheartcity:item/dish_mushroom_stew"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 5
+   },
+   "model": "fireheartcity:item/dish_ramen"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 6
+   },
+   "model": "fireheartcity:item/dish_veg_noodles"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 7
+   },
+   "model": "fireheartcity:item/dish_fried_rice"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 8
+   },
+   "model": "fireheartcity:item/dish_dumplings"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 9
+   },
+   "model": "fireheartcity:item/dish_bread"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 10
+   },
+   "model": "fireheartcity:item/dish_cookies"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 11
+   },
+   "model": "fireheartcity:item/dish_pumpkin_pie"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 12
+   },
+   "model": "fireheartcity:item/dish_apple_pie"
+  },
+  {
+   "predicate": {
+    "fireheartcity:dish": 13
+   },
+   "model": "fireheartcity:item/dish_cake"
+  }
+ ]
+}

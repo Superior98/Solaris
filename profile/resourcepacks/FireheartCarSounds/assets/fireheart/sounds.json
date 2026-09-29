@@ -1,0 +1,8 @@
+{
+  "car_engine": {
+    "subtitle": "Car engine",
+    "sounds": [
+      {"name": "fireheart:car_engine", "attenuation_distance": 24}
+    ]
+  }
+}

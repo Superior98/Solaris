@@ -1,0 +1,173 @@
+---- Minecraft Crash Report ----
+// Embeddium instance tainted by mods: [valkyrienskies, oculus]
+// Please do not reach out for Embeddium support without removing these mods first.
+// -------
+// Who set us up the TNT?
+
+Time: 2026-09-21 16:45:23
+Description: Rendering overlay
+
+java.lang.NullPointerException: Rendering overlay
+	at org.lwjgl.system.Checks.check(Checks.java:188) ~[lwjgl-3.3.1.jar%23134!/:build 7] {}
+	at org.lwjgl.system.MemoryUtil.memIntBuffer(MemoryUtil.java:1052) ~[lwjgl-3.3.1.jar%23134!/:build 7] {re:mixin}
+	at com.mojang.blaze3d.platform.NativeImage.m_266528_(NativeImage.java:221) ~[client-1.20.1-20230612.114412-srg.jar%23204!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:embeddium.mixins.json:features.textures.NativeImageAccessor,pl:mixin:A}
+	at net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations$PalettedSpriteSupplier.get(PalettedPermutations.java:124) ~[client-1.20.1-20230612.114412-srg.jar%23204!/:?] {re:classloading}
+	at net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations$PalettedSpriteSupplier.get(PalettedPermutations.java:119) ~[client-1.20.1-20230612.114412-srg.jar%23204!/:?] {re:classloading}
+	at java.util.concurrent.CompletableFuture$AsyncSupply.run(Unknown Source) ~[?:?] {}
+	at java.util.concurrent.CompletableFuture$AsyncSupply.exec(Unknown Source) ~[?:?] {}
+	at java.util.concurrent.ForkJoinTask.doExec(Unknown Source) ~[?:?] {}
+	at java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(Unknown Source) ~[?:?] {}
+	at java.util.concurrent.ForkJoinPool.scan(Unknown Source) ~[?:?] {}
+	at java.util.concurrent.ForkJoinPool.runWorker(Unknown Source) ~[?:?] {}
+	at java.util.concurrent.ForkJoinWorkerThread.run(Unknown Source) ~[?:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Render thread
+Suspected Mods: NONE
+Stacktrace:
+	at net.minecraft.client.renderer.GameRenderer.m_109093_(GameRenderer.java:957) ~[client-1.20.1-20230612.114412-srg.jar%23204!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+-- Overlay render details --
+Details:
+	Overlay name: net.minecraftforge.client.loading.ForgeLoadingOverlay
+Stacktrace:
+	at net.minecraft.client.renderer.GameRenderer.m_109093_(GameRenderer.java:957) ~[client-1.20.1-20230612.114412-srg.jar%23204!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91383_(Minecraft.java:1146) ~[client-1.20.1-20230612.114412-srg.jar%23204!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91374_(Minecraft.java:718) ~[client-1.20.1-20230612.114412-srg.jar%23204!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.main.Main.main(Main.java:218) ~[1.20.1-47.4.20.jar:?] {re:classloading}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.relaunch(MinecraftLaunch.java:63) ~[theseus.jar%2386!/:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.main(MinecraftLaunch.java:28) ~[theseus.jar%2386!/:?] {}
+
+
+-- Last reload --
+Details:
+	Reload number: 1
+	Reload reason: initial
+	Finished: No
+	Packs: PFM-Runtime-RP, vanilla, mod_resources
+
+-- System Details --
+Details:
+	Minecraft Version: 1.20.1
+	Minecraft Version ID: 1.20.1
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 17.0.20.1, Azul Systems, Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Azul Systems, Inc.
+	Memory: 1563786976 bytes (1491 MiB) / 2608857088 bytes (2488 MiB) up to 4294967296 bytes (4096 MiB)
+	CPUs: 12
+	Processor Vendor: GenuineIntel
+	Processor Name: 12th Gen Intel(R) Core(TM) i5-1235U
+	Identifier: Intel64 Family 6 Model 154 Stepping 4
+	Microarchitecture: Alder Lake
+	Frequency (GHz): 2.50
+	Number of physical packages: 1
+	Number of physical CPUs: 10
+	Number of logical CPUs: 12
+	Graphics card #0 name: Intel(R) Iris(R) Xe Graphics
+	Graphics card #0 vendor: Intel Corporation (0x8086)
+	Graphics card #0 VRAM (MB): 2048.00
+	Graphics card #0 deviceId: 0x46a8
+	Graphics card #0 versionInfo: DriverVersion=32.0.101.7085
+	Memory slot #0 capacity (MB): 8192.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MB): 8192.00
+	Memory slot #1 clockSpeed (GHz): 3.20
+	Memory slot #1 type: DDR4
+	Virtual memory max (MB): 22745.87
+	Virtual memory used (MB): 12945.16
+	Swap memory total (MB): 6656.00
+	Swap memory used (MB): 0.00
+	JVM Flags: 2 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -Xmx4096M
+	Loaded Shaderpack: MakeUp-UltraFast-9.5e.zip
+		Profile: medium (+0 options changed by user)
+	Launched Version: 1.20.1
+	Backend library: LWJGL version 3.3.1 build 7
+	Backend API: Intel(R) Iris(R) Xe Graphics GL version 4.6.0 - Build 32.0.101.7085, Intel
+	Window size: 854x480
+	GL Caps: Using framebuffer using OpenGL 3.2
+	GL debug messages: 
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'forge'
+	Type: Client (map_client.txt)
+	Graphics mode: fancy
+	Resource Packs: pfm-asset-resources, vanilla, mod_resources
+	Current Language: en_us
+	CPU: 12x 12th Gen Intel(R) Core(TM) i5-1235U
+	ModLauncher: 10.0.9+10.0.9+main.dcd20f30
+	ModLauncher launch target: forgeclient
+	ModLauncher naming: srg
+	ModLauncher services: 
+		mixin-0.8.5.jar mixin PLUGINSERVICE 
+		eventbus-6.2.33.jar eventbus PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar slf4jfixer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar object_holder_definalize PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar runtime_enum_extender PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar capability_token_subclass PLUGINSERVICE 
+		accesstransformers-8.0.4.jar accesstransformer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-10.0.9.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		minecraft@1.0
+		kotlinforforge@4.12.0
+		javafml@null
+		lowcodefml@null
+	Mod List: 
+		ritchiesprojectilelib-2.1.1+mc.1.20.1-forge.jar   |Ritchie's Projectile Library  |ritchiesprojectilelib         |2.1.1               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		createdieselgenerators-1.20.1-1.3.12.jar          |Create: Diesel Generators     |createdieselgenerators        |1.20.1-1.3.12       |ENQUEUE_IM|Manifest: NOSIGNATURE
+		Steam_Rails-1.7.3+forge-mc1.20.1.jar              |Create: Steam 'n' Rails       |railways                      |1.7.3+forge-mc1.20.1|ENQUEUE_IM|Manifest: NOSIGNATURE
+		cloth-config-forge-11.1.106.jar                   |Cloth Config v10 API          |cloth_config                  |11.1.106            |ENQUEUE_IM|Manifest: NOSIGNATURE
+		forge-1.20.1-47.4.20-universal.jar                |Forge                         |forge                         |47.4.20             |ENQUEUE_IM|Manifest: NOSIGNATURE
+		paladin-furniture-mod-1.5.0-forge-mc1.20.1.jar    |Paladin's Furniture           |pfm                           |1.5.0               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		embeddium-0.3.31+mc1.20.1.jar                     |Embeddium                     |embeddium                     |0.3.31+mc1.20.1     |ENQUEUE_IM|Manifest: NOSIGNATURE
+		betterblockz-0.2.10-1.20.1-forge.jar              |BetterBlockZ                  |betterblockz                  |0.2.10-1.20.1-forge |ENQUEUE_IM|Manifest: NOSIGNATURE
+		client-1.20.1-20230612.114412-srg.jar             |Minecraft                     |minecraft                     |1.20.1              |ENQUEUE_IM|Manifest: a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		FarmersDelight-1.20.1-1.3.4.jar                   |Farmer's Delight              |farmersdelight                |1.20.1-1.3.4        |ENQUEUE_IM|Manifest: NOSIGNATURE
+		kffmod-4.12.0.jar                                 |Kotlin For Forge              |kotlinforforge                |4.12.0              |ENQUEUE_IM|Manifest: NOSIGNATURE
+		flywheel-forge-1.20.1-1.0.5.jar                   |Flywheel                      |flywheel                      |1.0.5               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		Ponder-Forge-1.20.1-1.0.91.jar                    |Ponder                        |ponder                        |1.0.91              |ENQUEUE_IM|Manifest: NOSIGNATURE
+		create-1.20.1-6.0.8.jar                           |Create                        |create                        |6.0.8               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		createbigcannons-5.11.4-mc.1.20.1-forge.jar       |Create Big Cannons            |createbigcannons              |5.11.4              |ENQUEUE_IM|Manifest: NOSIGNATURE
+		createdeco-2.0.3-1.20.1-forge.jar                 |Create Deco                   |createdeco                    |2.0.3-1.20.1-forge  |ENQUEUE_IM|Manifest: NOSIGNATURE
+		CreateDragonsPlus-1.11.8.jar                      |Create: Dragons Plus          |create_dragons_plus           |1.11.8              |ENQUEUE_IM|Manifest: NOSIGNATURE
+		Create Encased-1.20.1-1.8-ht2.jar                 |Create Encased                |createcasing                  |1.8-ht2             |ENQUEUE_IM|Manifest: NOSIGNATURE
+		oculus-mc1.20.1-1.8.0.jar                         |Oculus                        |oculus                        |1.8.0               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		fireheartcity-0.1.0.jar                           |Fireheart City Residents      |fireheartcity                 |0.1.0               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		architectury-forge-9.1.12.jar                     |Architectury                  |architectury                  |9.1.12              |ENQUEUE_IM|Manifest: NOSIGNATURE
+		kelvin-forge-1.20.1-0.5.0+5c1c62c654.jar          |Kelvin                        |kelvin                        |1.20.1-0.5.0+5c1c62c|ENQUEUE_IM|Manifest: NOSIGNATURE
+		ferritecore-6.0.1-forge.jar                       |Ferrite Core                  |ferritecore                   |6.0.1               |ENQUEUE_IM|Manifest: 41:ce:50:66:d1:a0:05:ce:a1:0e:02:85:9b:46:64:e0:bf:2e:cf:60:30:9a:fe:0c:27:e0:63:66:9a:84:ce:8a
+		conditional-mixin-forge-0.6.4.jar                 |conditional mixin             |conditional_mixin             |0.6.4               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		valkyrienskies-120-2.4.11.jar                     |Valkyrien Skies 2             |valkyrienskies                |2.4.11              |ENQUEUE_IM|Manifest: NOSIGNATURE
+		clockwork-0.5.6.jar                               |Clockwork                     |vs_clockwork                  |0.5.6               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		drivebywire-1.20.1-0.1.1.jar                      |Drive-By-Wire Mod             |drivebywire                   |0.1.1               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		trackwork-1.20.1-1.2.3.jar                        |Trackwork Mod                 |trackwork                     |1.2.3               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		create-enchantment-industry-2.5.2.jar             |Create: Enchantment Industry  |create_enchantment_industry   |2.5.2               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		sliceanddice-forge-3.6.0.jar                      |Create Slice & Dice           |sliceanddice                  |3.6.0               |ENQUEUE_IM|Manifest: NOSIGNATURE
+		createaddition-1.20.1-1.3.3.jar                   |Create Crafts & Additions     |createaddition                |1.20.1-1.3.3        |ENQUEUE_IM|Manifest: NOSIGNATURE
+	Crash Report UUID: bb5cabd1-0dfd-4505-854b-ede09aa62709
+	FML: 47.4
+	Forge: net.minecraftforge:47.4.20
+	Flywheel Backend: flywheel:off

@@ -1,0 +1,340 @@
+{
+ "textures": {
+  "case": "fireheartcity:item/phone_case",
+  "screen": "fireheartcity:item/phone_screen",
+  "back": "fireheartcity:item/phone_back",
+  "particle": "fireheartcity:item/phone_case"
+ },
+ "gui_light": "front",
+ "elements": [
+  {
+   "from": [
+    5,
+    2,
+    7.5
+   ],
+   "to": [
+    11,
+    14,
+    8.5
+   ],
+   "faces": {
+    "north": {
+     "texture": "#case",
+     "uv": [
+      0,
+      0,
+      6,
+      12
+     ],
+     "tintindex": 0
+    },
+    "south": {
+     "texture": "#case",
+     "uv": [
+      0,
+      0,
+      6,
+      12
+     ],
+     "tintindex": 0
+    },
+    "east": {
+     "texture": "#case",
+     "uv": [
+      0,
+      0,
+      1,
+      12
+     ],
+     "tintindex": 0
+    },
+    "west": {
+     "texture": "#case",
+     "uv": [
+      0,
+      0,
+      1,
+      12
+     ],
+     "tintindex": 0
+    },
+    "up": {
+     "texture": "#case",
+     "uv": [
+      0,
+      0,
+      6,
+      1
+     ],
+     "tintindex": 0
+    },
+    "down": {
+     "texture": "#case",
+     "uv": [
+      0,
+      0,
+      6,
+      1
+     ],
+     "tintindex": 0
+    }
+   }
+  },
+  {
+   "from": [
+    5.4,
+    2.6,
+    7.45
+   ],
+   "to": [
+    10.6,
+    13.4,
+    7.5
+   ],
+   "faces": {
+    "north": {
+     "texture": "#screen",
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ],
+     "forge_data": {
+      "block_light": 12,
+      "sky_light": 12
+     }
+    }
+   }
+  },
+  {
+   "from": [
+    5.6,
+    10.8,
+    8.5
+   ],
+   "to": [
+    7.2,
+    12.6,
+    8.75
+   ],
+   "faces": {
+    "south": {
+     "texture": "#back",
+     "uv": [
+      2,
+      2,
+      6,
+      6
+     ]
+    },
+    "east": {
+     "texture": "#back",
+     "uv": [
+      2,
+      2,
+      3,
+      6
+     ]
+    },
+    "west": {
+     "texture": "#back",
+     "uv": [
+      2,
+      2,
+      3,
+      6
+     ]
+    },
+    "up": {
+     "texture": "#back",
+     "uv": [
+      2,
+      2,
+      6,
+      3
+     ]
+    },
+    "down": {
+     "texture": "#back",
+     "uv": [
+      2,
+      2,
+      6,
+      3
+     ]
+    }
+   }
+  },
+  {
+   "from": [
+    7.3,
+    7,
+    8.5
+   ],
+   "to": [
+    8.7,
+    8.4,
+    8.55
+   ],
+   "faces": {
+    "south": {
+     "texture": "#back",
+     "uv": [
+      7,
+      6,
+      9,
+      10
+     ]
+    }
+   }
+  }
+ ],
+ "display": {
+  "gui": {
+   "rotation": [
+    0,
+    195,
+    0
+   ],
+   "translation": [
+    0,
+    0,
+    0
+   ],
+   "scale": [
+    1.25,
+    1.25,
+    1.25
+   ]
+  },
+  "ground": {
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "translation": [
+    0,
+    2,
+    0
+   ],
+   "scale": [
+    0.6,
+    0.6,
+    0.6
+   ]
+  },
+  "fixed": {
+   "rotation": [
+    0,
+    0,
+    0
+   ],
+   "translation": [
+    0,
+    0,
+    0
+   ],
+   "scale": [
+    1.2,
+    1.2,
+    1.2
+   ]
+  },
+  "thirdperson_righthand": {
+   "rotation": [
+    0,
+    180,
+    0
+   ],
+   "translation": [
+    0,
+    1,
+    1
+   ],
+   "scale": [
+    0.55,
+    0.55,
+    0.55
+   ]
+  },
+  "thirdperson_lefthand": {
+   "rotation": [
+    0,
+    180,
+    0
+   ],
+   "translation": [
+    0,
+    1,
+    1
+   ],
+   "scale": [
+    0.55,
+    0.55,
+    0.55
+   ]
+  },
+  "firstperson_righthand": {
+   "rotation": [
+    0,
+    190,
+    10
+   ],
+   "translation": [
+    1.5,
+    3,
+    -1
+   ],
+   "scale": [
+    0.7,
+    0.7,
+    0.7
+   ]
+  },
+  "firstperson_lefthand": {
+   "rotation": [
+    0,
+    170,
+    -10
+   ],
+   "translation": [
+    1.5,
+    3,
+    -1
+   ],
+   "scale": [
+    0.7,
+    0.7,
+    0.7
+   ]
+  },
+  "head": {
+   "rotation": [
+    0,
+    180,
+    0
+   ],
+   "translation": [
+    0,
+    13,
+    -7
+   ],
+   "scale": [
+    1,
+    1,
+    1
+   ]
+  }
+ },
+ "overrides": [
+  {
+   "predicate": {
+    "fireheartcity:model": 1
+   },
+   "model": "fireheartcity:item/phone2"
+  }
+ ]
+}

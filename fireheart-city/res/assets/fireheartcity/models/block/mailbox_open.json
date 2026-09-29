@@ -1,0 +1,190 @@
+{
+ "parent": "block/block",
+ "textures": {
+  "post": "minecraft:block/spruce_planks",
+  "body": "minecraft:block/blue_terracotta",
+  "dark": "minecraft:block/black_concrete",
+  "flag": "minecraft:block/red_concrete",
+  "metal": "minecraft:block/iron_block",
+  "particle": "minecraft:block/blue_terracotta"
+ },
+ "elements": [
+  {
+   "from": [
+    7,
+    0,
+    7
+   ],
+   "to": [
+    9,
+    10,
+    9
+   ],
+   "faces": {
+    "north": {
+     "texture": "#post"
+    },
+    "south": {
+     "texture": "#post"
+    },
+    "east": {
+     "texture": "#post"
+    },
+    "west": {
+     "texture": "#post"
+    },
+    "up": {
+     "texture": "#post"
+    },
+    "down": {
+     "texture": "#post"
+    }
+   }
+  },
+  {
+   "from": [
+    4,
+    10,
+    4
+   ],
+   "to": [
+    12,
+    15,
+    13
+   ],
+   "faces": {
+    "north": {
+     "texture": "#body"
+    },
+    "south": {
+     "texture": "#body"
+    },
+    "east": {
+     "texture": "#body"
+    },
+    "west": {
+     "texture": "#body"
+    },
+    "up": {
+     "texture": "#body"
+    },
+    "down": {
+     "texture": "#body"
+    }
+   }
+  },
+  {
+   "from": [
+    4.5,
+    15,
+    4
+   ],
+   "to": [
+    11.5,
+    16,
+    13
+   ],
+   "faces": {
+    "north": {
+     "texture": "#body"
+    },
+    "south": {
+     "texture": "#body"
+    },
+    "east": {
+     "texture": "#body"
+    },
+    "west": {
+     "texture": "#body"
+    },
+    "up": {
+     "texture": "#body"
+    },
+    "down": {
+     "texture": "#body"
+    }
+   }
+  },
+  {
+   "from": [
+    4,
+    10,
+    13
+   ],
+   "to": [
+    12,
+    10.8,
+    18
+   ],
+   "faces": {
+    "north": {
+     "texture": "#body"
+    },
+    "south": {
+     "texture": "#body"
+    },
+    "east": {
+     "texture": "#body"
+    },
+    "west": {
+     "texture": "#body"
+    },
+    "up": {
+     "texture": "#body"
+    },
+    "down": {
+     "texture": "#body"
+    }
+   }
+  },
+  {
+   "from": [
+    4.8,
+    12,
+    3.9
+   ],
+   "to": [
+    11.2,
+    12.6,
+    4.1
+   ],
+   "faces": {
+    "north": {
+     "texture": "#metal"
+    }
+   }
+  },
+  {
+   "from": [
+    12,
+    12,
+    6
+   ],
+   "to": [
+    12.6,
+    13,
+    11
+   ],
+   "faces": {
+    "north": {
+     "texture": "#flag"
+    },
+    "south": {
+     "texture": "#flag"
+    },
+    "east": {
+     "texture": "#flag"
+    },
+    "west": {
+     "texture": "#flag"
+    },
+    "up": {
+     "texture": "#flag"
+    },
+    "down": {
+     "texture": "#flag"
+    }
+   }
+  }
+ ]
+}

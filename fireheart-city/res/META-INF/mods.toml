@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="fireheartcity"
+version="1.12.0"
+displayName="Solaris City"
+authors="Claude for Fireheart_4743"
+description='''Solaris: a living Create city - residents, jobs, phones, police, fire crews, fireworks and a cinema.'''
+
+[[dependencies.fireheartcity]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.fireheartcity]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.20.2)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.fireheartcity]]
+modId="watermedia"
+mandatory=false
+versionRange="[3,)"
+ordering="AFTER"
+side="CLIENT"

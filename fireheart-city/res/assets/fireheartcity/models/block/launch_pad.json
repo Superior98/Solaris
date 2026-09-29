@@ -1,0 +1,78 @@
+{
+ "parent": "block/block",
+ "textures": {
+  "top": "fireheartcity:block/launch_pad_top",
+  "side": "fireheartcity:block/launch_pad_side",
+  "particle": "fireheartcity:block/launch_pad_side"
+ },
+ "elements": [
+  {
+   "from": [
+    0,
+    0,
+    0
+   ],
+   "to": [
+    16,
+    3,
+    16
+   ],
+   "faces": {
+    "up": {
+     "texture": "#top",
+     "uv": [
+      0,
+      0,
+      16,
+      16
+     ]
+    },
+    "down": {
+     "texture": "#side",
+     "uv": [
+      0,
+      12,
+      16,
+      15
+     ]
+    },
+    "north": {
+     "texture": "#side",
+     "uv": [
+      0,
+      12,
+      16,
+      15
+     ]
+    },
+    "south": {
+     "texture": "#side",
+     "uv": [
+      0,
+      12,
+      16,
+      15
+     ]
+    },
+    "east": {
+     "texture": "#side",
+     "uv": [
+      0,
+      12,
+      16,
+      15
+     ]
+    },
+    "west": {
+     "texture": "#side",
+     "uv": [
+      0,
+      12,
+      16,
+      15
+     ]
+    }
+   }
+  }
+ ]
+}

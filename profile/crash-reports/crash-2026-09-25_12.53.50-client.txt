@@ -1,0 +1,247 @@
+---- Minecraft Crash Report ----
+// Embeddium instance tainted by mods: [valkyrienskies, oculus]
+// Please do not reach out for Embeddium support without removing these mods first.
+// -------
+// There are four lights!
+
+Time: 2026-09-25 12:53:50
+Description: Unexpected error
+
+java.lang.NullPointerException: Cannot invoke "net.minecraft.client.player.LocalPlayer.m_6117_()" because "this.f_91074_" is null
+	at net.minecraft.client.Minecraft.m_91279_(Minecraft.java:1957) ~[client-1.20.1-20230612.114412-srg.jar%23221!/:?] {re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91398_(Minecraft.java:1795) ~[client-1.20.1-20230612.114412-srg.jar%23221!/:?] {re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91383_(Minecraft.java:1112) ~[client-1.20.1-20230612.114412-srg.jar%23221!/:?] {re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91374_(Minecraft.java:718) ~[client-1.20.1-20230612.114412-srg.jar%23221!/:?] {re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.main.Main.main(Main.java:218) ~[1.20.1-47.4.20.jar:?] {re:classloading}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.relaunch(MinecraftLaunch.java:63) ~[theseus.jar%2386!/:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.main(MinecraftLaunch.java:28) ~[theseus.jar%2386!/:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Render thread
+Suspected Mods: NONE
+Stacktrace:
+	at net.minecraft.client.Minecraft.m_91279_(Minecraft.java:1957) ~[client-1.20.1-20230612.114412-srg.jar%23221!/:?] {re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+-- Last reload --
+Details:
+	Reload number: 1
+	Reload reason: initial
+	Finished: Yes
+	Packs: PFM-Runtime-RP, vanilla, mod_resources, file/FireheartStability, Essential Assets, essential
+	Recovery: Yes
+	Recovery reason: java.util.concurrent.CompletionException: java.lang.RuntimeException
+	at java.base/java.util.concurrent.CompletableFuture.encodeThrowable(Unknown Source)
+	at java.base/java.util.concurrent.CompletableFuture.completeThrowable(Unknown Source)
+	at java.base/java.util.concurrent.CompletableFuture$UniApply.tryFire(Unknown Source)
+	at java.base/java.util.concurrent.CompletableFuture$Completion.run(Unknown Source)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.server.packs.resources.SimpleReloadInstance.m_143940_(SimpleReloadInstance.java:69)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.util.thread.BlockableEventLoop.m_6367_(BlockableEventLoop.java:156)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.util.thread.ReentrantBlockableEventLoop.m_6367_(ReentrantBlockableEventLoop.java:23)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.util.thread.BlockableEventLoop.m_7245_(BlockableEventLoop.java:130)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.util.thread.BlockableEventLoop.m_18699_(BlockableEventLoop.java:115)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.client.Minecraft.m_91383_(Minecraft.java:1106)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.client.Minecraft.m_91374_(Minecraft.java:718)
+	at TRANSFORMER/minecraft@1.20.1/net.minecraft.client.main.Main.main(Main.java:218)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at MC-BOOTSTRAP/fmlloader@1.20.1-47.4.20/net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111)
+	at MC-BOOTSTRAP/fmlloader@1.20.1-47.4.20/net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99)
+	at MC-BOOTSTRAP/fmlloader@1.20.1-47.4.20/net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25)
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@10.0.9/cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30)
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@10.0.9/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53)
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@10.0.9/cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71)
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@10.0.9/cpw.mods.modlauncher.Launcher.run(Launcher.java:108)
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@10.0.9/cpw.mods.modlauncher.Launcher.main(Launcher.java:78)
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@10.0.9/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26)
+	at MC-BOOTSTRAP/cpw.mods.modlauncher@10.0.9/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23)
+	at cpw.mods.bootstraplauncher@1.1.2/cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
+	at com.modrinth.theseus.MinecraftLaunch.relaunch(MinecraftLaunch.java:63)
+	at com.modrinth.theseus.MinecraftLaunch.main(MinecraftLaunch.java:28)
+Caused by: java.lang.RuntimeException
+	at LAYER PLUGIN/fmlcore@1.20.1-47.4.20/net.minecraftforge.fml.DeferredWorkQueue.runTasks(DeferredWorkQueue.java:58)
+	at TRANSFORMER/forge@47.4.20/net.minecraftforge.fml.core.ParallelTransition.lambda$finalActivityGenerator$2(ParallelTransition.java:35)
+	... 31 more
+	Suppressed: java.lang.ExceptionInInitializerError
+		at TRANSFORMER/create@6.0.8/com.simibubi.create.Create.lambda$init$7(Create.java:188)
+		at java.base/java.util.concurrent.CompletableFuture$AsyncRun.run(Unknown Source)
+		at LAYER PLUGIN/fmlcore@1.20.1-47.4.20/net.minecraftforge.fml.DeferredWorkQueue.lambda$makeRunnable$2(DeferredWorkQueue.java:81)
+		at LAYER PLUGIN/fmlcore@1.20.1-47.4.20/net.minecraftforge.fml.DeferredWorkQueue.makeRunnable(DeferredWorkQueue.java:76)
+		at LAYER PLUGIN/fmlcore@1.20.1-47.4.20/net.minecraftforge.fml.DeferredWorkQueue.lambda$runTasks$0(DeferredWorkQueue.java:60)
+		at java.base/java.util.concurrent.ConcurrentLinkedDeque.forEach(Unknown Source)
+		at LAYER PLUGIN/fmlcore@1.20.1-47.4.20/net.minecraftforge.fml.DeferredWorkQueue.runTasks(DeferredWorkQueue.java:60)
+		... 32 more
+	Caused by: java.lang.NullPointerException: Registry entry not present: create:chocolate_bucket
+		at java.base/java.util.Objects.requireNonNull(Unknown Source)
+		at TRANSFORMER/Registrate.MC1._20@1.3.3/com.tterrag.registrate.util.entry.RegistryEntry.get(RegistryEntry.java:114)
+		at TRANSFORMER/Registrate.MC1._20@1.3.3/com.tterrag.registrate.builders.FluidBuilder.lambda$new$2(FluidBuilder.java:268)
+		at TRANSFORMER/forge@47.4.20/net.minecraftforge.fluids.ForgeFlowingFluid.m_6859_(ForgeFlowingFluid.java:112)
+		at TRANSFORMER/create@6.0.8/com.simibubi.create.foundation.advancement.AllAdvancements.lambda$static$53(AllAdvancements.java:357)
+		at TRANSFORMER/create@6.0.8/com.simibubi.create.foundation.advancement.CreateAdvancement.<init>(CreateAdvancement.java:50)
+		at TRANSFORMER/create@6.0.8/com.simibubi.create.foundation.advancement.AllAdvancements.create(AllAdvancements.java:675)
+		at TRANSFORMER/create@6.0.8/com.simibubi.create.foundation.advancement.AllAdvancements.<clinit>(AllAdvancements.java:356)
+		... 39 more
+
+Stacktrace:
+	at net.minecraft.client.ResourceLoadStateTracker.m_168562_(ResourceLoadStateTracker.java:49) ~[client-1.20.1-20230612.114412-srg.jar%23221!/:?] {re:classloading}
+	at net.minecraft.client.Minecraft.m_91354_(Minecraft.java:2326) ~[client-1.20.1-20230612.114412-srg.jar%23221!/:?] {re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91374_(Minecraft.java:740) ~[client-1.20.1-20230612.114412-srg.jar%23221!/:?] {re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.main.Main.main(Main.java:218) ~[1.20.1-47.4.20.jar:?] {re:classloading}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.relaunch(MinecraftLaunch.java:63) ~[theseus.jar%2386!/:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.main(MinecraftLaunch.java:28) ~[theseus.jar%2386!/:?] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.20.1
+	Minecraft Version ID: 1.20.1
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 17.0.20.1, Azul Systems, Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Azul Systems, Inc.
+	Memory: 1005798360 bytes (959 MiB) / 2921332736 bytes (2786 MiB) up to 4294967296 bytes (4096 MiB)
+	CPUs: 12
+	Processor Vendor: GenuineIntel
+	Processor Name: 12th Gen Intel(R) Core(TM) i5-1235U
+	Identifier: Intel64 Family 6 Model 154 Stepping 4
+	Microarchitecture: Alder Lake
+	Frequency (GHz): 2.50
+	Number of physical packages: 1
+	Number of physical CPUs: 10
+	Number of logical CPUs: 12
+	Graphics card #0 name: Intel(R) Iris(R) Xe Graphics
+	Graphics card #0 vendor: Intel Corporation (0x8086)
+	Graphics card #0 VRAM (MB): 2048.00
+	Graphics card #0 deviceId: 0x46a8
+	Graphics card #0 versionInfo: DriverVersion=32.0.101.7085
+	Memory slot #0 capacity (MB): 8192.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MB): 8192.00
+	Memory slot #1 clockSpeed (GHz): 3.20
+	Memory slot #1 type: DDR4
+	Virtual memory max (MB): 26841.87
+	Virtual memory used (MB): 18683.39
+	Swap memory total (MB): 10752.00
+	Swap memory used (MB): 828.91
+	JVM Flags: 2 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -Xmx4096M
+	Loaded Shaderpack: MakeUp-UltraFast-9.5e.zip
+		Profile: medium (+0 options changed by user)
+	Launched Version: 1.20.1
+	Backend library: LWJGL version 3.3.1 build 7
+	Backend API: Intel(R) Iris(R) Xe Graphics GL version 4.6.0 - Build 32.0.101.7085, Intel
+	Window size: 1920x1094
+	GL Caps: Using framebuffer using OpenGL 3.2
+	GL debug messages: 
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'forge'
+	Type: Client (map_client.txt)
+	Graphics mode: fancy
+	Resource Packs: 
+	Current Language: en_us
+	CPU: 12x 12th Gen Intel(R) Core(TM) i5-1235U
+	ModLauncher: 10.0.9+10.0.9+main.dcd20f30
+	ModLauncher launch target: forgeclient
+	ModLauncher naming: srg
+	ModLauncher services: 
+		mixin-0.8.5.jar mixin PLUGINSERVICE 
+		eventbus-6.2.33.jar eventbus PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar slf4jfixer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar object_holder_definalize PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar runtime_enum_extender PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar capability_token_subclass PLUGINSERVICE 
+		accesstransformers-8.0.4.jar accesstransformer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-10.0.9.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar essential-loader TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar fml TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar customskinloader-bootstrap TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		minecraft@1.0
+		kotlinforforge@4.12.0
+		javafml@null
+		lowcodefml@null
+	Mod List: 
+		CustomSkinLoader-Common.jar                       |CustomSkinLoader              |customskinloader              |15.0.1              |SIDED_SETU|Manifest: NOSIGNATURE
+		ritchiesprojectilelib-2.1.1+mc.1.20.1-forge.jar   |Ritchie's Projectile Library  |ritchiesprojectilelib         |2.1.1               |SIDED_SETU|Manifest: NOSIGNATURE
+		createdieselgenerators-1.20.1-1.3.12.jar          |Create: Diesel Generators     |createdieselgenerators        |1.20.1-1.3.12       |SIDED_SETU|Manifest: NOSIGNATURE
+		Steam_Rails-1.7.3+forge-mc1.20.1.jar              |Create: Steam 'n' Rails       |railways                      |1.7.3+forge-mc1.20.1|SIDED_SETU|Manifest: NOSIGNATURE
+		cloth-config-forge-11.1.106.jar                   |Cloth Config v10 API          |cloth_config                  |11.1.106            |SIDED_SETU|Manifest: NOSIGNATURE
+		forge-1.20.1-47.4.20-universal.jar                |Forge                         |forge                         |47.4.20             |SIDED_SETU|Manifest: NOSIGNATURE
+		paladin-furniture-mod-1.5.0-forge-mc1.20.1.jar    |Paladin's Furniture           |pfm                           |1.5.0               |SIDED_SETU|Manifest: NOSIGNATURE
+		embeddium-0.3.31+mc1.20.1.jar                     |Embeddium                     |embeddium                     |0.3.31+mc1.20.1     |SIDED_SETU|Manifest: NOSIGNATURE
+		betterblockz-0.2.10-1.20.1-forge.jar              |BetterBlockZ                  |betterblockz                  |0.2.10-1.20.1-forge |SIDED_SETU|Manifest: NOSIGNATURE
+		client-1.20.1-20230612.114412-srg.jar             |Minecraft                     |minecraft                     |1.20.1              |SIDED_SETU|Manifest: a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		FarmersDelight-1.20.1-1.3.4.jar                   |Farmer's Delight              |farmersdelight                |1.20.1-1.3.4        |SIDED_SETU|Manifest: NOSIGNATURE
+		another_furniture-forge-1.20.1-3.0.4.jar          |Another Furniture             |another_furniture             |1.20.1-3.0.4        |SIDED_SETU|Manifest: NOSIGNATURE
+		kffmod-4.12.0.jar                                 |Kotlin For Forge              |kotlinforforge                |4.12.0              |SIDED_SETU|Manifest: NOSIGNATURE
+		flywheel-forge-1.20.1-1.0.5.jar                   |Flywheel                      |flywheel                      |1.0.5               |SIDED_SETU|Manifest: NOSIGNATURE
+		Ponder-Forge-1.20.1-1.0.91.jar                    |Ponder                        |ponder                        |1.0.91              |SIDED_SETU|Manifest: NOSIGNATURE
+		create-1.20.1-6.0.8.jar                           |Create                        |create                        |6.0.8               |SIDED_SETU|Manifest: NOSIGNATURE
+		createbigcannons-5.11.4-mc.1.20.1-forge.jar       |Create Big Cannons            |createbigcannons              |5.11.4              |SIDED_SETU|Manifest: NOSIGNATURE
+		createdeco-2.0.3-1.20.1-forge.jar                 |Create Deco                   |createdeco                    |2.0.3-1.20.1-forge  |SIDED_SETU|Manifest: NOSIGNATURE
+		CreateDragonsPlus-1.11.8.jar                      |Create: Dragons Plus          |create_dragons_plus           |1.11.8              |SIDED_SETU|Manifest: NOSIGNATURE
+		Create Encased-1.20.1-1.8-ht2.jar                 |Create Encased                |createcasing                  |1.8-ht2             |SIDED_SETU|Manifest: NOSIGNATURE
+		oculus-mc1.20.1-1.8.0.jar                         |Oculus                        |oculus                        |1.8.0               |SIDED_SETU|Manifest: NOSIGNATURE
+		fireheartcity-0.1.0.jar                           |Fireheart City Residents      |fireheartcity                 |1.4.0               |SIDED_SETU|Manifest: NOSIGNATURE
+		architectury-forge-9.1.12.jar                     |Architectury                  |architectury                  |9.1.12              |SIDED_SETU|Manifest: NOSIGNATURE
+		kelvin-forge-1.20.1-0.5.0+5c1c62c654.jar          |Kelvin                        |kelvin                        |1.20.1-0.5.0+5c1c62c|SIDED_SETU|Manifest: NOSIGNATURE
+		ferritecore-6.0.1-forge.jar                       |Ferrite Core                  |ferritecore                   |6.0.1               |SIDED_SETU|Manifest: 41:ce:50:66:d1:a0:05:ce:a1:0e:02:85:9b:46:64:e0:bf:2e:cf:60:30:9a:fe:0c:27:e0:63:66:9a:84:ce:8a
+		conditional-mixin-forge-0.6.4.jar                 |conditional mixin             |conditional_mixin             |0.6.4               |SIDED_SETU|Manifest: NOSIGNATURE
+		valkyrienskies-120-2.4.11.jar                     |Valkyrien Skies 2             |valkyrienskies                |2.4.11              |SIDED_SETU|Manifest: NOSIGNATURE
+		clockwork-0.5.6.jar                               |Clockwork                     |vs_clockwork                  |0.5.6               |SIDED_SETU|Manifest: NOSIGNATURE
+		drivebywire-1.20.1-0.1.1.jar                      |Drive-By-Wire Mod             |drivebywire                   |0.1.1               |SIDED_SETU|Manifest: NOSIGNATURE
+		trackwork-1.20.1-1.2.3.jar                        |Trackwork Mod                 |trackwork                     |1.2.3               |SIDED_SETU|Manifest: NOSIGNATURE
+		create-enchantment-industry-2.5.2.jar             |Create: Enchantment Industry  |create_enchantment_industry   |2.5.2               |SIDED_SETU|Manifest: NOSIGNATURE
+		sliceanddice-forge-3.6.0.jar                      |Create Slice & Dice           |sliceanddice                  |3.6.0               |SIDED_SETU|Manifest: NOSIGNATURE
+		createaddition-1.20.1-1.3.3.jar                   |Create Crafts & Additions     |createaddition                |1.20.1-1.3.3        |SIDED_SETU|Manifest: NOSIGNATURE
+		Essential (forge_1.20.1).jar                      |Essential                     |essential                     |1.5.0.1             |SIDED_SETU|Manifest: NOSIGNATURE
+	Flywheel Backend: flywheel:off
+	Crash Report UUID: b4a2244e-3a13-4227-9b79-4937e14d2519
+	FML: 47.4
+	Forge: net.minecraftforge:47.4.20

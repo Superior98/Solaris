@@ -1,0 +1,41 @@
+{
+  "type": "pfm:simple_furniture",
+  "ingredients": [
+    {
+      "item": "minecraft:red_wool"
+    },
+    {
+      "item": "minecraft:red_wool"
+    },
+    {
+      "item": "minecraft:red_wool"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:stone_button"
+    },
+    {
+      "item": "minecraft:stone_button"
+    },
+    {
+      "item": "minecraft:stone_button"
+    },
+    {
+      "item": "minecraft:stone_button"
+    }
+  ],
+  "result": {
+    "item": "pfm:office_chair",
+    "tag": {
+      "Color": "red"
+    }
+  }
+}

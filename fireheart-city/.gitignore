@@ -1,0 +1,8 @@
+classes/
+scan/
+cmpA/
+cmpB/
+*.jar
+*.log
+srg2named.srg
+cp.txt

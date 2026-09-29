@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 15,
+    "description": "Fireheart crash fix: skips armor-trim texture generation (Image is not allocated crash)"
+  }
+}

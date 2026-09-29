@@ -1,0 +1,15 @@
+{
+  "pools": [
+    {
+      "name": "cut_scoria_create_kitchen_wall_small_drawer",
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pfm:cut_scoria_create_kitchen_wall_small_drawer"
+        }
+      ]
+    }
+  ]
+}

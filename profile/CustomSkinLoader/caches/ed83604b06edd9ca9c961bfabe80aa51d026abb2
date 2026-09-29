@@ -1,0 +1,9 @@
+{
+  "id" : "cd899a14de784de88d319d42fff31d7a",
+  "name" : "EssentialBot",
+  "properties" : [ {
+    "name" : "textures",
+    "value" : "ewogICJ0aW1lc3RhbXAiIDogMTc5MDMzOTM1NTg2NCwKICAicHJvZmlsZUlkIiA6ICJjZDg5OWExNGRlNzg0ZGU4OGQzMTlkNDJmZmYzMWQ3YSIsCiAgInByb2ZpbGVOYW1lIiA6ICJFc3NlbnRpYWxCb3QiLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI1MTJiYTNhZGFkZTVlYmMzNjYzOTJiODVjM2RiMTQ0YzhhNjI1ZTg3NzRlYzNlNDAyNzExZjQ1YzQzMGMxOCIKICAgIH0KICB9Cn0="
+  } ],
+  "profileActions" : [ ]
+}

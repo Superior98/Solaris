@@ -1,0 +1,22 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "III",
+  "ICI",
+  " S "
+ ],
+ "key": {
+  "I": {
+   "item": "minecraft:iron_ingot"
+  },
+  "C": {
+   "item": "minecraft:chest"
+  },
+  "S": {
+   "tag": "minecraft:logs"
+  }
+ },
+ "result": {
+  "item": "fireheartcity:mailbox"
+ }
+}

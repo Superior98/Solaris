@@ -1,0 +1,32 @@
+fill 30 71 -38 39 74 -31 air
+fill 30 70 -38 39 70 -31 minecraft:smooth_stone
+setblock 30 71 -37 pfm:spruce_red_classic_bed[facing=north,part=head]
+setblock 30 71 -36 pfm:spruce_red_classic_bed[facing=north,part=foot]
+setblock 31 71 -37 pfm:spruce_classic_nightstand[facing=north]
+setblock 32 71 -37 pfm:spruce_kitchen_counter[facing=north]
+setblock 33 71 -37 pfm:spruce_kitchen_sink[facing=north]
+setblock 34 71 -37 pfm:spruce_kitchen_counter_oven[facing=north]
+setblock 35 71 -37 pfm:iron_fridge[facing=north]
+setblock 35 72 -37 pfm:iron_freezer[facing=north]
+setblock 36 71 -37 pfm:gray_simple_sofa[facing=north]
+setblock 37 71 -37 pfm:gray_arm_chair[facing=north]
+setblock 38 71 -37 pfm:spruce_chair_dinner[facing=north]
+setblock 39 71 -37 pfm:spruce_desk_classic[facing=north]
+setblock 30 71 -34 pfm:spruce_coffee_table_modern
+setblock 31 71 -34 pfm:spruce_table_dinner[facing=north]
+setblock 32 71 -34 pfm:iron_stove[facing=north]
+setblock 33 71 -34 pfm:white_mirror[facing=north]
+setblock 34 71 -34 another_furniture:spruce_chair[facing=north]
+setblock 35 71 -34 another_furniture:spruce_table[facing=north]
+setblock 36 71 -34 another_furniture:spruce_shelf[facing=north]
+setblock 36 72 -34 another_furniture:spruce_shelf[facing=north]
+setblock 37 71 -34 another_furniture:spruce_drawer[facing=north]
+setblock 38 71 -34 another_furniture:spruce_bench[facing=north]
+setblock 39 71 -34 another_furniture:red_sofa[facing=north]
+setblock 30 71 -31 another_furniture:spruce_flower_box[facing=north]
+setblock 31 71 -31 another_furniture:red_curtain[facing=north,vertical=down]
+setblock 31 72 -31 another_furniture:red_curtain[facing=north,vertical=up]
+setblock 32 71 -31 another_furniture:white_lamp_connector[base=true]
+setblock 32 72 -31 another_furniture:white_lamp[facing=up,lit=true]
+setblock 33 71 -31 another_furniture:red_tall_stool
+say PFMTEST_DONE

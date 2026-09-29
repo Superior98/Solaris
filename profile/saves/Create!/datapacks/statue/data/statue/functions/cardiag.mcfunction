@@ -1,0 +1,24 @@
+execute if block -28669955 128 12290047 air run say MISSING_cog
+execute if block -28669955 129 12290047 air run say MISSING_gb_top
+execute if block -28669953 127 12290046 air run say MISSING_sh41
+execute if block -28669953 127 12290048 air run say MISSING_sh43
+execute if block -28669953 127 12290045 air run say MISSING_spd40
+execute if block -28669953 127 12290049 air run say MISSING_spd44
+execute if block -28669951 127 12290047 air run say MISSING_sh62
+execute if block -28669950 127 12290047 air run say MISSING_sh72
+execute if block -28669949 127 12290047 air run say MISSING_gb82
+execute if block -28669949 127 12290046 air run say MISSING_sh81
+execute if block -28669949 127 12290048 air run say MISSING_sh83
+execute if block -28669949 127 12290045 air run say MISSING_w80
+execute if block -28669955 127 12290045 air run say MISSING_w20
+execute if block -28669955 127 12290049 air run say MISSING_w24
+execute if block -28669952 127 12290046 air run say MISSING_ctrl
+execute if block -28669952 128 12290046 air run say MISSING_crank
+execute if block -28669952 128 12290047 air run say MISSING_valve
+execute if block -28669952 127 12290045 air run say MISSING_cmp50
+execute if block -28669951 127 12290045 air run say MISSING_rep60
+execute if block -28669950 127 12290045 air run say MISSING_rep70
+execute if block -28669953 126 12290047 air run say MISSING_floor
+execute if block -28669949 128 12290045 air run say MISSING_fender
+execute if block -28669954 130 12290047 air run say MISSING_roof
+say DIAG_DONE

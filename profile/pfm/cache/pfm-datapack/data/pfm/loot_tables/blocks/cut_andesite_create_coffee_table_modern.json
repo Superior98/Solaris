@@ -1,0 +1,15 @@
+{
+  "pools": [
+    {
+      "name": "cut_andesite_create_coffee_table_modern",
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pfm:cut_andesite_create_coffee_table_modern"
+        }
+      ]
+    }
+  ]
+}

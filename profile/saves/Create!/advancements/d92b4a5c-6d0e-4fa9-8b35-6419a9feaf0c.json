@@ -1,0 +1,1749 @@
+{
+  "create:root": {
+    "criteria": {
+      "0": "2026-09-25 12:57:18 +1000"
+    },
+    "done": true
+  },
+  "pfm:grant_book_on_first_join": {
+    "criteria": {
+      "tick": "2026-09-25 12:57:18 +1000"
+    },
+    "done": true
+  },
+  "create_enchantment_industry:root": {
+    "criteria": {
+      "0": "2026-09-25 12:57:18 +1000"
+    },
+    "done": true
+  },
+  "railways:root": {
+    "criteria": {
+      "0": "2026-09-25 12:57:18 +1000"
+    },
+    "done": true
+  },
+  "farmersdelight:main/root": {
+    "criteria": {
+      "seeds": "2026-09-25 12:57:18 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2026-09-25 12:57:19 +1000"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:snowy_slopes": "2026-09-25 19:30:52 +1000",
+      "minecraft:taiga": "2026-09-25 20:03:06 +1000",
+      "minecraft:river": "2026-09-25 12:57:53 +1000",
+      "minecraft:stony_shore": "2026-09-25 12:57:27 +1000",
+      "minecraft:grove": "2026-09-25 20:02:25 +1000",
+      "minecraft:jagged_peaks": "2026-09-25 19:30:46 +1000",
+      "minecraft:cold_ocean": "2026-09-25 19:30:27 +1000",
+      "minecraft:forest": "2026-09-25 12:57:58 +1000",
+      "minecraft:deep_cold_ocean": "2026-09-29 09:33:22 +1000",
+      "minecraft:plains": "2026-09-25 12:58:51 +1000"
+    },
+    "done": false
+  },
+  "minecraft:recipes/building_blocks/smooth_quartz_slab": {
+    "criteria": {
+      "has_smooth_quartz": "2026-09-25 12:58:21 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/smooth_quartz_stairs_from_smooth_quartz_stonecutting": {
+    "criteria": {
+      "has_smooth_quartz": "2026-09-25 12:58:21 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/smooth_quartz_stairs": {
+    "criteria": {
+      "has_smooth_quartz": "2026-09-25 12:58:21 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/smooth_quartz_slab_from_smooth_quartz_stonecutting": {
+    "criteria": {
+      "has_smooth_quartz": "2026-09-25 12:58:21 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/misc/crafting/schematics/empty_schematic": {
+    "criteria": {
+      "has_item": "2026-09-25 19:38:39 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/book": {
+    "criteria": {
+      "has_paper": "2026-09-25 19:38:39 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/misc/crafting/schematics/schematic_and_quill": {
+    "criteria": {
+      "has_item": "2026-09-25 19:38:39 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/misc/crafting/materials/sand_paper": {
+    "criteria": {
+      "has_item": "2026-09-25 19:38:39 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/misc/crafting/materials/red_sand_paper": {
+    "criteria": {
+      "has_item": "2026-09-25 19:38:39 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/cartography_table": {
+    "criteria": {
+      "has_paper": "2026-09-25 19:38:39 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/wall_toilet_paper": {
+    "criteria": {
+      "has_paper": "2026-09-25 19:38:39 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/cherry_boat": {
+    "criteria": {
+      "in_water": "2026-09-25 19:43:16 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/acacia_boat": {
+    "criteria": {
+      "in_water": "2026-09-25 19:43:16 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/jungle_boat": {
+    "criteria": {
+      "in_water": "2026-09-25 19:43:16 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/spruce_boat": {
+    "criteria": {
+      "in_water": "2026-09-25 19:43:16 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/mangrove_boat": {
+    "criteria": {
+      "in_water": "2026-09-25 19:43:16 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/dark_oak_boat": {
+    "criteria": {
+      "in_water": "2026-09-25 19:43:16 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/bamboo_raft": {
+    "criteria": {
+      "in_water": "2026-09-25 19:43:16 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/birch_boat": {
+    "criteria": {
+      "in_water": "2026-09-25 19:43:16 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/oak_boat": {
+    "criteria": {
+      "in_water": "2026-09-25 19:43:16 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/diamond_sword": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/jukebox": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/diamond_pickaxe": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/diamond_hoe": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/diamond_block": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/diamond_boots": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/diamond_chestplate": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/diamond_shovel": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/diamond_helmet": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:story/mine_diamond": {
+    "criteria": {
+      "diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "farmersdelight:recipes/combat/diamond_knife": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/diamond_leggings": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/diamond_axe": {
+    "criteria": {
+      "has_diamond": "2026-09-25 19:49:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/red_dye_from_poppy": {
+    "criteria": {
+      "has_poppy": "2026-09-25 19:57:01 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/birch_button": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/birch_fence": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/chest": {
+    "criteria": {
+      "has_lots_of_items": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/stick": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/birch_sign": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/root": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/birch_slab": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/birch_trapdoor": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "another_furniture:recipes/birch_table": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/birch_window": {
+    "criteria": {
+      "has_ingredient": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/birch_door": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/birch_fence_gate": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/birch_stairs": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/barrel": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "another_furniture:recipes/birch_chair": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "another_furniture:recipes/birch_shelf": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/birch_pressure_plate": {
+    "criteria": {
+      "has_planks": "2026-09-25 20:13:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/powered_rail": {
+    "criteria": {
+      "has_rail": "2026-09-25 20:34:07 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/detector_rail": {
+    "criteria": {
+      "has_rail": "2026-09-25 20:34:07 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/activator_rail": {
+    "criteria": {
+      "has_rail": "2026-09-25 20:34:07 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/redstone": {
+    "criteria": {
+      "has_redstone_block": "2026-09-25 20:34:29 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/smokestack_coalburner": {
+    "criteria": {
+      "has_item": "2026-09-25 20:34:48 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/smokestack_diesel": {
+    "criteria": {
+      "has_item": "2026-09-25 20:34:48 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/smokestack_woodburner": {
+    "criteria": {
+      "has_item": "2026-09-25 20:34:48 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/smokestack_oilburner": {
+    "criteria": {
+      "has_item": "2026-09-25 20:34:48 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/smokestack_long": {
+    "criteria": {
+      "has_item": "2026-09-25 20:34:48 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/smokestack_streamlined": {
+    "criteria": {
+      "has_item": "2026-09-25 20:34:48 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/smokestack_caboosestyle": {
+    "criteria": {
+      "has_item": "2026-09-25 20:34:48 +1000"
+    },
+    "done": true
+  },
+  "farmersdelight:recipes/decorations/stove": {
+    "criteria": {
+      "has_campfire": "2026-09-25 20:34:48 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/brown_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/granite_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/diorite_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/magenta_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/turquoise_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/olive_green_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/light_blue_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/dripstone_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "farmersdelight:recipes/decorations/birch_cabinet": {
+    "criteria": {
+      "has_birch_trapdoor": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/limestone_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/vermilion_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/light_gray_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/green_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/black_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/chartreuse_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/ochrum_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/gray_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/tuff_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/white_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/lime_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/maroon_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/red_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/orange_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/pine_green_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/pink_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/cyan_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/sea_green_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/royal_blue_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/purple_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/blue_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/scorchia_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/trapdoors/yellow_locometal_trapdoor": {
+    "criteria": {
+      "has_item": "2026-09-25 20:35:13 +1000"
+    },
+    "done": true
+  },
+  "farmersdelight:main/place_campfire": {
+    "criteria": {
+      "campfire": "2026-09-25 20:35:18 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/diorite_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/chartreuse_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/sea_green_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/light_gray_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/royal_blue_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/white_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/green_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/granite_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/purple_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/limestone_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/cyan_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/scorchia_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/yellow_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/lime_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/tuff_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/black_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/gray_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/orange_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/turquoise_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/brown_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/ochrum_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/red_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/pine_green_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/olive_green_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/pink_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/vermilion_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/maroon_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/magenta_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/light_blue_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/blue_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/palettes/doors/dripstone_hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 20:48:37 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/yellow_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/green_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/blue_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/black_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/magenta_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/light_gray_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/brown_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/pink_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/red_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/orange_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/white_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/cyan_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/lime_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/purple_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/light_blue_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/crafting/kinetics/gray_seat_from_other_seat": {
+    "criteria": {
+      "has_seat": "2026-09-25 20:51:44 +1000"
+    },
+    "done": true
+  },
+  "another_furniture:recipes/jungle_chair": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/jungle_stairs": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/jungle_trapdoor": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/jungle_sign": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/jungle_fence": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "another_furniture:recipes/jungle_shelf": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/jungle_window": {
+    "criteria": {
+      "has_ingredient": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/jungle_pressure_plate": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/jungle_door": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "another_furniture:recipes/jungle_table": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/jungle_slab": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/jungle_button": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/jungle_fence_gate": {
+    "criteria": {
+      "has_planks": "2026-09-25 21:00:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/magma_block": {
+    "criteria": {
+      "has_magma_cream": "2026-09-25 21:02:57 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/purple_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/blue_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/light_blue_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/yellow_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/horizontal_framed_glass_pane_from_glass_panes_colorless_stonecutting": {
+    "criteria": {
+      "has_glass_panes_colorless": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/orange_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/green_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/pink_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/framed_glass_pane_from_glass_panes_colorless_stonecutting": {
+    "criteria": {
+      "has_glass_panes_colorless": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/black_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/brown_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/lime_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/light_gray_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/tiled_glass_pane_from_glass_panes_colorless_stonecutting": {
+    "criteria": {
+      "has_glass_panes_colorless": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/gray_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/red_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/building_blocks/vertical_framed_glass_pane_from_glass_panes_colorless_stonecutting": {
+    "criteria": {
+      "has_glass_panes_colorless": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/white_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/magenta_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/cyan_stained_glass_pane_from_glass_pane": {
+    "criteria": {
+      "has_glass_pane": "2026-09-25 21:05:25 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/stonecutting/palettes/cycling/hinged_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 21:12:41 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/stonecutting/palettes/cycling/sliding_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 21:12:41 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/stonecutting/palettes/cycling/folding_locometal_door": {
+    "criteria": {
+      "has_item": "2026-09-25 21:12:41 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/stonecut_cyberlight_alt_blockz_3_to_cyberlight_alt": {
+    "criteria": {
+      "has_cyberlight_alt_blockz_3": "2026-09-25 21:43:40 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_variant12_to_thin0": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_12}": "2026-09-25 21:44:46 +1000"
+    },
+    "done": true
+  },
+  "minecraft:adventure/root": {
+    "criteria": {
+      "killed_something": "2026-09-25 21:45:03 +1000"
+    },
+    "done": true
+  },
+  "minecraft:adventure/sleep_in_bed": {
+    "criteria": {
+      "slept_in_bed": "2026-09-25 21:58:12 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/emerald": {
+    "criteria": {
+      "has_emerald_block": "2026-09-25 22:08:37 +1000"
+    },
+    "done": true
+  },
+  "railways:recipes/misc/crafting/paint_brush": {
+    "criteria": {
+      "has_item": "2026-09-25 22:22:33 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/arrow": {
+    "criteria": {
+      "has_feather": "2026-09-25 22:22:33 +1000"
+    },
+    "done": true
+  },
+  "minecraft:husbandry/tame_an_animal": {
+    "criteria": {
+      "tamed_animal": "2026-09-25 22:23:48 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/charcoal": {
+    "criteria": {
+      "has_log": "2026-09-25 22:26:12 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/jungle_planks": {
+    "criteria": {
+      "has_logs": "2026-09-25 22:26:12 +1000"
+    },
+    "done": true
+  },
+  "minecraft:end/elytra": {
+    "criteria": {
+      "elytra": "2026-09-25 22:26:47 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/brewing/cauldron": {
+    "criteria": {
+      "has_water_bucket": "2026-09-25 22:36:07 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/basic_shower_head": {
+    "criteria": {
+      "has_water_bucket": "2026-09-25 22:36:07 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/yellow_dye_from_sunflower": {
+    "criteria": {
+      "has_sunflower": "2026-09-28 17:59:07 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/diamond_frame_platform_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/korp_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/gold_frame_platform_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/forgecopper_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/ironslate_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/gold_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/synthalloy_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/diamond_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/iron_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/ztyl_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/jelt_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/copper_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:03:14 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/misc/crafting/logistics/pulse_timer": {
+    "criteria": {
+      "has_item": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/misc/crafting/logistics/powered_latch": {
+    "criteria": {
+      "has_item": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/note_block": {
+    "criteria": {
+      "has_redstone": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "createbigcannons:recipes/misc/wired_fuze": {
+    "criteria": {
+      "has_redstone": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/dropper": {
+    "criteria": {
+      "has_redstone": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/misc/crafting/materials/rose_quartz": {
+    "criteria": {
+      "has_item": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/piston": {
+    "criteria": {
+      "has_redstone": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/redstone_torch": {
+    "criteria": {
+      "has_redstone": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/misc/crafting/logistics/pulse_extender": {
+    "criteria": {
+      "has_item": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/misc/crafting/logistics/pulse_repeater": {
+    "criteria": {
+      "has_item": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/target": {
+    "criteria": {
+      "has_redstone": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/compass": {
+    "criteria": {
+      "has_redstone": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/redstone_block": {
+    "criteria": {
+      "has_redstone": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/clock": {
+    "criteria": {
+      "has_redstone": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/ironslateredstone_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "create:recipes/misc/crafting/logistics/powered_toggle_latch": {
+    "criteria": {
+      "has_item": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_cycle_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 18:10:44 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/basic_shower_handle": {
+    "criteria": {
+      "has_lever": "2026-09-28 18:10:52 +1000"
+    },
+    "done": true
+  },
+  "createbigcannons:recipes/misc/quickfiring_mechanism": {
+    "criteria": {
+      "has_lever": "2026-09-28 18:10:52 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/light_blue_dye_from_blue_orchid": {
+    "criteria": {
+      "has_blue_orchid": "2026-09-28 18:20:02 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/gray_fridge": {
+    "criteria": {
+      "has_gray_concrete": "2026-09-28 18:58:34 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/gray_modern_pendant": {
+    "criteria": {
+      "has_gray_concrete": "2026-09-28 18:58:34 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/gray_freezer": {
+    "criteria": {
+      "has_gray_concrete": "2026-09-28 18:58:34 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/gray_stove": {
+    "criteria": {
+      "has_gray_concrete": "2026-09-28 18:58:34 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/gray_oven_range_hood": {
+    "criteria": {
+      "has_gray_concrete": "2026-09-28 18:58:34 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/gray_mirror": {
+    "criteria": {
+      "has_gray_concrete": "2026-09-28 18:58:34 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/magenta_dye_from_allium": {
+    "criteria": {
+      "has_allium": "2026-09-28 19:07:29 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/sugar_from_honey_bottle": {
+    "criteria": {
+      "has_honey_bottle": "2026-09-28 19:07:36 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/honey_block": {
+    "criteria": {
+      "has_honey_bottle": "2026-09-28 19:07:36 +1000"
+    },
+    "done": true
+  },
+  "farmersdelight:recipes/food/honey_cookie": {
+    "criteria": {
+      "has_honey_bottle": "2026-09-28 19:07:36 +1000"
+    },
+    "done": true
+  },
+  "farmersdelight:recipes/food/horse_feed": {
+    "criteria": {
+      "has_golden_carrot": "2026-09-28 19:07:53 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/white_stove": {
+    "criteria": {
+      "has_white_concrete": "2026-09-28 20:13:02 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/white_freezer": {
+    "criteria": {
+      "has_white_concrete": "2026-09-28 20:13:02 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/basic_plate": {
+    "criteria": {
+      "has_white_concrete": "2026-09-28 20:13:02 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/white_oven_range_hood": {
+    "criteria": {
+      "has_white_concrete": "2026-09-28 20:13:02 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/white_mirror": {
+    "criteria": {
+      "has_white_concrete": "2026-09-28 20:13:02 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/white_fridge": {
+    "criteria": {
+      "has_white_concrete": "2026-09-28 20:13:02 +1000"
+    },
+    "done": true
+  },
+  "pfm:recipes/furniture/white_modern_pendant": {
+    "criteria": {
+      "has_white_concrete": "2026-09-28 20:13:02 +1000"
+    },
+    "done": true
+  },
+  "farmersdelight:recipes/cooking/dog_food": {
+    "criteria": {
+      "has_any_ingredient": "2026-09-28 20:25:30 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/lairflesh_custom": {
+    "criteria": {
+      "has_material": "2026-09-28 20:25:30 +1000"
+    },
+    "done": true
+  },
+  "farmersdelight:recipes/building_blocks/organic_compost_from_rotten_flesh": {
+    "criteria": {
+      "has_rotten_flesh": "2026-09-28 20:25:30 +1000"
+    },
+    "done": true
+  },
+  "minecraft:adventure/kill_a_mob": {
+    "criteria": {
+      "minecraft:zombie": "2026-09-28 20:25:39 +1000"
+    },
+    "done": true
+  },
+  "minecraft:adventure/kill_all_mobs": {
+    "criteria": {
+      "minecraft:ravager": "2026-09-29 09:32:54 +1000",
+      "minecraft:spider": "2026-09-29 09:34:16 +1000",
+      "minecraft:creeper": "2026-09-29 09:34:30 +1000",
+      "minecraft:zombie": "2026-09-28 20:25:39 +1000"
+    },
+    "done": false
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant1": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant3": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant2": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant5": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant4": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant7": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant6": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant9": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant8": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant10": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant12": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant11": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant14": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant13": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "betterblockz:recipes/building_blocks/cyberlight_alt_thin0_to_variant15": {
+    "criteria": {
+      "has_Block{betterblockz:cyberlight_thin_alt_0}": "2026-09-28 21:39:10 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/glow_item_frame": {
+    "criteria": {
+      "has_glow_ink_sac": "2026-09-28 23:02:14 +1000"
+    },
+    "done": true
+  },
+  "minecraft:husbandry/make_a_sign_glow": {
+    "criteria": {
+      "make_a_sign_glow": "2026-09-28 23:02:16 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/netherite_chestplate_smithing": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/netherite_helmet_smithing": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "farmersdelight:recipes/combat/netherite_knife_smithing": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "createdeco:recipes/decorations/gold_coinstack": {
+    "criteria": {
+      "has_item": "2026-09-29 09:40:20 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/netherite_leggings_smithing": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/lodestone": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/netherite_block": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/netherite_shovel_smithing": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/netherite_boots_smithing": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/netherite_axe_smithing": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/netherite_sword_smithing": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "createdeco:recipes/misc/netherite_nugget_from_netherite_ingot": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/netherite_hoe_smithing": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/netherite_pickaxe_smithing": {
+    "criteria": {
+      "has_netherite_ingot": "2026-09-29 09:13:48 +1000"
+    },
+    "done": true
+  },
+  "DataVersion": 3465
+}

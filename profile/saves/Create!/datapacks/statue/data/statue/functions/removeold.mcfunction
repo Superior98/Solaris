@@ -1,0 +1,9 @@
+fill -31 35 79 27 48 115 minecraft:water
+fill -31 49 79 27 62 115 minecraft:water
+fill -31 63 79 27 77 115 minecraft:air
+fill -26 78 84 23 102 109 minecraft:air
+fill -26 103 84 23 127 109 minecraft:air
+fill -26 128 84 23 152 109 minecraft:air
+fill -26 153 84 23 174 109 minecraft:air
+fill -5 60 77 1 62 79 minecraft:water
+fill -5 63 77 1 80 79 minecraft:air

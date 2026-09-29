@@ -1,0 +1,5 @@
+execute if block -28661760 127 12290047 drivebywire:controller_hub run tellraw @a "BIKECHK hub ok"
+execute if block -28661760 126 12290047 drivebywire:backup_block run tellraw @a "BIKECHK backup ok"
+execute if block -28661762 126 12290047 valkyrienskies:test_thruster run tellraw @a "BIKECHK thruster ok"
+execute if block -28661761 127 12290047 create:black_seat run tellraw @a "BIKECHK seat ok"
+execute if block -28661767 126 12290045 minecraft:air run tellraw @a "BIKECHK rear free"

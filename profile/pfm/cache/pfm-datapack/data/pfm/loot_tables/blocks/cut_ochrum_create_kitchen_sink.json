@@ -1,0 +1,15 @@
+{
+  "pools": [
+    {
+      "name": "cut_ochrum_create_kitchen_sink",
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pfm:cut_ochrum_create_kitchen_sink"
+        }
+      ]
+    }
+  ]
+}

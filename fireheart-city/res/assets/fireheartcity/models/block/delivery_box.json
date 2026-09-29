@@ -1,0 +1,116 @@
+{
+ "parent": "block/block",
+ "textures": {
+  "box": "minecraft:block/stripped_birch_log",
+  "top": "minecraft:block/birch_planks",
+  "tape": "minecraft:block/light_gray_wool",
+  "label": "minecraft:block/white_wool",
+  "particle": "minecraft:block/birch_planks"
+ },
+ "elements": [
+  {
+   "from": [
+    3,
+    0,
+    3
+   ],
+   "to": [
+    13,
+    7.5,
+    13
+   ],
+   "faces": {
+    "north": {
+     "texture": "#box"
+    },
+    "south": {
+     "texture": "#box"
+    },
+    "east": {
+     "texture": "#box"
+    },
+    "west": {
+     "texture": "#box"
+    },
+    "up": {
+     "texture": "#box"
+    },
+    "down": {
+     "texture": "#box"
+    }
+   }
+  },
+  {
+   "from": [
+    3,
+    7.5,
+    3
+   ],
+   "to": [
+    13,
+    8,
+    13
+   ],
+   "faces": {
+    "north": {
+     "texture": "#top"
+    },
+    "south": {
+     "texture": "#top"
+    },
+    "east": {
+     "texture": "#top"
+    },
+    "west": {
+     "texture": "#top"
+    },
+    "up": {
+     "texture": "#top"
+    },
+    "down": {
+     "texture": "#top"
+    }
+   }
+  },
+  {
+   "from": [
+    7,
+    7.6,
+    2.9
+   ],
+   "to": [
+    9,
+    8.1,
+    13.1
+   ],
+   "faces": {
+    "up": {
+     "texture": "#tape"
+    },
+    "north": {
+     "texture": "#tape"
+    },
+    "south": {
+     "texture": "#tape"
+    }
+   }
+  },
+  {
+   "from": [
+    4,
+    3,
+    2.9
+   ],
+   "to": [
+    8,
+    6,
+    3
+   ],
+   "faces": {
+    "north": {
+     "texture": "#label"
+    }
+   }
+  }
+ ]
+}

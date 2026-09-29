@@ -1,0 +1,10 @@
+{
+ "variants": {
+  "lit=true": {
+   "model": "fireheartcity:block/ceiling_spot"
+  },
+  "lit=false": {
+   "model": "fireheartcity:block/ceiling_spot_off"
+  }
+ }
+}

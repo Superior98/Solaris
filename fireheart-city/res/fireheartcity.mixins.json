@@ -1,0 +1,17 @@
+{
+ "required": false,
+ "minVersion": "0.8",
+ "package": "com.fireheart.city.mixin",
+ "compatibilityLevel": "JAVA_17",
+ "client": [
+  "StitchedSpriteMixin",
+  "SpriteShifterMixin",
+  "CTSpriteShifterMixin",
+  "PlayerModelMixin",
+  "LazyLoadedImageMixin",
+  "MinecraftKeybindMixin"
+ ],
+ "injectors": {
+  "defaultRequire": 1
+ }
+}

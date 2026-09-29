@@ -1,0 +1,741 @@
+[000.000][08:41:55.140][INFO] Log starts at 2026-09-28T22:41:55.140753600Z (08:41:55.140753600 local time)
+[000.096][08:41:55.237][DEBUG] Manager now in used by connection 1
+[000.390][08:41:55.531][TRACE] Skipping network interface because it is a loopback interface: name:lo (Software Loopback Interface 1)
+[000.409][08:41:55.550][TRACE] Skipping network interface because it is not up: name:net0 (Microsoft 6to4 Adapter)
+[000.428][08:41:55.568][TRACE] Skipping network interface because it is not up: name:ppp0 (WAN Miniport (PPPOE))
+[000.448][08:41:55.589][TRACE] Skipping network interface because it is not up: name:wlan0 (Microsoft Wi-Fi Direct Virtual Adapter #2)
+[000.473][08:41:55.614][TRACE] Skipping network interface because it is not up: name:net1 (Wintun Tunnel #2)
+[000.495][08:41:55.636][TRACE] Skipping network interface because it is not up: name:net2 (Generic Mobile Broadband Adapter #6)
+[000.509][08:41:55.650][TRACE] Skipping network interface because it is not up: name:net3 (WAN Miniport (SSTP))
+[000.526][08:41:55.667][TRACE] Skipping network interface because it is not up: name:net4 (Generic Mobile Broadband Adapter #7)
+[000.543][08:41:55.684][TRACE] Skipping network interface because it is not up: name:eth0 (Hyper-V Virtual Switch Extension Adapter)
+[000.563][08:41:55.704][TRACE] Skipping network interface because it is not up: name:net5 (Microsoft IP-HTTPS Platform Adapter)
+[000.582][08:41:55.722][TRACE] Skipping network interface because it is not up: name:eth1 (Bluetooth Device (Personal Area Network))
+[000.600][08:41:55.741][TRACE] Skipping network interface because it is not up: name:eth2 (WAN Miniport (Network Monitor))
+[000.618][08:41:55.759][TRACE] Skipping network interface because it is not up: name:net6 (Generic Mobile Broadband Adapter #9)
+[000.639][08:41:55.780][TRACE] Skipping network interface because it is not up: name:net7 (Generic Mobile Broadband Adapter #15)
+[000.658][08:41:55.798][TRACE] Skipping network interface because it is not up: name:eth3 (TAP-Windows Adapter V9)
+[000.672][08:41:55.813][TRACE] Skipping network interface because it is not up: name:net8 (WAN Miniport (PPTP))
+[000.687][08:41:55.828][TRACE] Skipping network interface because it is not up: name:net9 (Generic Mobile Broadband Adapter #12)
+[000.701][08:41:55.842][TRACE] Skipping network interface because it is not up: name:eth4 (WAN Miniport (IP))
+[000.717][08:41:55.857][TRACE] Skipping network interface because it is not up: name:eth5 (Hyper-V Virtual Switch Extension Adapter-Hyper-V Virtual Switch Extension Filter-0000)
+[000.731][08:41:55.872][TRACE] Skipping network interface because it is not up: name:wlan1 (Microsoft Wi-Fi Direct Virtual Adapter)
+[000.745][08:41:55.886][TRACE] Skipping network interface because it is not up: name:net10 (WAN Miniport (IKEv2))
+[000.759][08:41:55.900][TRACE] Skipping network interface because it is not up: name:net11 (Generic Mobile Broadband Adapter #8)
+[000.776][08:41:55.916][TRACE] Skipping network interface because it is not up: name:eth6 (Intel(R) Ethernet Connection (16) I219-V)
+[000.794][08:41:55.935][TRACE] Skipping network interface because it is not up: name:eth7 (WAN Miniport (IPv6))
+[000.808][08:41:55.949][TRACE] Skipping network interface because it is not up: name:net12 (Generic Mobile Broadband Adapter #16)
+[000.823][08:41:55.964][TRACE] Skipping network interface because it is not up: name:net13 (Microsoft Teredo Tunneling Adapter)
+[000.841][08:41:55.982][TRACE] Skipping network interface because it is not up: name:net14 (Generic Mobile Broadband Adapter #14)
+[000.855][08:41:55.996][TRACE] Skipping network interface because it is not up: name:net15 (Generic Mobile Broadband Adapter #17)
+[000.868][08:41:56.009][TRACE] Skipping network interface because it is not up: name:net16 (Generic Mobile Broadband Adapter #11)
+[000.878][08:41:56.019][TRACE] Skipping network interface because it is not up: name:net17 (Generic Mobile Broadband Adapter #4)
+[000.892][08:41:56.033][TRACE] Network interface name:wlan2 (Intel(R) Wi-Fi 6E AX211 160MHz) has addresses: [/192.168.0.15]
+[000.937][08:41:56.078][TRACE] Skipping network interface because it is not up: name:net18 (Generic Mobile Broadband Adapter #2)
+[000.953][08:41:56.094][TRACE] Skipping network interface because it is not up: name:net19 (Generic Mobile Broadband Adapter #5)
+[000.966][08:41:56.107][DEBUG] [192.168.0.15:65080] Contacting STUN server us.stun.essential.gg/15.204.108.48:3478
+[000.970][08:41:56.110][TRACE] Skipping network interface because it is not up: name:net20 (Generic Mobile Broadband Adapter)
+[000.985][08:41:56.126][TRACE] Skipping network interface because it is not up: name:eth8 (Microsoft Kernel Debug Network Adapter)
+[001.002][08:41:56.142][TRACE] Skipping network interface because it is not up: name:net21 (Generic Mobile Broadband Adapter #10)
+[001.016][08:41:56.157][TRACE] Skipping network interface because it is not up: name:net22 (Generic Mobile Broadband Adapter #13)
+[001.027][08:41:56.168][TRACE] Skipping network interface because it is not up: name:net23 (Generic Mobile Broadband Adapter #3)
+[001.028][08:41:56.169][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [WX7Ibpye6FOxYrIQ] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=WX7Ibpye6FOxYrIQ, attributes=[])
+[001.030][08:41:56.171][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [WX7Ibpye6FOxYrIQ] Sending STUN request, attempt 1/7
+[001.042][08:41:56.182][TRACE] Skipping network interface because it is not up: name:net24 (WAN Miniport (L2TP))
+[001.060][08:41:56.200][TRACE] Network interface name:eth9 (Hyper-V Virtual Ethernet Adapter) has addresses: [/172.27.112.1, /fe80:0:0:0:1158:5e61:eef8:6853%eth9]
+[001.078][08:41:56.219][TRACE] Skipping network interface because it is not up: name:eth10 (Hyper-V Virtual Ethernet Adapter-WFP Native MAC Layer LightWeight Filter-0000)
+[001.086][08:41:56.227][DEBUG] [192.168.0.15:65080] Contacting STUN server eu.stun.essential.gg/51.195.24.116:3478
+[001.087][08:41:56.227][DEBUG] [192.168.0.15:65080] Contacting STUN server as.stun.essential.gg/15.235.229.89:3478
+[001.091][08:41:56.231][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [eFJIXdHrt5DQ0emC] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=eFJIXdHrt5DQ0emC, attributes=[])
+[001.091][08:41:56.232][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [eFJIXdHrt5DQ0emC] Sending STUN request, attempt 1/7
+[001.092][08:41:56.232][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [hNKS+Y6m6m4MMnyI] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=hNKS+Y6m6m4MMnyI, attributes=[])
+[001.092][08:41:56.232][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [hNKS+Y6m6m4MMnyI] Sending STUN request, attempt 1/7
+[001.095][08:41:56.235][DEBUG] [192.168.0.15:65080] Contacting STUN server au.stun.essential.gg/51.161.174.239:3478
+[001.096][08:41:56.237][TRACE] Skipping network interface because it is not up: name:eth11 (Hyper-V Virtual Ethernet Adapter-QoS Packet Scheduler-0000)
+[001.105][08:41:56.246][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [GYCkUbFy51qGop5y] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=GYCkUbFy51qGop5y, attributes=[])
+[001.106][08:41:56.246][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [GYCkUbFy51qGop5y] Sending STUN request, attempt 1/7
+[001.106][08:41:56.247][DEBUG] [192.168.0.15:65080] Contacting TURN server us.turn.essential.gg/15.204.108.48:3478
+[001.113][08:41:56.254][TRACE] Skipping network interface because it is not up: name:eth12 (TAP-Windows Adapter V9-WFP Native MAC Layer LightWeight Filter-0000)
+[001.128][08:41:56.268][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [B5dtXlpU+NOvGhWh] Begin STUN request: StunMessage(type=Allocate, cls=Request, transactionId=B5dtXlpU+NOvGhWh, attributes=[RequestedTransport])
+[001.128][08:41:56.269][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [B5dtXlpU+NOvGhWh] Sending STUN request, attempt 1/7
+[001.129][08:41:56.270][TRACE] Skipping network interface because it is not up: name:eth13 (TAP-Windows Adapter V9-QoS Packet Scheduler-0000)
+[001.131][08:41:56.271][TRACE] [172.27.112.1:65082] Failed to send to /49.187.35.145:51164: Network is unreachable: sendto
+[001.162][08:41:56.303][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [GYCkUbFy51qGop5y] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=GYCkUbFy51qGop5y, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[001.163][08:41:56.304][DEBUG] [172.27.112.1:65082] Contacting STUN server us.stun.essential.gg/15.204.108.48:3478
+[001.165][08:41:56.306][TRACE] [172.27.112.1:65082 <> 15.204.108.48:3478] [RwdpQQlByJ3BDpWK] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=RwdpQQlByJ3BDpWK, attributes=[])
+[001.165][08:41:56.306][TRACE] [172.27.112.1:65082 <> 15.204.108.48:3478] [RwdpQQlByJ3BDpWK] Sending STUN request, attempt 1/7
+[001.166][08:41:56.306][DEBUG] [192.168.0.15:65080] Contacting TURN server eu.turn.essential.gg/51.195.24.116:3478
+[001.166][08:41:56.307][TRACE] [172.27.112.1:65082] Failed to send to us.stun.essential.gg/15.204.108.48:3478: Network is unreachable: sendto
+[001.166][08:41:56.307][DEBUG] [192.168.0.15:65080 <> 51.161.174.239:3478] Received public address from STUN server: /49.187.35.145:65080
+[001.167][08:41:56.308][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [nGH414CChuJIMYs+] Begin STUN request: StunMessage(type=Allocate, cls=Request, transactionId=nGH414CChuJIMYs+, attributes=[RequestedTransport])
+[001.167][08:41:56.308][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [nGH414CChuJIMYs+] Sending STUN request, attempt 1/7
+[001.168][08:41:56.309][TRACE] [172.27.112.1:65082 <> 15.204.108.48:3478] [RwdpQQlByJ3BDpWK] Failed to send packet, aborting
+[001.169][08:41:56.310][TRACE] Skipping network interface because it is not up: name:eth14 (TAP-Windows Adapter V9-WFP 802.3 MAC Layer LightWeight Filter-0000)
+[001.170][08:41:56.311][WARN] [172.27.112.1:65082 <> 15.204.108.48:3478] Failed to contact STUN server, timed out.
+[001.174][08:41:56.315][DEBUG] [172.27.112.1:65082] Contacting STUN server eu.stun.essential.gg/51.195.24.116:3478
+[001.176][08:41:56.316][TRACE] [172.27.112.1:65082 <> 51.195.24.116:3478] [FPwWtcj80KhIc91J] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=FPwWtcj80KhIc91J, attributes=[])
+[001.176][08:41:56.317][TRACE] [172.27.112.1:65082 <> 51.195.24.116:3478] [FPwWtcj80KhIc91J] Sending STUN request, attempt 1/7
+[001.177][08:41:56.318][DEBUG] [192.168.0.15:65080] Contacting TURN server as.turn.essential.gg/15.235.229.89:3478
+[001.177][08:41:56.318][TRACE] [172.27.112.1:65082] Failed to send to eu.stun.essential.gg/51.195.24.116:3478: Network is unreachable: sendto
+[001.177][08:41:56.318][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [jnXkmkogHPzD9EZO] Begin STUN request: StunMessage(type=Allocate, cls=Request, transactionId=jnXkmkogHPzD9EZO, attributes=[RequestedTransport])
+[001.177][08:41:56.318][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [jnXkmkogHPzD9EZO] Sending STUN request, attempt 1/7
+[001.178][08:41:56.318][TRACE] [172.27.112.1:65082 <> 51.195.24.116:3478] [FPwWtcj80KhIc91J] Failed to send packet, aborting
+[001.178][08:41:56.319][WARN] [172.27.112.1:65082 <> 51.195.24.116:3478] Failed to contact STUN server, timed out.
+[001.183][08:41:56.323][DEBUG] [172.27.112.1:65082] Contacting STUN server as.stun.essential.gg/15.235.229.89:3478
+[001.183][08:41:56.324][TRACE] [172.27.112.1:65082 <> 15.235.229.89:3478] [VAY4zu9UVSaDuKeu] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=VAY4zu9UVSaDuKeu, attributes=[])
+[001.184][08:41:56.324][TRACE] [172.27.112.1:65082 <> 15.235.229.89:3478] [VAY4zu9UVSaDuKeu] Sending STUN request, attempt 1/7
+[001.184][08:41:56.325][TRACE] [172.27.112.1:65082] Failed to send to as.stun.essential.gg/15.235.229.89:3478: Network is unreachable: sendto
+[001.185][08:41:56.326][TRACE] [172.27.112.1:65082 <> 15.235.229.89:3478] [VAY4zu9UVSaDuKeu] Failed to send packet, aborting
+[001.186][08:41:56.327][WARN] [172.27.112.1:65082 <> 15.235.229.89:3478] Failed to contact STUN server, timed out.
+[001.188][08:41:56.328][TRACE] Skipping network interface because it is not up: name:wlan3 (Microsoft Wi-Fi Direct Virtual Adapter #2-WFP Native MAC Layer LightWeight Filter-0000)
+[001.189][08:41:56.329][DEBUG] [192.168.0.15:65080] Contacting TURN server au.turn.essential.gg/51.161.174.239:3478
+[001.190][08:41:56.330][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [drlrPMrz/pDLjUo8] Begin STUN request: StunMessage(type=Allocate, cls=Request, transactionId=drlrPMrz/pDLjUo8, attributes=[RequestedTransport])
+[001.190][08:41:56.331][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [drlrPMrz/pDLjUo8] Sending STUN request, attempt 1/7
+[001.195][08:41:56.336][DEBUG] [172.27.112.1:65082] Contacting STUN server au.stun.essential.gg/51.161.174.239:3478
+[001.196][08:41:56.337][TRACE] [172.27.112.1:65082 <> 51.161.174.239:3478] [J9tJlUd3yqi7h+T8] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=J9tJlUd3yqi7h+T8, attributes=[])
+[001.196][08:41:56.337][TRACE] [172.27.112.1:65082 <> 51.161.174.239:3478] [J9tJlUd3yqi7h+T8] Sending STUN request, attempt 1/7
+[001.197][08:41:56.338][TRACE] [172.27.112.1:65082] Failed to send to au.stun.essential.gg/51.161.174.239:3478: Network is unreachable: sendto
+[001.198][08:41:56.338][TRACE] [172.27.112.1:65082 <> 51.161.174.239:3478] [J9tJlUd3yqi7h+T8] Failed to send packet, aborting
+[001.200][08:41:56.341][WARN] [172.27.112.1:65082 <> 51.161.174.239:3478] Failed to contact STUN server, timed out.
+[001.201][08:41:56.342][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [drlrPMrz/pDLjUo8] Received response: StunMessage(type=Allocate, cls=ResponseSuccess, transactionId=drlrPMrz/pDLjUo8, attributes=[XorRelayedAddress(address=/51.161.174.239:55421), XorMappedAddress(address=/49.187.35.145:65080), Lifetime(seconds=600)])
+[001.202][08:41:56.343][DEBUG] [172.27.112.1:65082] Contacting TURN server us.turn.essential.gg/15.204.108.48:3478
+[001.203][08:41:56.343][TRACE] [172.27.112.1:65082 <> 15.204.108.48:3478] [5Rfdnyul03tb2HFa] Begin STUN request: StunMessage(type=Allocate, cls=Request, transactionId=5Rfdnyul03tb2HFa, attributes=[RequestedTransport])
+[001.203][08:41:56.344][TRACE] [172.27.112.1:65082 <> 15.204.108.48:3478] [5Rfdnyul03tb2HFa] Sending STUN request, attempt 1/7
+[001.203][08:41:56.344][DEBUG] [192.168.0.15:65080 <> 51.161.174.239:3478] Received public address: /49.187.35.145:65080
+[001.204][08:41:56.344][DEBUG] [192.168.0.15:65080 <> 51.161.174.239:3478] Received relayed address: /51.161.174.239:55421
+[001.205][08:41:56.346][TRACE] Skipping network interface because it is not up: name:eth15 (Intel(R) Ethernet Connection (16) I219-V-WFP Native MAC Layer LightWeight Filter-0000)
+[001.207][08:41:56.347][TRACE] [172.27.112.1:65082 <> 15.204.108.48:3478] [5Rfdnyul03tb2HFa] Failed to send packet, aborting
+[001.216][08:41:56.356][WARN] [172.27.112.1:65082 <> 15.204.108.48:3478] Failed to contact TURN server, timed out.
+[001.220][08:41:56.361][DEBUG] [172.27.112.1:65082] Contacting TURN server eu.turn.essential.gg/51.195.24.116:3478
+[001.223][08:41:56.364][TRACE] Skipping network interface because it is not up: name:eth16 (Intel(R) Ethernet Connection (16) I219-V-QoS Packet Scheduler-0000)
+[001.224][08:41:56.365][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [yiMiu3v/Jwb/F3rc] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=yiMiu3v/Jwb/F3rc, attributes=[XorPeerAddress(address=/15.204.108.48:0)])
+[001.224][08:41:56.365][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [yiMiu3v/Jwb/F3rc] Sending STUN request, attempt 1/7
+[001.227][08:41:56.368][TRACE] [172.27.112.1:65082 <> 15.204.108.48:3478] [TWXPWkApGpedDfw8] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=TWXPWkApGpedDfw8, attributes=[Lifetime(seconds=0)])
+[001.227][08:41:56.368][TRACE] [172.27.112.1:65082 <> 15.204.108.48:3478] [TWXPWkApGpedDfw8] Sending STUN request, attempt 1/7
+[001.228][08:41:56.369][TRACE] [172.27.112.1:65082 <> 51.195.24.116:3478] [OJeAo30wWnWGIdoW] Begin STUN request: StunMessage(type=Allocate, cls=Request, transactionId=OJeAo30wWnWGIdoW, attributes=[RequestedTransport])
+[001.228][08:41:56.369][TRACE] [172.27.112.1:65082 <> 51.195.24.116:3478] [OJeAo30wWnWGIdoW] Sending STUN request, attempt 1/7
+[001.231][08:41:56.371][TRACE] [172.27.112.1:65082 <> 15.204.108.48:3478] [TWXPWkApGpedDfw8] Failed to send packet, aborting
+[001.231][08:41:56.371][TRACE] [172.27.112.1:65082 <> 51.195.24.116:3478] [OJeAo30wWnWGIdoW] Failed to send packet, aborting
+[001.232][08:41:56.372][WARN] [172.27.112.1:65082 <> 15.204.108.48:3478] Failed to release TURN allocation, timed out.
+[001.232][08:41:56.373][WARN] [172.27.112.1:65082 <> 51.195.24.116:3478] Failed to contact TURN server, timed out.
+[001.233][08:41:56.374][TRACE] [172.27.112.1:65082 <> 51.195.24.116:3478] [cGUq6AX+vR8Drlwa] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=cGUq6AX+vR8Drlwa, attributes=[Lifetime(seconds=0)])
+[001.233][08:41:56.374][TRACE] [172.27.112.1:65082 <> 51.195.24.116:3478] [cGUq6AX+vR8Drlwa] Sending STUN request, attempt 1/7
+[001.234][08:41:56.375][TRACE] [172.27.112.1:65082 <> 51.195.24.116:3478] [cGUq6AX+vR8Drlwa] Failed to send packet, aborting
+[001.237][08:41:56.377][WARN] [172.27.112.1:65082 <> 51.195.24.116:3478] Failed to release TURN allocation, timed out.
+[001.241][08:41:56.382][TRACE] Skipping network interface because it is not up: name:eth17 (Intel(R) Ethernet Connection (16) I219-V-WFP 802.3 MAC Layer LightWeight Filter-0000)
+[001.242][08:41:56.383][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [yiMiu3v/Jwb/F3rc] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=yiMiu3v/Jwb/F3rc, attributes=[])
+[001.259][08:41:56.400][TRACE] Skipping network interface because it is not up: name:wlan4 (Intel(R) Wi-Fi 6E AX211 160MHz-WFP Native MAC Layer LightWeight Filter-0000)
+[001.265][08:41:56.406][DEBUG] [172.27.112.1:65082] Contacting TURN server as.turn.essential.gg/15.235.229.89:3478
+[001.267][08:41:56.407][TRACE] [172.27.112.1:65082 <> 15.235.229.89:3478] [SPwpAkTA7zl4U7JR] Begin STUN request: StunMessage(type=Allocate, cls=Request, transactionId=SPwpAkTA7zl4U7JR, attributes=[RequestedTransport])
+[001.267][08:41:56.408][TRACE] [172.27.112.1:65082 <> 15.235.229.89:3478] [SPwpAkTA7zl4U7JR] Sending STUN request, attempt 1/7
+[001.268][08:41:56.408][TRACE] [172.27.112.1:65082 <> 15.235.229.89:3478] [SPwpAkTA7zl4U7JR] Failed to send packet, aborting
+[001.270][08:41:56.411][WARN] [172.27.112.1:65082 <> 15.235.229.89:3478] Failed to contact TURN server, timed out.
+[001.271][08:41:56.412][TRACE] [172.27.112.1:65082 <> 15.235.229.89:3478] [o5Y4E/1JzHjsTux5] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=o5Y4E/1JzHjsTux5, attributes=[Lifetime(seconds=0)])
+[001.271][08:41:56.412][TRACE] [172.27.112.1:65082 <> 15.235.229.89:3478] [o5Y4E/1JzHjsTux5] Sending STUN request, attempt 1/7
+[001.272][08:41:56.413][DEBUG] [172.27.112.1:65082] Contacting TURN server au.turn.essential.gg/51.161.174.239:3478
+[001.272][08:41:56.413][TRACE] [172.27.112.1:65082 <> 15.235.229.89:3478] [o5Y4E/1JzHjsTux5] Failed to send packet, aborting
+[001.273][08:41:56.414][TRACE] [172.27.112.1:65082 <> 51.161.174.239:3478] [Sv5CunkGw0npXVKN] Begin STUN request: StunMessage(type=Allocate, cls=Request, transactionId=Sv5CunkGw0npXVKN, attributes=[RequestedTransport])
+[001.273][08:41:56.414][TRACE] [172.27.112.1:65082 <> 51.161.174.239:3478] [Sv5CunkGw0npXVKN] Sending STUN request, attempt 1/7
+[001.274][08:41:56.415][WARN] [172.27.112.1:65082 <> 15.235.229.89:3478] Failed to release TURN allocation, timed out.
+[001.274][08:41:56.415][TRACE] [172.27.112.1:65082 <> 51.161.174.239:3478] [Sv5CunkGw0npXVKN] Failed to send packet, aborting
+[001.275][08:41:56.416][WARN] [172.27.112.1:65082 <> 51.161.174.239:3478] Failed to contact TURN server, timed out.
+[001.276][08:41:56.417][TRACE] [172.27.112.1:65082 <> 51.161.174.239:3478] [MnFhXrAnK+gdQGk6] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=MnFhXrAnK+gdQGk6, attributes=[Lifetime(seconds=0)])
+[001.277][08:41:56.418][TRACE] [172.27.112.1:65082 <> 51.161.174.239:3478] [MnFhXrAnK+gdQGk6] Sending STUN request, attempt 1/7
+[001.280][08:41:56.421][TRACE] [172.27.112.1:65082 <> 51.161.174.239:3478] [MnFhXrAnK+gdQGk6] Failed to send packet, aborting
+[001.282][08:41:56.423][WARN] [172.27.112.1:65082 <> 51.161.174.239:3478] Failed to release TURN allocation, timed out.
+[001.283][08:41:56.423][TRACE] [172.27.112.1:65082] Failed to send to /192.168.0.7:51164: Network is unreachable: sendto
+[001.286][08:41:56.427][TRACE] Skipping network interface because it is not up: name:wlan5 (Intel(R) Wi-Fi 6E AX211 160MHz-Virtual WiFi Filter Driver-0000)
+[001.303][08:41:56.444][TRACE] Skipping network interface because it is not up: name:wlan6 (Intel(R) Wi-Fi 6E AX211 160MHz-Native WiFi Filter Driver-0000)
+[001.320][08:41:56.461][TRACE] Skipping network interface because it is not up: name:wlan7 (Intel(R) Wi-Fi 6E AX211 160MHz-QoS Packet Scheduler-0000)
+[001.330][08:41:56.471][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Up1HBf4gZLGqn2CI] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=Up1HBf4gZLGqn2CI, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0)])
+[001.330][08:41:56.471][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Up1HBf4gZLGqn2CI] Sending STUN request, attempt 1/7
+[001.335][08:41:56.476][TRACE] Skipping network interface because it is not up: name:wlan8 (Intel(R) Wi-Fi 6E AX211 160MHz-WFP 802.3 MAC Layer LightWeight Filter-0000)
+[001.343][08:41:56.484][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Up1HBf4gZLGqn2CI] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=Up1HBf4gZLGqn2CI, attributes=[])
+[001.350][08:41:56.491][TRACE] Skipping network interface because it is not up: name:wlan9 (Microsoft Wi-Fi Direct Virtual Adapter-WFP Native MAC Layer LightWeight Filter-0000)
+[001.363][08:41:56.503][TRACE] Skipping network interface because it is not up: name:net25 (Generic Mobile Broadband Adapter-WFP Native MAC Layer LightWeight Filter-0000)
+[001.376][08:41:56.517][TRACE] Skipping network interface because it is not up: name:wlan10 (Microsoft Wi-Fi Direct Virtual Adapter-Native WiFi Filter Driver-0000)
+[001.387][08:41:56.528][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [hNKS+Y6m6m4MMnyI] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=hNKS+Y6m6m4MMnyI, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[001.388][08:41:56.529][DEBUG] [192.168.0.15:65080 <> 15.235.229.89:3478] Received public address from STUN server: /49.187.35.145:65080
+[001.393][08:41:56.534][TRACE] Skipping network interface because it is not up: name:wlan11 (Microsoft Wi-Fi Direct Virtual Adapter-QoS Packet Scheduler-0000)
+[001.406][08:41:56.547][TRACE] Skipping network interface because it is not up: name:eth18 (Hyper-V Virtual Ethernet Adapter-WFP 802.3 MAC Layer LightWeight Filter-0000)
+[001.421][08:41:56.562][TRACE] Skipping network interface because it is not up: name:wlan12 (Microsoft Wi-Fi Direct Virtual Adapter-WFP 802.3 MAC Layer LightWeight Filter-0000)
+[001.439][08:41:56.579][TRACE] Skipping network interface because it is not up: name:wlan13 (Microsoft Wi-Fi Direct Virtual Adapter #2-Native WiFi Filter Driver-0000)
+[001.453][08:41:56.594][TRACE] Skipping network interface because it is not up: name:wlan14 (Microsoft Wi-Fi Direct Virtual Adapter #2-QoS Packet Scheduler-0000)
+[001.468][08:41:56.609][TRACE] Skipping network interface because it is not up: name:wlan15 (Microsoft Wi-Fi Direct Virtual Adapter #2-WFP 802.3 MAC Layer LightWeight Filter-0000)
+[001.478][08:41:56.619][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [WX7Ibpye6FOxYrIQ] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=WX7Ibpye6FOxYrIQ, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[001.479][08:41:56.620][DEBUG] [192.168.0.15:65080 <> 15.204.108.48:3478] Received public address from STUN server: /49.187.35.145:65080
+[001.483][08:41:56.624][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [jnXkmkogHPzD9EZO] Received response: StunMessage(type=Allocate, cls=ResponseSuccess, transactionId=jnXkmkogHPzD9EZO, attributes=[XorRelayedAddress(address=/15.235.229.89:61592), XorMappedAddress(address=/49.187.35.145:65080), Lifetime(seconds=600)])
+[001.483][08:41:56.624][TRACE] Skipping network interface because it is not up: name:eth19 (WAN Miniport (IP)-WFP Native MAC Layer LightWeight Filter-0000)
+[001.484][08:41:56.624][DEBUG] [192.168.0.15:65080 <> 15.235.229.89:3478] Received public address: /49.187.35.145:65080
+[001.484][08:41:56.624][DEBUG] [192.168.0.15:65080 <> 15.235.229.89:3478] Received relayed address: /15.235.229.89:61592
+[001.486][08:41:56.627][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [A6hoNhAw+w2QBgrr] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=A6hoNhAw+w2QBgrr, attributes=[XorPeerAddress(address=/15.204.108.48:0)])
+[001.487][08:41:56.627][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [A6hoNhAw+w2QBgrr] Sending STUN request, attempt 1/7
+[001.489][08:41:56.630][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [uGckpfmrua/YD3Em] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=uGckpfmrua/YD3Em, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0)])
+[001.490][08:41:56.630][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [uGckpfmrua/YD3Em] Sending STUN request, attempt 1/7
+[001.496][08:41:56.637][TRACE] Skipping network interface because it is not up: name:eth20 (WAN Miniport (IP)-QoS Packet Scheduler-0000)
+[001.503][08:41:56.644][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [eFJIXdHrt5DQ0emC] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=eFJIXdHrt5DQ0emC, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[001.504][08:41:56.645][DEBUG] [192.168.0.15:65080 <> 51.195.24.116:3478] Received public address from STUN server: /49.187.35.145:65080
+[001.506][08:41:56.646][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [uGckpfmrua/YD3Em] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=uGckpfmrua/YD3Em, attributes=[])
+[001.514][08:41:56.655][TRACE] Skipping network interface because it is not up: name:eth21 (WAN Miniport (IPv6)-WFP Native MAC Layer LightWeight Filter-0000)
+[001.537][08:41:56.678][TRACE] Skipping network interface because it is not up: name:eth22 (WAN Miniport (IPv6)-QoS Packet Scheduler-0000)
+[001.543][08:41:56.684][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [HBJd+vQHJlmaJjRC] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=HBJd+vQHJlmaJjRC, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0)])
+[001.543][08:41:56.684][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [HBJd+vQHJlmaJjRC] Sending STUN request, attempt 1/7
+[001.544][08:41:56.685][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [B5dtXlpU+NOvGhWh] Received response: StunMessage(type=Allocate, cls=ResponseSuccess, transactionId=B5dtXlpU+NOvGhWh, attributes=[XorRelayedAddress(address=/15.204.108.48:51736), XorMappedAddress(address=/49.187.35.145:65080), Lifetime(seconds=600)])
+[001.545][08:41:56.686][DEBUG] [192.168.0.15:65080 <> 15.204.108.48:3478] Received public address: /49.187.35.145:65080
+[001.545][08:41:56.686][DEBUG] [192.168.0.15:65080 <> 15.204.108.48:3478] Received relayed address: /15.204.108.48:51736
+[001.548][08:41:56.689][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [k0Pyc4b1P+1EGjBM] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=k0Pyc4b1P+1EGjBM, attributes=[XorPeerAddress(address=/15.204.108.48:0)])
+[001.549][08:41:56.690][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [k0Pyc4b1P+1EGjBM] Sending STUN request, attempt 1/7
+[001.553][08:41:56.694][TRACE] Skipping network interface because it is not up: name:eth23 (WAN Miniport (Network Monitor)-WFP Native MAC Layer LightWeight Filter-0000)
+[001.570][08:41:56.711][TRACE] Skipping network interface because it is not up: name:eth24 (WAN Miniport (Network Monitor)-QoS Packet Scheduler-0000)
+[001.585][08:41:56.726][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [nGH414CChuJIMYs+] Received response: StunMessage(type=Allocate, cls=ResponseSuccess, transactionId=nGH414CChuJIMYs+, attributes=[XorRelayedAddress(address=/51.195.24.116:62634), XorMappedAddress(address=/49.187.35.145:65080), Lifetime(seconds=600)])
+[001.586][08:41:56.727][DEBUG] [192.168.0.15:65080 <> 51.195.24.116:3478] Received public address: /49.187.35.145:65080
+[001.586][08:41:56.727][DEBUG] [192.168.0.15:65080 <> 51.195.24.116:3478] Received relayed address: /51.195.24.116:62634
+[001.588][08:41:56.728][DEBUG] End of candidate gathering.
+[001.589][08:41:56.730][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [JYuA4OxXFpg7Zqzq] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=JYuA4OxXFpg7Zqzq, attributes=[XorPeerAddress(address=/15.204.108.48:0)])
+[001.589][08:41:56.730][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [JYuA4OxXFpg7Zqzq] Sending STUN request, attempt 1/7
+[001.643][08:41:56.784][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [e5TDfm3npKUy5oy4] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=e5TDfm3npKUy5oy4, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0)])
+[001.643][08:41:56.784][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [e5TDfm3npKUy5oy4] Sending STUN request, attempt 1/7
+[001.692][08:41:56.833][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [W4lTb8ZWS0Fs5sNG] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=W4lTb8ZWS0Fs5sNG, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0), XorPeerAddress(address=/15.235.229.89:0)])
+[001.693][08:41:56.833][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [W4lTb8ZWS0Fs5sNG] Sending STUN request, attempt 1/7
+[001.707][08:41:56.847][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [W4lTb8ZWS0Fs5sNG] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=W4lTb8ZWS0Fs5sNG, attributes=[])
+[001.744][08:41:56.884][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [3aofRh+OT8ZEFMRF] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=3aofRh+OT8ZEFMRF, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0), XorPeerAddress(address=/15.235.229.89:0)])
+[001.744][08:41:56.884][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [3aofRh+OT8ZEFMRF] Sending STUN request, attempt 1/7
+[001.778][08:41:56.918][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [A6hoNhAw+w2QBgrr] Ignoring STUN response because we have no active request for that id.
+[001.795][08:41:56.936][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [0RS7tjqXO5tIwQu0] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=0RS7tjqXO5tIwQu0, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0)])
+[001.795][08:41:56.936][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [0RS7tjqXO5tIwQu0] Sending STUN request, attempt 1/7
+[001.834][08:41:56.974][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [HBJd+vQHJlmaJjRC] Ignoring STUN response because we have no active request for that id.
+[001.897][08:41:57.038][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [yJ65X5Oub6pOK1at] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=yJ65X5Oub6pOK1at, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0)])
+[001.897][08:41:57.038][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [yJ65X5Oub6pOK1at] Sending STUN request, attempt 1/7
+[001.935][08:41:57.076][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [e5TDfm3npKUy5oy4] Ignoring STUN response because we have no active request for that id.
+[005.777][08:42:00.918][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [k0Pyc4b1P+1EGjBM] Ignoring STUN response because we have no active request for that id.
+[005.778][08:42:00.918][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [JYuA4OxXFpg7Zqzq] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=JYuA4OxXFpg7Zqzq, attributes=[])
+[005.778][08:42:00.919][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [3aofRh+OT8ZEFMRF] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=3aofRh+OT8ZEFMRF, attributes=[])
+[005.784][08:42:00.924][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [UmqKKCs4KDACOBMw] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[005.785][08:42:00.926][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [YBxCFb7pZN0CJ3k2] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.786][08:42:00.927][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [0RS7tjqXO5tIwQu0] Ignoring STUN response because we have no active request for that id.
+[005.788][08:42:00.928][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [yJ65X5Oub6pOK1at] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=yJ65X5Oub6pOK1at, attributes=[])
+[005.788][08:42:00.929][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [5WiFKs5pJKvuYQK0] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[005.788][08:42:00.929][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [5yTGbq9JP0YmEx4n] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[005.789][08:42:00.930][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [tIQG+UaLIm3uFrz2] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.789][08:42:00.930][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [YEiWdsoKtCenLgkW] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[005.790][08:42:00.931][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [9xIv7pJ3syybiU4U] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.791][08:42:00.932][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [SwMrWjNTbXkN6mHa] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.791][08:42:00.932][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [excvpDIK9WTTXM6D] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[005.792][08:42:00.933][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [9WFqs5PTMeWSF4yF] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.792][08:42:00.933][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [iU1xXJ3kl+etXr3t] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[005.793][08:42:00.934][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [O7GifzK0GPk16BbE] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[005.793][08:42:00.934][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [EH4PwjGehWrko+0n] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.793][08:42:00.934][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [x2PfYwB0l9ZpFi4M] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.794][08:42:00.935][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [bpzKxGNvh5SWl9GB] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[005.794][08:42:00.935][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [tYXnjaIuZ6mx2asg] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.795][08:42:00.936][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [QQj1+ntTpd54brJ6] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.797][08:42:00.937][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [7S/fp9p8FglD14ff] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[005.797][08:42:00.938][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [/S76GTJf6hp6MCki] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.800][08:42:00.941][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [twl+sJ89ZtLPGK5H] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[005.801][08:42:00.942][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [QyfAGTjB5ok9CiWG] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.802][08:42:00.942][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [5RUgG4NmCkJWdRH3] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.802][08:42:00.943][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [W7inpPXou3tWR3K3] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.803][08:42:00.944][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [bsWLVdiha4lhaXVN] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.805][08:42:00.946][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [wDkCb3Xn0XwHz12O] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[005.806][08:42:00.946][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Yr8aFEEI7p5F4CrW] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[005.806][08:42:00.947][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [Y6rWMVkTqOKigRyr] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.807][08:42:00.948][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [4NCm911tjWWdYWX6] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.808][08:42:00.949][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [oJn9RDrWMjxbd725] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.808][08:42:00.949][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [IX78MAeLMA7b+aCC] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[005.810][08:42:00.951][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [KsQLwqETzNHT0jK0] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[005.811][08:42:00.952][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [cPjRq1H++uKiClqr] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.813][08:42:00.954][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [pFhTsGl9dAxGI7E7] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.814][08:42:00.954][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [wzkXngSJB+UNYIki] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.818][08:42:00.959][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [2oc9jGQOhxFLvYyc] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[005.822][08:42:00.963][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [gYf+A8hWOBVaOK6W] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[005.822][08:42:00.963][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Sp6owFvu8uBGtvbx] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.870][08:42:01.011][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [g+kTqsGRkALqUhNU] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=g+kTqsGRkALqUhNU, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0), XorPeerAddress(address=/15.235.229.89:0)])
+[005.871][08:42:01.011][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [g+kTqsGRkALqUhNU] Sending STUN request, attempt 1/7
+[005.902][08:42:01.043][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Cncr6EgJiBtFb8ql] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[005.903][08:42:01.044][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [4J1bFp2BKdOqK+g8] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[005.905][08:42:01.046][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [HQ6UkRQRw+S6PUY0] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[005.917][08:42:01.057][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [4CbdrQSCQvjxTq4h] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[005.923][08:42:01.064][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [gQrpvtDX+8YX3DHr] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[005.970][08:42:01.111][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [0vfXO34B4+qhcyeY] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[005.990][08:42:01.131][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [kVt20ZpI8sXZ/ij1] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[006.008][08:42:01.149][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [VmIQzjqmdUObFtwV] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[006.038][08:42:01.179][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [IhZ4iP3Ikljzr/EC] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[006.180][08:42:01.321][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [pGr5T76RxBxRz9fC] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[006.191][08:42:01.332][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [b098LT29urQi8xTB] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[006.288][08:42:01.429][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [g+kTqsGRkALqUhNU] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=g+kTqsGRkALqUhNU, attributes=[])
+[006.297][08:42:01.438][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [T9Af0Ghp2/d+VHpB] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[006.325][08:42:01.466][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [94LYc0am4g7/JpwK] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[006.357][08:42:01.498][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [xhV7h2qpi4VjLHzF] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[006.358][08:42:01.498][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [hWqKGxwY2J+2obzu] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[006.418][08:42:01.558][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [sPYtrlHL/H3kx5yb] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[006.440][08:42:01.581][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [m/I5/sDAWajHDgYL] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[006.445][08:42:01.585][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Cnv40b8yb13bT6mL] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=Cnv40b8yb13bT6mL, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0)])
+[006.445][08:42:01.585][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Cnv40b8yb13bT6mL] Sending STUN request, attempt 1/7
+[006.455][08:42:01.595][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [CMTDYwZI+gYLxyoi] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[006.459][08:42:01.599][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [Hx4b7gSbFkBogMD6] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[006.459][08:42:01.600][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [qISFRgoRlFKb6Slo] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[006.467][08:42:01.608][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [iuHNL9fNPUmmHl5X] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[006.468][08:42:01.609][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [We+JM8ob/W2WznEb] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[006.500][08:42:01.641][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [M4/y77ysWjP68woR] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[006.503][08:42:01.643][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [3jW4T0Mgg+7D9hBq] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[006.517][08:42:01.658][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [MvUjTvShrcpT4kwH] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[006.519][08:42:01.660][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [PJMWsGfTh/2us4Oy] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[006.556][08:42:01.697][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [kutdZlLiTcnYRPsi] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[006.600][08:42:01.741][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [qMa4TBGo2108lPEX] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=qMa4TBGo2108lPEX, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0)])
+[006.601][08:42:01.741][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [qMa4TBGo2108lPEX] Sending STUN request, attempt 1/7
+[006.645][08:42:01.785][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [ojFA8JMJYzcX0yej] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[006.652][08:42:01.793][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [XPgCrg1nh5GKsh7B] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=XPgCrg1nh5GKsh7B, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0), XorPeerAddress(address=/15.235.229.89:0), XorPeerAddress(address=/51.195.24.116:0)])
+[006.652][08:42:01.793][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [XPgCrg1nh5GKsh7B] Sending STUN request, attempt 1/7
+[006.666][08:42:01.807][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [WtSa5s6b7M/84YS5] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[006.671][08:42:01.812][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [XPgCrg1nh5GKsh7B] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=XPgCrg1nh5GKsh7B, attributes=[])
+[006.681][08:42:01.822][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [0Z3qhfPij5WMIW2a] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[006.705][08:42:01.846][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [zmnYRare71DGew5B] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=zmnYRare71DGew5B, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0), XorPeerAddress(address=/15.235.229.89:0)])
+[006.705][08:42:01.846][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [zmnYRare71DGew5B] Sending STUN request, attempt 1/7
+[006.708][08:42:01.849][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [W03FzkcY99rKxbuM] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[006.710][08:42:01.851][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [cGjEKlk5fmUr1x68] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[006.713][08:42:01.854][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [tM17b/1TYgCermY7] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[006.723][08:42:01.864][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [5Pcz5z6BljrrwFjB] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[006.732][08:42:01.873][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [gzf1THeGkCKfeuDI] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[006.758][08:42:01.899][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [rtknvqUbG2PfgE21] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=rtknvqUbG2PfgE21, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0), XorPeerAddress(address=/15.235.229.89:0), XorPeerAddress(address=/51.195.24.116:0)])
+[006.758][08:42:01.899][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [rtknvqUbG2PfgE21] Sending STUN request, attempt 1/7
+[006.761][08:42:01.902][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [EhxRZr8TNXVxrNGi] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[006.777][08:42:01.917][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [aHCJZOBFXsS54sTq] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[006.779][08:42:01.919][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [6AtH6R4OW5vZmAGX] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[006.781][08:42:01.922][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [0gxG45QZRtaaRLnY] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[006.806][08:42:01.946][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [PVhIpiqkj/l8kyhS] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[006.859][08:42:02.000][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [px4cHv6TW3eRFPuJ] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=px4cHv6TW3eRFPuJ, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0), XorPeerAddress(address=/15.235.229.89:0), XorPeerAddress(address=/51.195.24.116:0)])
+[006.859][08:42:02.000][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [px4cHv6TW3eRFPuJ] Sending STUN request, attempt 1/7
+[006.866][08:42:02.007][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Cnv40b8yb13bT6mL] Ignoring STUN response because we have no active request for that id.
+[006.910][08:42:02.051][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [B/qQcWrw3UjQCP5v] Begin STUN request: StunMessage(type=CreatePermission, cls=Request, transactionId=B/qQcWrw3UjQCP5v, attributes=[XorPeerAddress(address=/15.204.108.48:0), XorPeerAddress(address=/49.187.35.145:0), XorPeerAddress(address=/51.161.174.239:0), XorPeerAddress(address=/15.235.229.89:0), XorPeerAddress(address=/51.195.24.116:0)])
+[006.910][08:42:02.051][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [B/qQcWrw3UjQCP5v] Sending STUN request, attempt 1/7
+[006.922][08:42:02.062][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [0eBmL/OyeQ0fTwjc] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[006.922][08:42:02.063][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478 <> 15.204.108.48:57466] [jh+D6K6JzMvSRMxC] Ignoring STUN response because we have no active request for that id.
+[006.975][08:42:02.115][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [Vy28gop70C7/jhKj] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[007.020][08:42:02.160][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [qMa4TBGo2108lPEX] Ignoring STUN response because we have no active request for that id.
+[007.033][08:42:02.174][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [z0X1HAzTAMfc+1TQ] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[007.034][08:42:02.174][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 49.187.35.145:51164] [QGFG1l44H+pok0ec] Ignoring STUN response because we have no active request for that id.
+[007.034][08:42:02.175][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [3SRqDS9N18IBAFaB] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[007.035][08:42:02.175][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [wuiP/y5k/tVJ1fWy] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[007.066][08:42:02.206][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [rtknvqUbG2PfgE21] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=rtknvqUbG2PfgE21, attributes=[])
+[007.066][08:42:02.207][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [dcaQW8aU7oQG3l+o] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[007.103][08:42:02.243][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [8AuxrFa4jajusKrU] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[007.110][08:42:02.250][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [8kCKnRlNTpBAhU0f] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[007.119][08:42:02.259][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [zmnYRare71DGew5B] Ignoring STUN response because we have no active request for that id.
+[007.119][08:42:02.260][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [1XGJxEB4mVwE7cWn] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[007.143][08:42:02.284][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [8KQpuy7JelsMwHZJ] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[007.169][08:42:02.310][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [wry7JTlAlulq8OFJ] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[007.175][08:42:02.316][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [YDOT1hT8RyTOclWq] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[007.176][08:42:02.316][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [ZjhG5IW7YtCvohrw] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[007.176][08:42:02.317][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 15.235.229.89:53388] [IYq8W7CAawgGBhFc] Ignoring STUN response because we have no active request for that id.
+[007.185][08:42:02.326][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [PO9af/iaPai0/yh5] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[007.186][08:42:02.326][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 51.161.174.239:52452] [+pZPEfrqMGQfhkob] Ignoring STUN response because we have no active request for that id.
+[007.203][08:42:02.344][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Ixl3PmKqD4p6nqP5] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[007.216][08:42:02.357][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [5Vffdl1LwFf8xe75] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[007.216][08:42:02.357][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 15.235.229.89:53388] [ox/kFGybTlRPlUQY] Ignoring STUN response because we have no active request for that id.
+[007.228][08:42:02.369][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [4fIbbQR+L6SYx7DC] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[007.249][08:42:02.390][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [69f6BaN/ODcPiFjo] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[007.265][08:42:02.406][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [NTK3slUCS3f6Kotb] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[007.278][08:42:02.419][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [px4cHv6TW3eRFPuJ] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=px4cHv6TW3eRFPuJ, attributes=[])
+[007.279][08:42:02.420][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [MlD49oT8pK4idsrn] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[007.279][08:42:02.420][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Ld+Aq1SFEg/U5+E8] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[007.281][08:42:02.422][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [y0a7IKGPyiZPztRi] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[007.281][08:42:02.422][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478 <> 15.204.108.48:57466] [j8n1jX9R54tR9MPN] Ignoring STUN response because we have no active request for that id.
+[007.282][08:42:02.422][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [2dOf32hNQeQaTX9A] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[007.329][08:42:02.470][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [syl9LJ0G9q4b/Ly3] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[007.343][08:42:02.484][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [B/qQcWrw3UjQCP5v] Received response: StunMessage(type=CreatePermission, cls=ResponseSuccess, transactionId=B/qQcWrw3UjQCP5v, attributes=[])
+[007.343][08:42:02.484][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [yvOXTVxH25QfQKJx] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[007.373][08:42:02.514][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [MKFquE2rOoxEC7tV] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[007.377][08:42:02.518][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [xubOnTEFRsa2JRGe] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[007.389][08:42:02.530][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [7pDUJWNSoPrlAvK6] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[007.404][08:42:02.545][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [FyDNzis798Iu7BDC] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[007.477][08:42:02.617][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [pSR8KwKT7Np/P3MR] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[007.490][08:42:02.631][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [QbJIDbDqd8/qD+me] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[007.519][08:42:02.659][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [q5cuWUztTCzqU40y] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[007.524][08:42:02.665][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [7Co8LP4FBad3PnAF] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[007.534][08:42:02.675][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [5HslyCJJtDcTPWFo] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[007.551][08:42:02.692][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [jmB8gWL+bBvXnHre] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[007.591][08:42:02.732][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [vkYbst3hXkPOraBB] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[007.600][08:42:02.741][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [RFz7APgRQrprhex5] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[007.600][08:42:02.741][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 15.204.108.48:57466] [6r4bYmZtZsH+ywDL] Ignoring STUN response because we have no active request for that id.
+[007.619][08:42:02.760][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [1o7u0ktyH5pVTsrN] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[007.619][08:42:02.760][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 15.204.108.48:57466] [L3UQjev7JFy+CnPP] Ignoring STUN response because we have no active request for that id.
+[007.619][08:42:02.760][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [5gm8eEtAIBl0y9ob] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[007.620][08:42:02.761][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [NAew4VAmvG2PMX8P] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[007.669][08:42:02.810][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [R2Pqq0sCE9J5VsiU] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[007.669][08:42:02.810][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 49.187.35.145:51164] [G1EH+cds085yoaQ9] Ignoring STUN response because we have no active request for that id.
+[007.684][08:42:02.825][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [C4frrhFn/9hAy7br] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[007.702][08:42:02.843][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [+Nm2408Jq7U6i8Kw] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[007.733][08:42:02.874][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [pe55T7Yql2qpPC03] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[007.743][08:42:02.884][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [qlE0Ph1Pg3No02qL] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[007.753][08:42:02.894][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [8eyP0+RU6w0hIKH8] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[007.774][08:42:02.915][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [NxG39IRCN8eLmlLB] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[007.790][08:42:02.931][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [CVmE3vHZxtPlT+qp] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[007.790][08:42:02.931][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 49.187.35.145:51164] [S4WjBM9U7yZtAIEx] Ignoring STUN response because we have no active request for that id.
+[007.790][08:42:02.931][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [NqDz/U4UcTQ2z3Uh] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[007.806][08:42:02.947][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [I+SB6oLVz5+AlC+k] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[007.822][08:42:02.962][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [D1Kx3gXeVjRCb4KQ] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[007.822][08:42:02.963][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [YZ6a2BpsG/yZRdzM] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[007.822][08:42:02.963][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 51.161.174.239:52452] [V8PDB7G7TQCtrON4] Ignoring STUN response because we have no active request for that id.
+[007.834][08:42:02.974][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [/GqRcPVD3vVCDj5U] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[007.839][08:42:02.979][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [XG6ogcqmAw6s6n6+] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[007.853][08:42:02.994][TRACE] [192.168.0.15:65080 <> 51.195.24.116:50953] [rVPGaJWMlY1ftEz9] Ignoring STUN response because we have no active request for that id.
+[007.854][08:42:02.994][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [2TmUUuZqPrguEClN] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[007.872][08:42:03.012][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [e0g1Mmyxo+fNoa7g] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[007.872][08:42:03.013][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478 <> 51.195.24.116:50953] [+joBvBM6Jq5EbHo2] Ignoring STUN response because we have no active request for that id.
+[007.879][08:42:03.020][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [8BHKI06Pftu3B7IU] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[007.889][08:42:03.030][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [aN+0hcjQneomLy8S] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[007.889][08:42:03.030][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 15.204.108.48:57466] [i7sFnv5U6+8EpfV3] Ignoring STUN response because we have no active request for that id.
+[007.914][08:42:03.055][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [cdRrf3QafvpKkbak] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[007.916][08:42:03.057][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [RimQ0FICfoobwtLC] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[007.916][08:42:03.057][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 15.235.229.89:53388] [5M8adB/LWL3UuisE] Ignoring STUN response because we have no active request for that id.
+[007.975][08:42:03.116][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [dS5BKAw0GCZn1vMk] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[008.011][08:42:03.152][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [F2NMHhp1sR54BKRo] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[008.018][08:42:03.159][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [oqDKdexRVRYzI/VW] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[008.050][08:42:03.191][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [NvPK66FgYbLYOYQP] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[008.051][08:42:03.191][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478 <> 51.195.24.116:50953] [iUBMXR4EWeyZrQX1] Ignoring STUN response because we have no active request for that id.
+[008.051][08:42:03.191][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [fC4ywN8iKRZJNhi1] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[008.052][08:42:03.192][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [gf+YCcg3eZDnhaas] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[008.052][08:42:03.193][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 15.235.229.89:53388] [gV7/O0Ug/2Mur2m9] Ignoring STUN response because we have no active request for that id.
+[008.090][08:42:03.231][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [pEn7QDAAZqg8MWbJ] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[008.092][08:42:03.233][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [tz7LnpyTWSQMF8m7] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[008.098][08:42:03.238][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [s/kCbfBkuuYJPi3I] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[008.134][08:42:03.274][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [ZHXZpC8BKqHZthTX] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[008.134][08:42:03.275][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 51.195.24.116:50953] [K4x2MdSjVgZAzGJT] Ignoring STUN response because we have no active request for that id.
+[008.134][08:42:03.275][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Lhhcs+Bvwadq1132] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[008.134][08:42:03.275][TRACE] [192.168.0.15:65080 <> 15.235.229.89:53388] [4xSFtsjvPYHtkSHY] Ignoring STUN response because we have no active request for that id.
+[008.134][08:42:03.275][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [jomicyC8Vq+zR+/g] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.144][08:42:03.285][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [4H+w4WLzTgjRC9WW] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.183][08:42:03.324][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [TJmUu/li3zbVIp1r] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[008.240][08:42:03.380][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [WOb7UjeY8HZOV2xY] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[008.245][08:42:03.386][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [POWiLfL5yq7dZxDq] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[008.246][08:42:03.386][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 51.195.24.116:50953] [0hKpiPO2qrsEUo6F] Ignoring STUN response because we have no active request for that id.
+[008.296][08:42:03.437][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [Ly817jpo0pwrHXxG] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[008.297][08:42:03.438][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Fx2hPRE6I4/Klgm4] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.297][08:42:03.438][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [3HV10U4R1RlM1wYP] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[008.315][08:42:03.456][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [le9XPIFHIT+MHL1W] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[008.335][08:42:03.476][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [4BUc8WfGmM7p3Jrm] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[008.342][08:42:03.483][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [Sbg8YNkjClyaXyfr] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[008.343][08:42:03.483][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 51.195.24.116:50953] [LuuzUcuCXl6ssC/l] Ignoring STUN response because we have no active request for that id.
+[008.407][08:42:03.548][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [W/OJy7zzQzw58t/B] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.453][08:42:03.594][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [HjjqRoqR2Wj8gxS3] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[008.467][08:42:03.608][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [IWJS7CpJa1mjNQC0] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[008.468][08:42:03.609][TRACE] [192.168.0.15:65080 <> 15.204.108.48:57466] [02gOeWjtaRHxj5lY] Ignoring STUN response because we have no active request for that id.
+[008.468][08:42:03.609][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [NtwnU/fcgTL9KukP] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[008.469][08:42:03.610][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [vhSY9p3UakbSVrZZ] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[008.469][08:42:03.610][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 49.187.35.145:51164] [n4/yt82gbn4ru8ar] Ignoring STUN response because we have no active request for that id.
+[008.493][08:42:03.634][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [p1TcNW9tSYr8Ss54] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.494][08:42:03.635][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [PRy/UQuDU0ctMuPH] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[008.512][08:42:03.653][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [qaM+G9ILzvP2VeDa] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[008.513][08:42:03.653][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [IbxgdpJsql6wvvZw] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[008.517][08:42:03.658][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [cOUIoZokrzF4dCIe] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[008.528][08:42:03.669][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [l/MR9d/nb+GhRvjM] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[008.529][08:42:03.669][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 51.161.174.239:52452] [wmGxiSxkGeY39lp/] Ignoring STUN response because we have no active request for that id.
+[008.539][08:42:03.679][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [mFxSzgUUaKSpHt2P] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[008.539][08:42:03.680][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [CUWoFpyTXYRHUT8j] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.559][08:42:03.700][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [O9qlBCuN4N7ybS50] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[008.559][08:42:03.700][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 15.235.229.89:53388] [ibHRf0fm9UnjExiX] Ignoring STUN response because we have no active request for that id.
+[008.577][08:42:03.718][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [f4xt94RR3CAdxBgK] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[008.584][08:42:03.725][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [y5iH18w0HaVLXGrz] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[008.593][08:42:03.734][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [ofLux0RNgbjifGA6] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[008.607][08:42:03.748][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [8sistncjzFB6wcV9] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[008.615][08:42:03.756][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [u8DD59Y+PXwpYWlz] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[008.615][08:42:03.756][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478 <> 15.204.108.48:57466] [uXbdnR8KN9D034vb] Ignoring STUN response because we have no active request for that id.
+[008.644][08:42:03.785][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [UsiVlbqRABceOgig] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.654][08:42:03.795][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [wsD1T79r1W4FxJ5X] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.665][08:42:03.806][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [WeTRCnr1WfPK6usL] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[008.726][08:42:03.867][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [/cS4RR7dn+TtMAze] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[008.727][08:42:03.867][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [fV1gfaB35NwppVW6] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[008.735][08:42:03.876][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [ztihR5DIWY73PRav] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[008.789][08:42:03.930][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [EGPmCcZFiIz/RrXp] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[008.807][08:42:03.948][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [oCUj/fNHywPo2JPo] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[008.820][08:42:03.961][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [D2aU1xnxS3bSnPTm] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[008.868][08:42:04.009][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [p0eC9K44YItxdAT5] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.899][08:42:04.040][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [l3LI+Egj7gxWVQ1c] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[008.899][08:42:04.040][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [SaNNVvueqxmeUBNI] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.913][08:42:04.054][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [SY/fAtOt30gIxH0b] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[008.933][08:42:04.073][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [RWzvQijYeBPIxP05] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.943][08:42:04.084][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [7P6Nf1xxswq5pseA] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[008.944][08:42:04.084][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 15.204.108.48:57466] [ILuRwo9TujBSQWQg] Ignoring STUN response because we have no active request for that id.
+[008.959][08:42:04.100][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [kWQjk6H8DNo/lG1j] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[008.974][08:42:04.115][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [8dKX5QdY296zFBEY] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[008.974][08:42:04.115][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [a/6xPfBUDYT0nim5] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[008.974][08:42:04.115][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 15.204.108.48:57466] [gvKbWblwVzvgDK+s] Ignoring STUN response because we have no active request for that id.
+[009.007][08:42:04.147][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [GQ+7aCePwF7TFyWV] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[009.007][08:42:04.148][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [EAbgYVTIWh4zYICb] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[009.008][08:42:04.148][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [CBbA2GMrh3Te8nfs] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[009.011][08:42:04.152][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [xcY9iEFaGIVAOW07] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[009.021][08:42:04.162][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [eBGY4eIkN7X/2CBV] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[009.021][08:42:04.162][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 51.161.174.239:52452] [JWJjPjGRNCf/tf2N] Ignoring STUN response because we have no active request for that id.
+[009.041][08:42:04.181][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [hFc7vEtn7imuFdO5] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[009.041][08:42:04.182][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [xETMHlGcrFHvaeVn] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[009.043][08:42:04.184][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [bkA3fxq+W1BBqrPy] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[009.044][08:42:04.184][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 49.187.35.145:51164] [z3xy/3p34fb548Gc] Ignoring STUN response because we have no active request for that id.
+[009.045][08:42:04.186][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [vwI9gBMcYpO8Dn8y] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[009.067][08:42:04.208][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [zWBbZsq8RxzMB9pJ] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[009.091][08:42:04.232][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [SI8+fsZHLwfgzZyH] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[009.091][08:42:04.232][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 49.187.35.145:51164] [I/G4SMsSm+7Pp89S] Ignoring STUN response because we have no active request for that id.
+[009.115][08:42:04.256][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [ch3k93yO/cKqp1WF] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[009.155][08:42:04.296][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [6ReR2Cecq7MxTE2N] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[009.158][08:42:04.299][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [R6pKE0V42oKQHnKG] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[009.207][08:42:04.348][TRACE] [192.168.0.15:65080 <> 51.195.24.116:50953] [33VhXy9asRCht1x2] Ignoring STUN response because we have no active request for that id.
+[009.208][08:42:04.349][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [f1D2voOq2SO9uGJh] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[009.212][08:42:04.353][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [HqFjpkJ3y7C4SAra] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[009.250][08:42:04.391][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [cV2zJj9KCRKVl2W4] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[009.251][08:42:04.392][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Vyo1BXh45RhaGkJ4] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[009.251][08:42:04.392][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478 <> 51.195.24.116:50953] [+56epwjCl+qHosEM] Ignoring STUN response because we have no active request for that id.
+[009.255][08:42:04.395][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [qcm17iLTINFmKtpV] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[009.324][08:42:04.465][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [HTbIdwKPXcN7rqoD] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[009.333][08:42:04.473][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [teYxBxIPz4voACLV] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[009.333][08:42:04.474][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 15.235.229.89:53388] [ZAOwlU/Y8uk1mDCP] Ignoring STUN response because we have no active request for that id.
+[009.344][08:42:04.484][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [tRD+VE48yvvM6/38] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[009.359][08:42:04.500][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [h1f24q8IIoTYR1ir] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[009.360][08:42:04.501][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [tvKplqT4l51cakH7] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[009.362][08:42:04.503][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [f3oREdfsbAYHD2R4] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[009.392][08:42:04.532][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [v627Fk4LE3AOWnCd] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[009.392][08:42:04.533][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [2vSHjthDkt/bjQaR] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[009.392][08:42:04.533][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [P7bu8Y7HjizeaWFc] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[009.392][08:42:04.533][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 15.204.108.48:57466] [9fLQlvj0yRzQ7yO9] Ignoring STUN response because we have no active request for that id.
+[009.413][08:42:04.554][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [YA0O3Z6KYt7pG+Te] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[009.438][08:42:04.579][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [XA+5zdP7MxEaet2m] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[009.438][08:42:04.579][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 15.235.229.89:53388] [CBVtpRgvk81gm2RX] Ignoring STUN response because we have no active request for that id.
+[009.468][08:42:04.609][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [Kgo/yBQdekbbfjM1] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[009.475][08:42:04.616][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [iL3FRsjEsE2a57dM] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[009.499][08:42:04.639][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [dYaqM4KUTUOZH5OH] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[009.499][08:42:04.640][TRACE] [192.168.0.15:65080 <> 15.235.229.89:53388] [TEsLSY3nBLGZVmcc] Ignoring STUN response because we have no active request for that id.
+[009.520][08:42:04.661][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [WzBw/F2cERLh1IdP] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[009.521][08:42:04.661][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 51.195.24.116:50953] [6YiFLxTGP3k8jkDp] Ignoring STUN response because we have no active request for that id.
+[009.539][08:42:04.680][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [2SfZT/xuuQM3oFtq] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[009.540][08:42:04.680][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 51.195.24.116:50953] [p4k2Tw5XPokQuX7g] Ignoring STUN response because we have no active request for that id.
+[009.605][08:42:04.746][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [d8RLu2+zoRVVby9f] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[009.636][08:42:04.777][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [jvLxWjtCagnrl7Gz] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[009.683][08:42:04.824][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [oc950qOa3xIC4FeI] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[009.721][08:42:04.862][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [23puBRPGHUJn8Bcd] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[009.741][08:42:04.882][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [ZEG5zpp3obdvsGQR] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[009.757][08:42:04.898][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [EzfEBQi/Y4h6UT22] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[009.757][08:42:04.898][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 51.195.24.116:50953] [kKWcjjP0RVLKugD2] Ignoring STUN response because we have no active request for that id.
+[009.768][08:42:04.908][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [FsWn0COt9HKaVWt/] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[009.781][08:42:04.921][TRACE] [192.168.0.15:65080 <> 15.204.108.48:57466] [Su+ytxQjoAfFMfJS] Ignoring STUN response because we have no active request for that id.
+[009.805][08:42:04.946][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [MmrqLy+EgfjzJP/f] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[009.806][08:42:04.947][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [h82dFi8TPh0Di/bZ] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[009.812][08:42:04.952][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [FY8kTxtWA0PjHf1X] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[009.815][08:42:04.956][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [Z9qQ1KuMJ3jYIHY+] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[009.815][08:42:04.956][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 49.187.35.145:51164] [Blp9TcbbJ4UGvu4s] Ignoring STUN response because we have no active request for that id.
+[009.834][08:42:04.975][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [Bzg4h8gAEyVPq3+h] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[009.835][08:42:04.976][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [CI8GaIoodeAtLJet] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[009.854][08:42:04.995][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [c58Cz3xw+ZoJ+i7m] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[009.855][08:42:04.996][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [ABxRQ7NKazH5oh2l] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[009.859][08:42:04.999][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [Deuoqa23U2V4Z9l9] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[009.859][08:42:05.000][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 51.161.174.239:52452] [PKGcLDAvomKjzkYS] Ignoring STUN response because we have no active request for that id.
+[009.873][08:42:05.014][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [0pxzFC7XoFjfaVjx] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[009.882][08:42:05.023][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [lp8KCTxpydwaIWEL] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[009.883][08:42:05.023][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [ZPEfJQB4fZAKmNFs] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[009.883][08:42:05.023][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 15.235.229.89:53388] [eH4LErewpR7/UgqS] Ignoring STUN response because we have no active request for that id.
+[009.883][08:42:05.024][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [78MD2Yi9R+3cKb7l] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[009.887][08:42:05.028][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [P6XQDl24oyx/v/sX] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[009.907][08:42:05.048][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [nUVwjq1It+BeqUcC] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[009.927][08:42:05.068][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [zY9vcdCvB5NmHRQU] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[009.928][08:42:05.069][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [q3eHgp4AwbApg10n] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[009.967][08:42:05.108][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [1cN4MaWmC+WFDKFc] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[009.975][08:42:05.116][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [82SoQMpsebwUXngP] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[009.975][08:42:05.116][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478 <> 15.204.108.48:57466] [wGXbdpBqg/F/Z2Le] Ignoring STUN response because we have no active request for that id.
+[010.070][08:42:05.210][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [4GPjSwNDHIkLYJVA] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[010.076][08:42:05.217][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [CgK3pO5zGLcRnqHt] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[010.108][08:42:05.249][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [pz2KFZrQ8aOw5aAb] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[010.109][08:42:05.250][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [i2Vna1bvaSdDikh7] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[010.117][08:42:05.257][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [grrsoUAiCOTh+6GH] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[010.143][08:42:05.284][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [LFd2/dHmDgN89fbI] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[010.163][08:42:05.304][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [h9rn/MOuDCDOLroq] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[010.164][08:42:05.304][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [D8nSHIPPK+6lnXwZ] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[010.214][08:42:05.355][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [GS6IvGiI6aK9ugOR] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[010.270][08:42:05.411][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [OFqv5gJeHQy+BdJ0] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[010.271][08:42:05.411][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [9XDgfWWbVxe/e5vy] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[010.291][08:42:05.432][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Zis5s1MCvzuqhkgu] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[010.292][08:42:05.433][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [MhIxdfW4KfFjVItN] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[010.292][08:42:05.433][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 15.204.108.48:57466] [APp/8vxgPBlDBiSo] Ignoring STUN response because we have no active request for that id.
+[010.307][08:42:05.447][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [lj2GlOb8MhJHUAAk] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[010.309][08:42:05.450][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [6uzq8ats60MWvL5X] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[010.309][08:42:05.450][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 15.204.108.48:57466] [wgcl3L+klGILFJAP] Ignoring STUN response because we have no active request for that id.
+[010.329][08:42:05.469][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [vakoyFev9ywh2mM8] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[010.330][08:42:05.471][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [A6zGnklYUrZCfjCz] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[010.354][08:42:05.495][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [YdoIMjQeQBX9aGmJ] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[010.362][08:42:05.503][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [UL1dtqynpZpk4crO] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[010.363][08:42:05.503][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [f3UdGiU45j5DFN+6] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[010.369][08:42:05.510][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [l7jmccjK4qQTdKzj] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[010.370][08:42:05.510][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 51.161.174.239:52452] [+R/qFS1fQmPgSARx] Ignoring STUN response because we have no active request for that id.
+[010.382][08:42:05.523][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [CFNvvhVfvWL5dcQY] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[010.382][08:42:05.523][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 49.187.35.145:51164] [fEWPTW33GCB0hN21] Ignoring STUN response because we have no active request for that id.
+[010.382][08:42:05.523][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [b4cBpVcsfjWusSB/] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[010.418][08:42:05.559][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [L8uCMu5ce6XFdW1G] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[010.423][08:42:05.564][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [qnx39kSB1ZPocOsb] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[010.424][08:42:05.564][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 49.187.35.145:51164] [5FHLxTJ9oQ4A55Z/] Ignoring STUN response because we have no active request for that id.
+[010.440][08:42:05.580][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [rHcdhANRyEscVNW/] Received STUN Data indication from peer /15.235.229.89:53388 with 152 bytes of data.
+[010.440][08:42:05.581][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [tyDg9rykVkQWNLjj] Received STUN Data indication from peer /51.161.174.239:52452 with 92 bytes of data.
+[010.529][08:42:05.670][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [fe91M+1MWpFlGaIm] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[010.530][08:42:05.670][TRACE] [192.168.0.15:65080 <> 51.195.24.116:50953] [2U50rHqh7ftuEKJL] Ignoring STUN response because we have no active request for that id.
+[010.538][08:42:05.679][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [b05M3LzvBnd6IIOk] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[010.559][08:42:05.700][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [Thr/y4WSCmXDlA/p] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[010.559][08:42:05.700][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 51.195.24.116:50953] [Pkh4i3uixZHNwT29] Ignoring STUN response because we have no active request for that id.
+[010.575][08:42:05.716][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [yoWcbqFL7H4hJJtX] Received STUN Data indication from peer /49.187.35.145:51164 with 152 bytes of data.
+[010.590][08:42:05.730][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [zgdME7tJliPnfVFu] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[010.590][08:42:05.731][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478 <> 51.195.24.116:50953] [BBZgGnxi1JnqBVpZ] Ignoring STUN response because we have no active request for that id.
+[010.590][08:42:05.731][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [tIHTAKVHBgVQPjBB] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[010.605][08:42:05.746][TRACE] [192.168.0.15:65080 <> 15.204.108.48:57466] [Qhlyn2GrBBBKYf6D] Ignoring STUN response because we have no active request for that id.
+[010.620][08:42:05.761][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [w7jTz0p16Aazm38L] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[010.621][08:42:05.762][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [kr1Gca0P6YohMOP9] Received STUN Data indication from peer /49.187.35.145:51164 with 92 bytes of data.
+[010.621][08:42:05.762][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 49.187.35.145:51164] [JnZUnMa9IQAHvGr/] Ignoring STUN response because we have no active request for that id.
+[010.645][08:42:05.786][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [rA71IGyco57AYxI8] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[010.654][08:42:05.795][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [kMRUHGOB4KDn5EnC] Received STUN Data indication from peer /51.195.24.116:50953 with 152 bytes of data.
+[010.655][08:42:05.796][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [qrC1TgPnbVsdqA0h] Received STUN Data indication from peer /15.235.229.89:53388 with 92 bytes of data.
+[010.655][08:42:05.796][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478 <> 15.235.229.89:53388] [s2Yn4PpjIgONJmKk] Ignoring STUN response because we have no active request for that id.
+[010.683][08:42:05.824][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [FM5I32TzoQvvO9Pg] Received STUN Data indication from peer /51.161.174.239:52452 with 152 bytes of data.
+[010.756][08:42:05.897][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [qwiJi4oPHQlYbKYV] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[010.757][08:42:05.897][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478 <> 15.204.108.48:57466] [v8RbIiFK5qbeH4o/] Ignoring STUN response because we have no active request for that id.
+[010.780][08:42:05.921][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [SBGmDSENRU/3vzUk] Received STUN Data indication from peer /15.204.108.48:57466 with 92 bytes of data.
+[010.781][08:42:05.921][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478 <> 15.204.108.48:57466] [SYrRGoWNxP+wJ5Df] Ignoring STUN response because we have no active request for that id.
+[010.790][08:42:05.931][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [WpQWx8R1rdnuQAkp] Received STUN Data indication from peer /15.204.108.48:57466 with 152 bytes of data.
+[010.820][08:42:05.961][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [5GoFn28POLIWZDbF] Received STUN Data indication from peer /51.195.24.116:50953 with 92 bytes of data.
+[010.820][08:42:05.961][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478 <> 51.195.24.116:50953] [Vl4s9ICuSeYcGpLO] Ignoring STUN response because we have no active request for that id.
+[011.168][08:42:06.309][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Sa7KH9UPDbFNR8/9] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=Sa7KH9UPDbFNR8/9, attributes=[])
+[011.169][08:42:06.309][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Sa7KH9UPDbFNR8/9] Sending STUN request, attempt 1/7
+[011.187][08:42:06.328][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [Sa7KH9UPDbFNR8/9] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=Sa7KH9UPDbFNR8/9, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[011.207][08:42:06.347][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [16zO562gY3k6kF8Q] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=16zO562gY3k6kF8Q, attributes=[])
+[011.207][08:42:06.348][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [16zO562gY3k6kF8Q] Sending STUN request, attempt 1/7
+[011.252][08:42:06.393][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [16zO562gY3k6kF8Q] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=16zO562gY3k6kF8Q, attributes=[Lifetime(seconds=600)])
+[011.389][08:42:06.530][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [Ja4zi/hXOl69Zxpz] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=Ja4zi/hXOl69Zxpz, attributes=[])
+[011.389][08:42:06.530][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [Ja4zi/hXOl69Zxpz] Sending STUN request, attempt 1/7
+[011.481][08:42:06.621][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [S5XwTVRh+H/jzD2h] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=S5XwTVRh+H/jzD2h, attributes=[])
+[011.481][08:42:06.622][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [S5XwTVRh+H/jzD2h] Sending STUN request, attempt 1/7
+[011.485][08:42:06.626][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [W56af5uDYAJAFuOj] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=W56af5uDYAJAFuOj, attributes=[])
+[011.486][08:42:06.626][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [W56af5uDYAJAFuOj] Sending STUN request, attempt 1/7
+[011.506][08:42:06.647][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [S5DS3ack6xLx8FR/] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=S5DS3ack6xLx8FR/, attributes=[])
+[011.506][08:42:06.647][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [S5DS3ack6xLx8FR/] Sending STUN request, attempt 1/7
+[011.547][08:42:06.688][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [BN5G3s8aU19TyaSb] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=BN5G3s8aU19TyaSb, attributes=[])
+[011.548][08:42:06.688][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [BN5G3s8aU19TyaSb] Sending STUN request, attempt 1/7
+[011.589][08:42:06.729][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [htylQfzW+27ey1Rj] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=htylQfzW+27ey1Rj, attributes=[])
+[011.589][08:42:06.729][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [htylQfzW+27ey1Rj] Sending STUN request, attempt 1/7
+[011.683][08:42:06.824][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [Ja4zi/hXOl69Zxpz] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=Ja4zi/hXOl69Zxpz, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[011.773][08:42:06.914][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [W56af5uDYAJAFuOj] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=W56af5uDYAJAFuOj, attributes=[Lifetime(seconds=600)])
+[011.896][08:42:07.036][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [S5XwTVRh+H/jzD2h] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=S5XwTVRh+H/jzD2h, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[011.933][08:42:07.074][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [S5DS3ack6xLx8FR/] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=S5DS3ack6xLx8FR/, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[011.967][08:42:07.108][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [BN5G3s8aU19TyaSb] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=BN5G3s8aU19TyaSb, attributes=[Lifetime(seconds=600)])
+[012.010][08:42:07.151][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [htylQfzW+27ey1Rj] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=htylQfzW+27ey1Rj, attributes=[Lifetime(seconds=600)])
+[021.190][08:42:16.331][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [KT/ckLg7ABmuCcUN] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=KT/ckLg7ABmuCcUN, attributes=[])
+[021.190][08:42:16.331][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [KT/ckLg7ABmuCcUN] Sending STUN request, attempt 1/7
+[021.203][08:42:16.344][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [KT/ckLg7ABmuCcUN] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=KT/ckLg7ABmuCcUN, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[021.255][08:42:16.396][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [5xRW+X2wKvRZzAU4] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=5xRW+X2wKvRZzAU4, attributes=[])
+[021.255][08:42:16.396][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [5xRW+X2wKvRZzAU4] Sending STUN request, attempt 1/7
+[021.279][08:42:16.420][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [5xRW+X2wKvRZzAU4] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=5xRW+X2wKvRZzAU4, attributes=[Lifetime(seconds=600)])
+[021.692][08:42:16.832][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [THR2drx2H3z/W0ya] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=THR2drx2H3z/W0ya, attributes=[])
+[021.692][08:42:16.833][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [THR2drx2H3z/W0ya] Sending STUN request, attempt 1/7
+[021.775][08:42:16.915][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [CxQeikVO4G9GLdEF] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=CxQeikVO4G9GLdEF, attributes=[])
+[021.775][08:42:16.916][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [CxQeikVO4G9GLdEF] Sending STUN request, attempt 1/7
+[021.898][08:42:17.039][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [KV5RU1lkRj1RmlSw] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=KV5RU1lkRj1RmlSw, attributes=[])
+[021.899][08:42:17.039][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [KV5RU1lkRj1RmlSw] Sending STUN request, attempt 1/7
+[021.935][08:42:17.075][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [ZY17nKx2mEsMxXoq] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=ZY17nKx2mEsMxXoq, attributes=[])
+[021.935][08:42:17.076][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [ZY17nKx2mEsMxXoq] Sending STUN request, attempt 1/7
+[021.969][08:42:17.110][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [B1pslhIKlMDIQ1rR] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=B1pslhIKlMDIQ1rR, attributes=[])
+[021.969][08:42:17.110][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [B1pslhIKlMDIQ1rR] Sending STUN request, attempt 1/7
+[021.992][08:42:17.132][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [THR2drx2H3z/W0ya] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=THR2drx2H3z/W0ya, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[022.012][08:42:17.153][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Y+xc83LlrBbBOODJ] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=Y+xc83LlrBbBOODJ, attributes=[])
+[022.012][08:42:17.153][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Y+xc83LlrBbBOODJ] Sending STUN request, attempt 1/7
+[022.068][08:42:17.209][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [CxQeikVO4G9GLdEF] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=CxQeikVO4G9GLdEF, attributes=[Lifetime(seconds=600)])
+[022.316][08:42:17.457][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [KV5RU1lkRj1RmlSw] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=KV5RU1lkRj1RmlSw, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[022.362][08:42:17.503][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [ZY17nKx2mEsMxXoq] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=ZY17nKx2mEsMxXoq, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[022.399][08:42:17.539][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [B1pslhIKlMDIQ1rR] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=B1pslhIKlMDIQ1rR, attributes=[Lifetime(seconds=600)])
+[022.440][08:42:17.581][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Y+xc83LlrBbBOODJ] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=Y+xc83LlrBbBOODJ, attributes=[Lifetime(seconds=600)])
+[031.204][08:42:26.345][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [2f+81fN0UVWhLibj] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=2f+81fN0UVWhLibj, attributes=[])
+[031.204][08:42:26.345][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [2f+81fN0UVWhLibj] Sending STUN request, attempt 1/7
+[031.217][08:42:26.358][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [2f+81fN0UVWhLibj] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=2f+81fN0UVWhLibj, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[031.280][08:42:26.421][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [/PHP+XB1GuNUyttZ] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=/PHP+XB1GuNUyttZ, attributes=[])
+[031.280][08:42:26.421][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [/PHP+XB1GuNUyttZ] Sending STUN request, attempt 1/7
+[031.293][08:42:26.434][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [/PHP+XB1GuNUyttZ] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=/PHP+XB1GuNUyttZ, attributes=[Lifetime(seconds=600)])
+[031.993][08:42:27.134][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [eitMNJsstPWGG+0V] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=eitMNJsstPWGG+0V, attributes=[])
+[031.993][08:42:27.134][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [eitMNJsstPWGG+0V] Sending STUN request, attempt 1/7
+[032.070][08:42:27.211][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [KMpALI1/gTsYIKWE] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=KMpALI1/gTsYIKWE, attributes=[])
+[032.070][08:42:27.211][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [KMpALI1/gTsYIKWE] Sending STUN request, attempt 1/7
+[032.288][08:42:27.429][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [eitMNJsstPWGG+0V] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=eitMNJsstPWGG+0V, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[032.318][08:42:27.459][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [ql12Kq1aFeyWrZr/] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=ql12Kq1aFeyWrZr/, attributes=[])
+[032.318][08:42:27.459][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [ql12Kq1aFeyWrZr/] Sending STUN request, attempt 1/7
+[032.360][08:42:27.501][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [KMpALI1/gTsYIKWE] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=KMpALI1/gTsYIKWE, attributes=[Lifetime(seconds=600)])
+[032.363][08:42:27.504][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [FO8M/4BMQhK28cRC] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=FO8M/4BMQhK28cRC, attributes=[])
+[032.363][08:42:27.504][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [FO8M/4BMQhK28cRC] Sending STUN request, attempt 1/7
+[032.400][08:42:27.541][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [wuxMUsvG69F9SB+c] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=wuxMUsvG69F9SB+c, attributes=[])
+[032.400][08:42:27.541][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [wuxMUsvG69F9SB+c] Sending STUN request, attempt 1/7
+[032.441][08:42:27.582][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Z40ejAFnmR8ibHG8] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=Z40ejAFnmR8ibHG8, attributes=[])
+[032.441][08:42:27.582][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Z40ejAFnmR8ibHG8] Sending STUN request, attempt 1/7
+[032.819][08:42:27.960][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [ql12Kq1aFeyWrZr/] Sending STUN request, attempt 2/7
+[032.831][08:42:27.972][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [ql12Kq1aFeyWrZr/] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=ql12Kq1aFeyWrZr/, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[032.832][08:42:27.972][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [FO8M/4BMQhK28cRC] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=FO8M/4BMQhK28cRC, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[032.832][08:42:27.972][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [wuxMUsvG69F9SB+c] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=wuxMUsvG69F9SB+c, attributes=[Lifetime(seconds=600)])
+[032.861][08:42:28.001][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [Z40ejAFnmR8ibHG8] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=Z40ejAFnmR8ibHG8, attributes=[Lifetime(seconds=600)])
+[033.253][08:42:28.394][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [ql12Kq1aFeyWrZr/] Ignoring STUN response because we have no active request for that id.
+[041.221][08:42:36.362][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [jJEQikgg/mtKxGga] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=jJEQikgg/mtKxGga, attributes=[])
+[041.221][08:42:36.362][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [jJEQikgg/mtKxGga] Sending STUN request, attempt 1/7
+[041.239][08:42:36.380][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [jJEQikgg/mtKxGga] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=jJEQikgg/mtKxGga, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[041.301][08:42:36.442][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [50lKXr/QI34XU11L] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=50lKXr/QI34XU11L, attributes=[])
+[041.302][08:42:36.442][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [50lKXr/QI34XU11L] Sending STUN request, attempt 1/7
+[041.321][08:42:36.462][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [50lKXr/QI34XU11L] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=50lKXr/QI34XU11L, attributes=[Lifetime(seconds=600)])
+[042.290][08:42:37.431][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [U0aWtjWO6l9F45+c] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=U0aWtjWO6l9F45+c, attributes=[])
+[042.290][08:42:37.431][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [U0aWtjWO6l9F45+c] Sending STUN request, attempt 1/7
+[042.362][08:42:37.503][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [G1ZPTh6pn8VvPt7c] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=G1ZPTh6pn8VvPt7c, attributes=[])
+[042.362][08:42:37.503][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [G1ZPTh6pn8VvPt7c] Sending STUN request, attempt 1/7
+[042.597][08:42:37.738][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [U0aWtjWO6l9F45+c] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=U0aWtjWO6l9F45+c, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[042.663][08:42:37.804][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [G1ZPTh6pn8VvPt7c] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=G1ZPTh6pn8VvPt7c, attributes=[Lifetime(seconds=600)])
+[042.833][08:42:37.974][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [/eYM3sO2ASJTX99G] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=/eYM3sO2ASJTX99G, attributes=[])
+[042.833][08:42:37.974][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [/eYM3sO2ASJTX99G] Sending STUN request, attempt 1/7
+[042.833][08:42:37.974][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [6V4dWLq0zykB+NUD] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=6V4dWLq0zykB+NUD, attributes=[])
+[042.833][08:42:37.974][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [6V4dWLq0zykB+NUD] Sending STUN request, attempt 1/7
+[042.834][08:42:37.974][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [00dsm4PxhJbMwIBk] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=00dsm4PxhJbMwIBk, attributes=[])
+[042.834][08:42:37.974][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [00dsm4PxhJbMwIBk] Sending STUN request, attempt 1/7
+[042.862][08:42:38.002][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [eI79MUnEddbcq+a7] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=eI79MUnEddbcq+a7, attributes=[])
+[042.862][08:42:38.002][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [eI79MUnEddbcq+a7] Sending STUN request, attempt 1/7
+[043.286][08:42:38.427][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [/eYM3sO2ASJTX99G] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=/eYM3sO2ASJTX99G, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[043.287][08:42:38.427][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [00dsm4PxhJbMwIBk] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=00dsm4PxhJbMwIBk, attributes=[Lifetime(seconds=600)])
+[043.287][08:42:38.427][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [6V4dWLq0zykB+NUD] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=6V4dWLq0zykB+NUD, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[043.289][08:42:38.429][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [eI79MUnEddbcq+a7] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=eI79MUnEddbcq+a7, attributes=[Lifetime(seconds=600)])
+[051.241][08:42:46.382][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [0h3fcGkxzAHntfMV] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=0h3fcGkxzAHntfMV, attributes=[])
+[051.241][08:42:46.382][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [0h3fcGkxzAHntfMV] Sending STUN request, attempt 1/7
+[051.254][08:42:46.394][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [0h3fcGkxzAHntfMV] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=0h3fcGkxzAHntfMV, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[051.341][08:42:46.482][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [uVm0UIv8QNyp2BrN] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=uVm0UIv8QNyp2BrN, attributes=[])
+[051.341][08:42:46.482][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [uVm0UIv8QNyp2BrN] Sending STUN request, attempt 1/7
+[051.358][08:42:46.498][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [uVm0UIv8QNyp2BrN] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=uVm0UIv8QNyp2BrN, attributes=[Lifetime(seconds=600)])
+[052.606][08:42:47.747][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [GlAwbEqP3rMPNlNw] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=GlAwbEqP3rMPNlNw, attributes=[])
+[052.608][08:42:47.749][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [GlAwbEqP3rMPNlNw] Sending STUN request, attempt 1/7
+[052.665][08:42:47.805][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [FwcGVl6ZIMgLQsWY] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=FwcGVl6ZIMgLQsWY, attributes=[])
+[052.665][08:42:47.805][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [FwcGVl6ZIMgLQsWY] Sending STUN request, attempt 1/7
+[052.907][08:42:48.048][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [GlAwbEqP3rMPNlNw] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=GlAwbEqP3rMPNlNw, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[052.958][08:42:48.099][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [FwcGVl6ZIMgLQsWY] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=FwcGVl6ZIMgLQsWY, attributes=[Lifetime(seconds=600)])
+[053.291][08:42:48.432][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [6Asn7RxaL28R44zh] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=6Asn7RxaL28R44zh, attributes=[])
+[053.291][08:42:48.432][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [6Asn7RxaL28R44zh] Sending STUN request, attempt 1/7
+[053.293][08:42:48.434][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [P5J/fUrH6dV5+zsd] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=P5J/fUrH6dV5+zsd, attributes=[])
+[053.293][08:42:48.434][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [P5J/fUrH6dV5+zsd] Sending STUN request, attempt 1/7
+[053.293][08:42:48.434][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [HSAH99rdbvpT2cWg] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=HSAH99rdbvpT2cWg, attributes=[])
+[053.293][08:42:48.434][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [HSAH99rdbvpT2cWg] Sending STUN request, attempt 1/7
+[053.293][08:42:48.434][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [kh6LfWDpp8ic9xlF] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=kh6LfWDpp8ic9xlF, attributes=[])
+[053.293][08:42:48.434][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [kh6LfWDpp8ic9xlF] Sending STUN request, attempt 1/7
+[053.711][08:42:48.852][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [6Asn7RxaL28R44zh] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=6Asn7RxaL28R44zh, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[053.712][08:42:48.852][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [P5J/fUrH6dV5+zsd] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=P5J/fUrH6dV5+zsd, attributes=[Lifetime(seconds=600)])
+[053.716][08:42:48.857][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [HSAH99rdbvpT2cWg] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=HSAH99rdbvpT2cWg, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[053.716][08:42:48.857][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [kh6LfWDpp8ic9xlF] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=kh6LfWDpp8ic9xlF, attributes=[Lifetime(seconds=600)])
+[061.257][08:42:56.397][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [8GNKn9h6cHcNBrKE] Begin STUN request: StunMessage(type=Binding, cls=Request, transactionId=8GNKn9h6cHcNBrKE, attributes=[])
+[061.257][08:42:56.398][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [8GNKn9h6cHcNBrKE] Sending STUN request, attempt 1/7
+[061.279][08:42:56.420][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [8GNKn9h6cHcNBrKE] Received response: StunMessage(type=Binding, cls=ResponseSuccess, transactionId=8GNKn9h6cHcNBrKE, attributes=[XorMappedAddress(address=/49.187.35.145:65080)])
+[061.360][08:42:56.500][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [kQTASkrCPGXjLRCe] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=kQTASkrCPGXjLRCe, attributes=[])
+[061.360][08:42:56.501][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [kQTASkrCPGXjLRCe] Sending STUN request, attempt 1/7
+[061.390][08:42:56.531][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [kQTASkrCPGXjLRCe] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=kQTASkrCPGXjLRCe, attributes=[Lifetime(seconds=600)])
+[061.597][08:42:56.738][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [HZOtxYtUTQaNA+pW] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=HZOtxYtUTQaNA+pW, attributes=[Lifetime(seconds=0)])
+[061.597][08:42:56.738][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [HZOtxYtUTQaNA+pW] Sending STUN request, attempt 1/7
+[061.598][08:42:56.738][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [t1SPvXQKtfgVu1hA] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=t1SPvXQKtfgVu1hA, attributes=[Lifetime(seconds=0)])
+[061.599][08:42:56.740][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [t1SPvXQKtfgVu1hA] Sending STUN request, attempt 1/7
+[061.600][08:42:56.741][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [k0X35hLj6T+d2a2h] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=k0X35hLj6T+d2a2h, attributes=[Lifetime(seconds=0)])
+[061.600][08:42:56.741][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [k0X35hLj6T+d2a2h] Sending STUN request, attempt 1/7
+[061.600][08:42:56.741][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [1bWXVIaeXo2Tkbuk] Begin STUN request: StunMessage(type=Refresh, cls=Request, transactionId=1bWXVIaeXo2Tkbuk, attributes=[Lifetime(seconds=0)])
+[061.600][08:42:56.741][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [1bWXVIaeXo2Tkbuk] Sending STUN request, attempt 1/7
+[061.617][08:42:56.758][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] [HZOtxYtUTQaNA+pW] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=HZOtxYtUTQaNA+pW, attributes=[Lifetime(seconds=0)])
+[061.618][08:42:56.759][TRACE] [192.168.0.15:65080 <> 51.161.174.239:3478] TURN allocation successfully released.
+[061.907][08:42:57.047][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] [t1SPvXQKtfgVu1hA] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=t1SPvXQKtfgVu1hA, attributes=[Lifetime(seconds=0)])
+[061.907][08:42:57.048][TRACE] [192.168.0.15:65080 <> 15.235.229.89:3478] TURN allocation successfully released.
+[062.013][08:42:57.154][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] [1bWXVIaeXo2Tkbuk] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=1bWXVIaeXo2Tkbuk, attributes=[Lifetime(seconds=0)])
+[062.020][08:42:57.160][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] [k0X35hLj6T+d2a2h] Received response: StunMessage(type=Refresh, cls=ResponseSuccess, transactionId=k0X35hLj6T+d2a2h, attributes=[Lifetime(seconds=0)])
+[062.020][08:42:57.161][TRACE] [192.168.0.15:65080 <> 51.195.24.116:3478] TURN allocation successfully released.
+[062.020][08:42:57.161][TRACE] [192.168.0.15:65080 <> 15.204.108.48:3478] TURN allocation successfully released.

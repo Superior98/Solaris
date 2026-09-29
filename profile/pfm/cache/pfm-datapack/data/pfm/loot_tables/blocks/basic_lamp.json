@@ -1,0 +1,33 @@
+{
+  "pools": [
+    {
+      "name": "basic_lamp",
+      "rolls": 1.0,
+      "bonus_rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "source": "block_entity",
+              "ops": [
+                {
+                  "source": "variant",
+                  "target": "BlockEntityTag.variant",
+                  "op": "replace"
+                },
+                {
+                  "source": "color",
+                  "target": "BlockEntityTag.color",
+                  "op": "replace"
+                }
+              ]
+            }
+          ],
+          "name": "pfm:basic_lamp"
+        }
+      ]
+    }
+  ]
+}

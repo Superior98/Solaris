@@ -1,0 +1,15 @@
+* -text
+"profile/backups/2026-09-21_15-45-53_Create!.zip" filter=lfs diff=lfs merge=lfs -text
+"profile/backups/2026-09-21_16-11-22_Create!.zip" filter=lfs diff=lfs merge=lfs -text
+"profile/essential/Essential (forge_1.20.1).jar" filter=lfs diff=lfs merge=lfs -text
+"profile/mods/clockwork-0.5.6.jar" filter=lfs diff=lfs merge=lfs -text
+"profile/mods/create-1.20.1-6.0.8.jar" filter=lfs diff=lfs merge=lfs -text
+"profile/mods/Essential_1-5-0-1_forge_1-20-1.jar" filter=lfs diff=lfs merge=lfs -text
+"profile/mods/Steam_Rails-1.7.3+forge-mc1.20.1.jar" filter=lfs diff=lfs merge=lfs -text
+"profile/mods/valkyrienskies-120-2.4.11.jar" filter=lfs diff=lfs merge=lfs -text
+"profile/mods/watermedia_binaries-3.0.0.6.jar" filter=lfs diff=lfs merge=lfs -text
+"profile/resourcepacks/StellarRealism_1.20.1.zip" filter=lfs diff=lfs merge=lfs -text
+"profile/resourcepacks/StellarRealism_COMPLETE_1.20.1.zip" filter=lfs diff=lfs merge=lfs -text
+"profile/resourcepacks/Stellar_Materials_1024px.zip" filter=lfs diff=lfs merge=lfs -text
+"profile/essential/ice-logs/connection-3.log" filter=lfs diff=lfs merge=lfs -text
+"profile/CustomSkinLoader/LocalSkin/skins/StellarFox1.png" filter=lfs diff=lfs merge=lfs -text

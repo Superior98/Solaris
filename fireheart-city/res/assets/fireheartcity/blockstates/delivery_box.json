@@ -1,0 +1,19 @@
+{
+ "variants": {
+  "facing=north": {
+   "model": "fireheartcity:block/delivery_box"
+  },
+  "facing=east": {
+   "model": "fireheartcity:block/delivery_box",
+   "y": 90
+  },
+  "facing=south": {
+   "model": "fireheartcity:block/delivery_box",
+   "y": 180
+  },
+  "facing=west": {
+   "model": "fireheartcity:block/delivery_box",
+   "y": 270
+  }
+ }
+}

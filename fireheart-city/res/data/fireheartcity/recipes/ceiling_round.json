@@ -1,0 +1,18 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "minecraft:glowstone"
+  },
+  {
+   "item": "minecraft:iron_ingot"
+  },
+  {
+   "item": "minecraft:white_dye"
+  }
+ ],
+ "result": {
+  "item": "fireheartcity:ceiling_round",
+  "count": 2
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  {
+   "item": "minecraft:glowstone"
+  },
+  {
+   "item": "minecraft:iron_ingot"
+  },
+  {
+   "item": "minecraft:glowstone_dust"
+  }
+ ],
+ "result": {
+  "item": "fireheartcity:ceiling_panel",
+  "count": 2
+ }
+}

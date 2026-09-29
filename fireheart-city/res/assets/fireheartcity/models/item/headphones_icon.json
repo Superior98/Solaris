@@ -1,0 +1,7 @@
+{
+ "parent": "item/generated",
+ "textures": {
+  "layer0": "fireheartcity:item/headphones_shell",
+  "layer1": "fireheartcity:item/headphones_pads"
+ }
+}

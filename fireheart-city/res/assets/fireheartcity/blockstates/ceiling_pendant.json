@@ -1,0 +1,10 @@
+{
+ "variants": {
+  "lit=true": {
+   "model": "fireheartcity:block/ceiling_pendant"
+  },
+  "lit=false": {
+   "model": "fireheartcity:block/ceiling_pendant_off"
+  }
+ }
+}

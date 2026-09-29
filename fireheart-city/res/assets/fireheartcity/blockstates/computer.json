@@ -1,0 +1,64 @@
+{
+ "variants": {
+  "facing=north,screen=0": {
+   "model": "fireheartcity:block/computer_off"
+  },
+  "facing=north,screen=1": {
+   "model": "fireheartcity:block/computer_on"
+  },
+  "facing=north,screen=2": {
+   "model": "fireheartcity:block/computer_game"
+  },
+  "facing=east,screen=0": {
+   "model": "fireheartcity:block/computer_off",
+   "y": 90
+  },
+  "facing=east,screen=1": {
+   "model": "fireheartcity:block/computer_on",
+   "y": 90
+  },
+  "facing=east,screen=2": {
+   "model": "fireheartcity:block/computer_game",
+   "y": 90
+  },
+  "facing=south,screen=0": {
+   "model": "fireheartcity:block/computer_off",
+   "y": 180
+  },
+  "facing=south,screen=1": {
+   "model": "fireheartcity:block/computer_on",
+   "y": 180
+  },
+  "facing=south,screen=2": {
+   "model": "fireheartcity:block/computer_game",
+   "y": 180
+  },
+  "facing=west,screen=0": {
+   "model": "fireheartcity:block/computer_off",
+   "y": 270
+  },
+  "facing=west,screen=1": {
+   "model": "fireheartcity:block/computer_on",
+   "y": 270
+  },
+  "facing=west,screen=2": {
+   "model": "fireheartcity:block/computer_game",
+   "y": 270
+  },
+  "facing=north,screen=3": {
+   "model": "fireheartcity:block/computer_video"
+  },
+  "facing=east,screen=3": {
+   "model": "fireheartcity:block/computer_video",
+   "y": 90
+  },
+  "facing=south,screen=3": {
+   "model": "fireheartcity:block/computer_video",
+   "y": 180
+  },
+  "facing=west,screen=3": {
+   "model": "fireheartcity:block/computer_video",
+   "y": 270
+  }
+ }
+}

@@ -1,0 +1,231 @@
+# SOLARIS (formerly Fireheart City): Project Handoff, v1.12.0 (2026-09-29)
+
+This file carries the project into a new chat. Read this file first. The older, much longer `Fireheart_Project_Handoff.md` in this folder has the full history, the toolchain derivation, the block-ID lists and the generator code from earlier sessions. Use it as a reference when you need detail.
+
+## 000. v1.12.0 - newest (2026-09-29)
+Player-facing commands moved to a no-op-needed root **/sol** (tutorial, gender, romance, stalk, garage). Admin stays under /city (root requires op).
+- **Photo/video kick fixed** (`PcNet`): `Blob` was registered twice for one class, so uploads went out with the client-bound id -> Forge "Illegal packet received". Now `BlobUp` (id 3, to server) and `Blob` (id 4, to client). Photo downloads by other players were affected too.
+- **Video recording** (`ClientVideo`): pressing record closes the phone so you can walk around; HUD shows REC timer/progress; phone key stops; up to 24 s (160 frames at 128x72); upload is queued 4 chunks/tick. `Photos.MAX_VIDEO` 6 MB.
+- **Voices** (`VoiceApi` shared, `VoiceServer`, `client/VoiceClient`): players without their own ElevenLabs key get audio relayed from the host (Act `voice_req` -> Blob kind `voice`, cached by sha1 in config/fireheartcity/voicecache). Legacy ElevenLabs voice ids fall back to modern ones (MODERN map) on 404. quietHours default now false. `/city voice` tests the key live (subscription/characters) and prints relay stats + last error. Ellie uses `Cast.SULTRY` (Charlotte XB0fDUnXU5powFXDhCwa, calm/flirty settings). **Groq**: the user's `fireheartcity-ai.properties` still had an empty `groqApiKey=` on 2026-09-28.
+- **Police** (`Police.java`, `client/CinemaFx`): sidearm (item `fireheartcity:sidearm`, drawn during SHOOT/SPRAY/RAIL, holstered after) - hitscan with tracers vs creepers (from range), flyers, crowds. Tanks (warden, ravager, wither, elder guardian, >=60 HP) trigger `callBackup` (all officers incl. sleeping ones, radio sound, action-bar alert) and heavy moves (BARRAGE, RAIL), x1.7 damage. **Ultimate** (chance per 20 ticks, much higher vs tanks): 44-tick cinematic power-up (`#fx|ult` -> letterbox, title, FOV, roll), 420 ticks of WARP/METEOR/RAIL/BARRAGE with x2.4 damage, then 4800 ticks resting (slowness, won't be dispatched) and a 36000-tick cooldown. **Finisher** when a tank is <12% or any target during ult is low: `#fx|finish` cutscene, 60 ticks, guaranteed kill. Sounds police.shot/rail/ult/finisher/radio (synthesised, `tools/sfx_police.py`). Gestures G_AIM 36, G_ULT 37.
+- **Firefighters** (`FireDept`): arcing hose up to 12-16 blocks with line of sight; when stuck and the fire is above them they pillar up on scaffolding (CLIMB) and tear it down afterwards (DOWN); otherwise throw a water bomb (3-block radius). G_HOSE 39.
+- **Repair crew** (`Repair.java`, resident **Gus**, Job.REPAIR, skin 33, apt5C): `res/data/fireheartcity/blueprint.bin` (from `tools/blueprint.py` over the pre-damage world copy; natural blocks, consumables and new mod builds excluded) is scanned 3 chunks every 2 s for holes (air/fire/replaceable where a building block should be; must stay missing 60 s) plus non-player explosion damage anywhere near the city. Player breaks are remembered as intentional (`ignored`). Gus walks there and every block flies from his hands (block_display with interpolation) into place. SavedData `fireheartcity_repair`. `/city repair [scan|accept <r>|clear|on|off]`. The police-station west wall (x48-50 z-47..-43) damage is in the blueprint.
+- **Magma Beach Bar** (`BeachBar.java`): queued as a Gus construction job once (CityData.beachBar) at x84-98 z38-51 deck y71 on stilts, thatched tiki bar, stools, umbrellas, torches. `/city beachbar` re-queues. Places `beach_bar`, `hotel` (magmagamer9's hotel, 51 78 33), `beach` added to CITY_HANGOUTS.
+- **Traders** (`Traders.java`): residents spot wandering traders / employed villagers, walk over, haggle over a real offer; fair -> deal, rip-off -> brawl until the trader dies.
+- **Headphones**: `Color` NBT tinted (8 phone colours, picker in SolTech), SolBeats **Magma Edition** (`hpmagma`, Magma NBT, own 3D model, ember particles while worn).
+- **The Watcher** (`client/Stalker.java`): `/sol stalk <player> [stop]`, only StellarFox1/Fireheart_4743. Fully client-side for the target: tall thin figure appears behind them, breathing (synthesised stalker.breath, not downloaded), follows; when looked at it cracks its head sideways, lunges with a scream and vanishes.
+- **Romance** (`Romance.java`): gender asked once on login (clickable), saved permanently (`/city gender reset <p>` for admins). Residents in `Romance.WOMEN` only date/confess to "m" players and vice versa. Flirting/compliments build Rel.romance; confessions at romance>=30 & aff>=40 with clickable yes/no (`/sol romance yes|no <id>`); ask out; dating = settings `sweetheart`, hearts, pet names, sweet texts, kiss/hug, dates (they follow you), breakups.
+- **Messaging**: read receipts ("✓ Delivered" / "✓✓ Read") and "X is typing…" bubbles in phone Messages and PC Messenger (`Receipts` server+client). Residents read after ~1/3 of their reply delay, type ~2-5 s before replying; player-player threads relay reads/typing.
+- **Tutorial** (`Tour.java`, `client/TourHud`): `/sol tutorial` (offered on first join): ride Nova's holo-drone (invisible armour stand) across 13 stops incl. Neon Heights, buildings outlined + beamed, typewriter narration, camera drifts to each sight, "open your phone" task, 3-question quiz with coin reward, fireworks. Sneak to leave.
+- **SolEats**: dishes arrive as `fireheartcity:dish` items (NBT Dish + CookedAt) with individual 3D models (`tools/dishes.py`, atlas `dish_atlas.png`), hot for 15 min (steam particle `fireheartcity:steam` from hands, ground and displays; hot meal = regen). `Kitchen.java`: the shop's cook walks to the nearest stove and cooks the order with item displays (raw -> tossed -> cooked), sizzle/bubble/chop sounds, plates it steaming, "Order up!".
+- **SolPlay Gen 2** (`Gen2Game` engine: countdown, P pause, particles, shake, persistent achievements in config/fireheartcity/solplay.properties, `Gamepad` GLFW controller support): Neon Drift (pseudo-3D racer), Stellar Fox Run (parallax runner with the user's fox), Neon Maze 3D (raycaster), Beat Solaris (rhythm). On PC/SolPad/SolBox and SolPhone 2; SolPhone 1 and the SolStation keep the classics (Gen 2 shown locked). Console: gamepad, crash guards (any app/game exception returns to menu instead of crashing), resume a game within 10 min, hints.
+- **Vehicles** (`Vehicle`, `Vehicles`, `VehicleDrive`, client `VehicleRenderer`/`VehicleClient`): Solaris Coupe, Street Bike (leans), Speedboat (bobs, planes, wake). Boat-style client-authoritative driving, W/S/A/D, Space handbrake drift, H horn, L headlights, 1-block kerb climbing, 6 paints, speedometer HUD, engine loops. Keys place them; hit 3x (owner) to pack up. `/sol garage give [paint]|park`, `/city garage replace` (op) runs `vs delete fireheart-cr01/mb01/sea01` and parks new ones at 2 71 -20, 5 71 -20 and the marina.
+- Sounds are all in `res/assets/fireheartcity/sounds.json`, generated by `tools/sfx_*.py` (numpy + ffmpeg).
+
+### Not done / next (v1.12)
+1. Nothing here was seen in the real client yet (server-tested only: 64/64, repair/beach bar build, warden fight). Check: vehicle model orientation/feel, dish models, steam, stalker, tour camera, Gen 2 games.
+2. First real-world blueprint scan may flag blocks the user deliberately removed after 18:14 on 09-28 outside the excluded zones - `/city repair accept 30` where needed.
+3. magmagamer9 must install the same jar.
+
+## 00. v1.11.0
+- **Beach** (live world only, datapack `beach.zip` in the world's datapacks): `beach:go` cleared x42..108 z24..60 to grass/sand down to the sea; `beach:smooth` sloped the surrounding hills (north band only to z>=5 to spare Solaris East). For magmagamer9's beach bar.
+- **Stellar House** - `StellarHome.java`. StellarFox1's futuristic house on the hilltop north of the beach (X66..98, Z7..21, floors y84/y90, roof y96), navy/black + white/light-blue star theme (betterblockz zeon/cyberlight/aurora/azur/zenohex, `"a|b"` fallback specs). Automations: sliding glass doors, presence and night lights, animated neon streak ring at y84, infinity pool (z23..26), fox-constellation crest + antenna + landing ring on the roof, night searchlights, ASTRA actionbar voice, ambient sci-fi sounds. Levitation lifts: beach (63,20) y71<->84, stairs (92,11) y84<->90, **secret lift** 3x3 at (71,10) y84<->56, owners only (StellarFox1, magmagamer9, Fireheart_4743): sneak on the study hatch to drop, stand on the pad to rise. **Secret base** x64..100 z6..22 y56..68: reactor core (88,57,14), TV wall, computers, holo map table (76,58,16, particle heightmap + live residents/players), server racks, jet (69,57,17), red laser grid at x74 that zaps non-owners. Builds itself once (`CityData.stellarHome`) when chunks load; `/city home` teleports, `/city home rebuild` rebuilds.
+- **SolPhone Maps overhaul** - `client/pc/MapApp.java`. Baked satellite textures `textures/gui/map_city.png` (x-176..175, z-112..175, 2 px/block) and `map_isle.png` (x-80..79, z208..351) made by `scratchpad/mapgen.py` from the test world regions (averaged block textures, water depth, hillshade). Zoom 1-10x (wheel at cursor, +/-), drag-pan (new `App.drag`, wired in PhoneScreen/ComputerScreen `mouseDragged`), arrow keys pan, ◎ recenters on you, you-are-here pulse + heading arrow, resident face markers, ranked labels that appear with zoom (incl. Police, Fire, Lab, Cinema, Stellar House, Firework Machine, Beach, Hall of Lights), scale bar, compass; list row click focuses that resident, "➤ Go" = directions. To refresh the map after big builds, rerun mapgen.py on an updated world copy.
+- **Cinema via WATERMeDIA 3** - `client/pc/CinemaVideo.java`, `TvRender.cinema()`. Optional dep (`mods.toml`, client, `[3,)`); compiled against `libs/watermedia-3.0.0.23.jar`. Booth TV program `url;<path|link>` -> `MediaAPI.mrl` -> `createPlayer(mrl, glEngine, alEngine)`, texture drawn letterboxed on the big screen (x71..94, y73..82, z~1), synced by seeking to elapsed time, loops. Audio source placed at (82.5,77.5,1) (ref 6, max 48, volume = master x records). Set it with `/city cinema play <path|url>` / `/city cinema stop`, or right-click the booth TV (82,78,-16) with a book whose first page is the link. Saved in `CityData.cinemaUrl`. Without WATERMeDIA the screen shows an install hint.
+- **Groq**: the user says he added his key. `/city ai` shows status after restarting on 1.11.
+
+### Not done / next (v1.11)
+1. In-client checks: WATERMeDIA playback + 3D audio (untested), Stellar House automations with a real player, map textures/drag in the phone, Groq with his real key.
+2. The baked map predates the beach (the test world copy is older); regenerate from a fresh world copy.
+
+## 0. Latest session (v1.8.0 -> v1.10.0) - read this first
+- **Version:** mods.toml now carries the real version (was stuck at 1.4.0). Current: **1.10.0**. The jar filename stays `fireheartcity-0.1.0.jar`.
+- **Toolchain in this session:** jars staged to `/mnt/user-data/uploads/libraries/...`; `mkdir /mnt/user-data/uploads/meta && ln -s ../libraries /mnt/user-data/uploads/meta/libraries` makes cp.txt paths resolve. Test server `/tmp/srv` libraries are `cp -rs` of that plus symlinks server-srg/extra -> client ones, forge-server -> forge-client, and stub jars for java-objc-bridge and the linux epoll natives (not on his PC). Mods for the server: everything except Essential, CustomSkinLoader, embeddium, oculus, effortlessbuilding.
+- **Skins:** `Resident.SKINS = 33`. 20-23 = HD 256x256 slim (Slate/Sage/Rose/Auburn), 24-27 = 64x64 slim from JPGs (white made transparent on outer layers), 28-30 police uniforms, 31-32 firefighter uniforms (generated in Python from base skins). `ResidentRenderer.slim()` = 20..27 -> PLAYER_SLIM model. Assignments: Mia 22, Nina 20, Ivy 21, Nell 23, Ellie 24, Zara 25, Ava 26, Nova 27, Dex 28, Kira 29, Bruno 30, Hank 31, Sofia 32.
+- **Ellie (Receptionist, LAIDBACK + flirty, apt4D)** - `Reception.java`. Works 5000-15800 at the Ember Heights front desk (stand 30 71 17, desk 28..32 71 18, bell 30 72 18). Residents entering the lobby heading upstairs queue at the desk (spots z19-21), she serves the nearest within 3.2, greeting -> guest line -> bell + key handover (sayLine so repeats aren't deduped), stalled guests dropped after 30 s. No random chats while she's on duty. Player: "check in"/"key"/"room" -> named tripwire hook once per day. Persona lines in `Reception.persona/flirt`. New `Trait.LAIDBACK`; `Cast.flirty()`.
+- **New residents arrive automatically** (`Events.newcomers`): any Cast member missing from the save is spawned at the lobby with a news item.
+- **Sky Organ** - `OrganConsole.java`. Re-places the PLAY/NEXT/STOP buttons if broken (PLAY warped 53 181 283 needs its backing block 54 181 283). New **venue button** (mangrove, 53 181 281, sign above): toggles `CityData.organInHall`. In hall mode PLAY cancels the datapack (#on 0) and the mod plays the song in the Hall of Lights from `res/data/fireheartcity/organ/songN.txt` (extracted from the datapack seq functions: tick, instrument b/h/e, note 0-24), lamps light per note column + dust/note particles.
+- **Firework Machine** - `FireworkMachine.java`. Island centred -2 70 130 (radius 15, deck y70 on pillars) + bridge x-3..-1 from the Skyport (z96) to z115. Launch buttons: bridge -4 72 97 (east face), island -2 72 117. `/city fireshow [stop]`. Auto show Wed + Sat (and festival) at tod 12300. 2400-tick show: power-up + 3-2-1 titles, opening salvo, ring of fire, sweeping tower fans, sky shapes (heart, stars, smiley, planet, spiral), flame/water jets, SOLARIS sky text, finale barrage, giant gold burst, willow. Big effects are forced long-range particles (visible city-wide). Old pier show disabled once built (`Fireworks.schedule`). Residents cheer.
+- **Solaris PD** - `Police.java`, `client/HitAnim.java`. Dex (night) & Bruno (night) live in the new bunkhouse x65..69 z-51..-42; Kira (day) apt2D. `Police.dispatch` sends the nearest free officer to any hostile within 16 of a resident/player; moves: jab combo, dash, taser, uppercut -> air spike, spin kick, ground slam shockwave, creeper punt; hit-stop freeze then launch. `#hit|id|kind|dx|dz|power` messages drive client impact anims (recoil, launch spin, spin, pancake slam, taser shake, camera shake on slams). Gestures 27-35 in ResidentModel.
+- **Solaris Fire Dept** - `FireDept.java`. Hank (day) & Sofia (night), bunks added on the fire station ground floor (77/79 71 -51). Scans loaded city chunks every 2 s for fire (palette check), rings the station bell, nearest firefighter runs over (emergency routing via `Resident.emergencyTarget()` + CommuteGoal at speed 1.6) and hoses fires out. `/city firedrill` lights a practice fire at 64 71 -29.
+- **Groq AI** - `Groq.java`. Key in `config/fireheartcity-ai.properties` (`groqApiKey=`, `model=openai/gpt-oss-20b`). Chat.handle: rule reply is computed first (keeps side effects), then for non-action messages the persona + rule reply as "facts" is sent to Groq async; "..." bubble meanwhile. 429 -> pause until retry-after/x-ratelimit-reset (fallback to rule dialogue), 401/403 -> disabled until the key changes, 3 failures -> 5 min pause. `/city ai` shows status. Not yet tested with a real key.
+- **Effortless Building** installed via the Modrinth App.
+
+### Not done / next
+1. Verify v1.10 in the real client: firework particle visibility from the city, police hit animations, organ hall mode sound, police/fire skins. (Launching failed this session: Modrinth said the instance was "already running" while the game was open with magmagamer9.)
+2. Test Groq with his real key; tune `model` if Groq rejects it.
+3. WATERMeDIA shows as installed in the Modrinth UI but is NOT in the mods folder.
+
+## 1. The user
+- **Who:** Daniel.
+  - His Minecraft name is now **StellarFox1**. It was Fireheart_4743, and there's a new 256x256 HD skin.
+  - He plays creatively and writes casually with typos, so read his messages for intent.
+  - He wants short, professional replies, and code without comments unless they're needed.
+  - Use the AskUserQuestion tool for big jobs; just do quick fixes.
+- **His brother:**
+  - Minecraft name **magmagamer9**; he joins through Essential (LAN-style multiplayer).
+  - His house is at **x -67..-51, z 32..51**, front door at **-51 71 41/42** (facing west, onto the road at x -45).
+  - It's decorated, and has a mailbox at **-46 71 39** (facing east).
+- **City name:** **Solaris**. The apartment tower keeps the name "Ember Heights" and the sky island is "Neon Heights".
+- **Apps:** SolPhone, SolFeed, SolTube, SolEats, SolTech, SolOS, SolNet, SolBeats, SolPad, SolWatch, SolStation, and SolBox (the console block).
+
+## 2. Setup (paths)
+- **Game:** Forge 1.20.1 (47.4.20), Modrinth App, profile **"Create_ Remastered"**, world **"Create!"**.
+- **Profile folder:** `C:\Users\whosh\AppData\Roaming\ModrinthApp\profiles\Create_ Remastered\`
+  - **Mod file:** `mods\fireheartcity-0.1.0.jar`. Keep this filename, and replace it only while the game is closed.
+- **World datapacks:** `saves\Create!\datapacks\`.
+  - `brohouse` (`/function brohouse:go` re-runs the brother-house decoration).
+  - `statue` has no pack.mcmeta, so it's inactive. The statue is now built by the mod.
+- **Voice:** `config\fireheartcity-voice.properties` holds the ElevenLabs key.
+- **Device bridge:**
+  - Remote-device tools: stage and commit files, computer use (javaw + Modrinth App), and sometimes `device_bash`.
+  - The v1.7.0 jar **was copied into the mods folder** at the end of this session. The game must be restarted to load it.
+
+## 3. Build and test (cloud workspace)
+1. Unzip `fireheartcity_mod_source.zip` to `/tmp/modbuild`.
+2. Rebuild the named jars and `cp.txt` as described in the old handoff, Part 7 (search "mkmap.py").
+3. Run `bash build.sh`, which produces `fhc.jar`. It aborts on compile errors: never ship a failed build.
+- **Compiling rules:**
+  - Compile against Mojang-named jars; ART then reverses the jar to SRG.
+  - Record accessors must use SRG names, e.g. `BlockStateParser.BlockResult.f_234748_()`.
+  - Mixins use `remap=false` with SRG method names.
+- **Test server:** `/tmp/srv`, scripts in `test_server_scripts/`.
+  - `restart.sh [fresh]` copies `/mnt/user-data/uploads/Create!` (a staged copy of the world) as `world` and installs `fhc.jar`.
+  - `./c.sh "cmd"` sends a command; output goes to `out.log`.
+  - Re-apply forceloads after every restart: `-48 -40 48 112`, `-72 218 62 336`, `-30 -92 26 -28`, `41 -62 106 6`.
+- **Useful commands:**
+  - `/city test player`: 64 automated checks; all pass.
+  - `/city ask <residentId> <text>`: prints the resident's reply. This is the best way to test dialogue.
+  - `/city festival [start|stop|skip <ticks>]`
+  - `/city mailtest <player>`: queues a letter with a gift plus a SolEats parcel.
+  - `/city dump <from> <to>`, `/city dumpents`, `/city findblock <id>`
+  - `/city surface <from> <to>`: writes `world/surface.txt` (x z y block) for map renders.
+  - `/city skytower`
+
+## 4. What changed this session (v1.7.0, commits in git log order)
+### Fixes
+- **Time:** the world had `doDaylightCycle=false`, which stopped the watch, the clock tower and the festival. `Events` now re-enables it every 10 s while config `timeMoves` is true.
+- **Chat:** resident speech no longer goes to chat (`d.chatter` is forced false; speech bubbles only).
+- **Vibrating residents:** fixed; the dance no longer snaps its angle every tick, and the shiver is a subtle occasional sway.
+- **Factory door:** the Create piston contraption was lost. `AutoDoor` is now a code-driven sliding iron door at -3..-1 71..73 z12.
+- **Factory worker:** fixes stalled or empty diesel engines through `Maintenance.fix` (with the wrench animation) and harvests and replants the wheat field. `Maintenance` also refreshes every diesel engine city-wide every 5 minutes.
+- **Sky Launch:** duplicate tower at -61 156 removed. The tower was moved into the city at **98 71 -44**; the old one at -86 145 is removed when its chunk loads.
+
+### Festival of the Founder
+It now runs on its own timeline, so it works at any time of day.
+- The stages are gather, sermon, chant, offerings, finale, then a **3-minute feast**:
+  - cake stalls and lanterns;
+  - a music loop;
+  - residents dancing and eating;
+  - fireworks every 30 s;
+  - a hamper for the player and gifts from residents.
+- Everything is cleaned up afterwards.
+
+### Residents' intelligence
+- **`Intents.meet`:** "meet me at <place> at <time>" in person, by text or on a call. The resident agrees, or counter-offers if they're working or asleep, then walks there and waits (`Meets.java`). They text when they arrive, greet the player and follow them. If stood up, they send a sad text and lose some trust.
+- **`Intents.more`:** job, home, time, weather, directions, jokes, advice, feelings, insults and more.
+- **`Understand.java` (large):**
+  - Sentence patterns: do you like, what do you think of, have you ever, can you, would you, are you, did you, what is, where is, how many, how do, when, why, X or Y, and statements like I like / I built / I'm going to / my X is / I think / I have.
+  - Opinions are stable per resident.
+  - Follow-ups: why, what about you, really, same, tell me more.
+  - It replaces the old "Interesting..." fallback with replies that echo the player's words.
+- **`Knowledge.java`:** facts about Solaris places, gadgets, people, the Founder and magmagamer9.
+- **Pets:** residents notice players' pets (name tag or animal type), fuss over them and talk about them.
+- **Body language:** speech drives gestures (`Resident.emoteFor`), with expression particles per gesture.
+
+### Rebrand
+- **Solaris:** all display strings and app names renamed. `Rebrand.java` rewrites old names on signs chunk by chunk.
+- **Statue:** rebuilt from the StellarFox1 HD skin by `statue_gen.py`, whose output lives in `res/data/fireheartcity/functions/statue/stellar1..2`. It runs once when its chunks load (`SkyTower.statue`, flag `statueV2`).
+
+### Phone and tech
+- **Real photos:**
+  - Captured from the world render with no GUI (`ClientPhoto`), uploaded in chunks through the `PcNet.Blob` channel and stored in `<world>/fhc_photos/`.
+  - Gallery keys are `ph_<id>`, fetched on demand by `PhotoCache`.
+  - Captions when posting, a 3 s timer, and "set as wallpaper".
+- **Video:** camera VIDEO mode records about 7 fps for up to 9 s as a 128x72 sprite sheet (`vd_<id>`, `ClientVideo`). Videos can be posted to SolFeed or **uploaded to SolTube** (`d.uploads`, action `tubeup`).
+- **SolTube:** 3 new, richer premade videos (skyline day-to-night, festival highlights, ocean documentary). Uploads show in SolTube and play on TVs and in the cinema.
+- **Settings:** wallpapers (8 painted presets or a photo), 24-hour clock, message previews, app labels.
+- **App icons:** painted icons in `textures/gui/icons/*.png` (`AppIcons`).
+- **Multiplayer:**
+  - Other players appear in contacts as `player:<Name>`.
+  - Texts go to their inbox and trigger a toast.
+  - Live player-to-player calls with text lines (`PlayerLink.java`).
+- **Headphones:**
+  - They're an Equipable HEAD item with a 3D model (forge separate_transforms: 3D on the head, 2D icon in the GUI).
+  - Right-click plays a two-hands put-on animation (`#deva|id|don`); music auto-plays while worn and stops when removed.
+  - Sneak + right-click skips track.
+- **TV:**
+  - Everyone sees what's on it: `TvShows` (server) plus `TvRender` (client), which draws `GuiGraphics` into the world with depth testing.
+  - Idle TVs show a "SolTV" channel.
+  - The player holds a **SolTube Remote** while using a TV.
+- **SolBox console block:**
+  - Costs 150 at SolTech, the most expensive item.
+  - Right-click needs a TV within 6 blocks. The camera turns to the TV, which plays a boot intro, then an animated menu with Snake, 2048, Flap, Mines, Blocks, SolTube and Photos.
+  - The picture is on the world TV and visible to others; F toggles full screen.
+  - The player holds a **SolBox Controller**.
+- **SolEats overhaul:** shop cards with open/closed status and ratings, menus with item icons, a cart with quantities, a tip for Pip, and order tracking (preparing, out for delivery, at your door).
+
+### Post
+- **Mailbox block:** the owner is whoever places it. Every player gets one on first login.
+- **Letters and gifts:** the postman walks to the player's mailbox, opens it, puts the post in with an animation and raises the flag. The player gets a toast.
+- **SolEats orders:** left as a **delivery box block** beside the mailbox (at the front door). Right-click the box to open it.
+
+### New blocks and items
+- Ceiling lights (panel, round, spot, pendant; right-click toggles, light 15).
+- Mailbox, delivery box, SolBox, remote, controller.
+
+### Solaris East (island expansion)
+- **Location:** x 41..106, z -62..6, built once via `Expansion.java` and `Builder.java`.
+- **Road:** a new road (z -28..-24) links to the x=30 road by the library.
+- **Buildings:**
+  - **Police station:** x48..64 z-52..-34, with cells, desk, computers and a police car.
+  - **Fire station:** x70..88 z-52..-34, with two fire trucks, fire pole, bunks and a siren bell.
+  - **Research lab:** x46..62 z-20..-4.
+    - Glowing froglight tubes and Create fluid tanks (lava/water) with pumps and pipes.
+    - A water containment chamber with a conduit.
+    - Brewing, cauldrons and computers.
+  - **Cinema:** x68..96 z-21..2.
+    - Marquee, lobby with snacks and tickets, red sofa rows (another_furniture) and curtains.
+    - The **big screen** is drawn at x71..93 y73..81 z1.
+    - It mirrors the projection-booth TV at **82 78 -16**; otherwise it runs a "Now Showing" schedule.
+- **Places for residents:** police, fire, lab, cinema. The cinema is a hangout and date spot.
+
+### Other additions
+- **Hall of Lights:** on the Sky Organ bridge (x21..38 z282..288, floor y180). Walls and ceiling of redstone lamps glow around players, ripple waves with rising chimes play as they walk, and there's a finale at the organ end (`MusicHall.java`).
+- **Parrots:** players' parrots dance while their owner listens to music, greet and flutter to them, and chirp with hearts. Sneak + right-click to pet. Client-side they bob and sway (`ParrotAnim`).
+- **Brother's house:** decorated with rugs, ceiling lanterns, plants, a garden, a welcome sign, a parrot perch and a gift chest, via the `brohouse` datapack.
+
+## 5. Key files (`src/com/fireheart/city/`)
+- **Residents and dialogue:** Resident, Chat (dispatch), Intents, Understand, Knowledge, Meets, Pets, Festival, Work (jobs and tasks), Maintenance, AutoDoor, Post (+ MailboxBlock, ParcelBlock).
+- **Phone and network:** Phones (texts and calls), PlayerLink, Photos, PcNet (network: Data/Msg/Act/Blob), Computers, Extras (phone actions, SolEats, gallery, settings), TvShows, TechStore, DeviceItem.
+- **World building:** Expansion, Builder, MusicHall, SkyTower, Rebrand, ParrotLove, CeilingLightBlock, ConsoleBlock, TvBlock.
+- **Client (`client/`, `client/pc/`):**
+  - PhoneScreen, CameraApp, EatsApp, TubeApp, SettingsApp, Wallpapers, AppIcons, PhotoCache, ClientPhoto, ClientVideo, ConsoleScreen, ConsoleUi, TvRender, DeviceAnim, ParrotAnim.
+  - ResidentModel/Renderer (gestures G_* 0..26).
+- **Saved data:** CityData holds all flags: expanded, hallBuilt, statueV2, towerFixed, mailboxSetup, oldTowerGone, doorsMigrated.
+
+## 6. Not done yet / next steps
+1. **Check v1.7.0 in the real game:**
+   - The jar is already in the mods folder; restart the game to load it. If needed, copy `fireheartcity-0.1.0.jar` from this folder over `mods\fireheartcity-0.1.0.jar` while the game is closed.
+   - On first load:
+     - The statue rebuilds.
+     - Solaris East builds; it takes about 0.5 s, when the player is near x 70 z -30.
+     - The Hall of Lights builds when the player is near the Sky Organ.
+     - The brother's mailbox appears, and the old towers are removed.
+   - Check each in-game.
+2. **Mods not installed yet** (container network blocks Modrinth; install through the Modrinth App with computer use):
+   - **WATERMeDIA:** needed for the cinema to play video files from his computer. Hook it into `TvRender.cinema()` / the booth TV program string (add e.g. `url;<path>`).
+   - **Effortless Building:** no code conflicts expected. Mailboxes are claimed on first right-click even if Effortless skips `setPlacedBy`.
+3. **Client-only features, not verified in the real client:** photo and video capture, TV/cinema world rendering, headphone 3D model, SolBox screen, parrot bob. Test them after installing, and watch `logs/latest.log` for errors from `TvRender`, `ClientPhoto` or `ClientVideo`.
+4. **Ideas that came up:**
+   - Police and fire staff jobs (new Job entries), so residents actually work in Solaris East.
+   - Brother's own letters and SolEats to his mailbox (already works if he orders).
+   - More premade films.
+
+## 7. Contents of this handoff folder
+- `SOLARIS_HANDOFF.md`: this file.
+- `Fireheart_Project_Handoff.md`: the previous full handoff (history, toolchain, block IDs, generators).
+- `fireheartcity-0.1.0.jar`: the v1.7.0 build, ready to install.
+- `fireheartcity_mod_source.zip`: `src/`, `res/`, `build.sh`, `cp.txt`, `manifest.txt`, `mkmap.py`, `srg2named.srg`, `statue_gen.py`, `tools/`, plus the git history as `git.bundle`.
+- `datapacks/brohouse/`: the brother-house decoration datapack.
+- `test_server_scripts/`: `restart.sh`, `run.sh`, `c.sh`.

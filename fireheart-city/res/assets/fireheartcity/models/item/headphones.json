@@ -1,0 +1,26 @@
+{
+ "loader": "forge:separate_transforms",
+ "gui_light": "front",
+ "base": {
+  "parent": "fireheartcity:item/headphones_3d"
+ },
+ "perspectives": {
+  "gui": {
+   "parent": "fireheartcity:item/headphones_icon"
+  },
+  "fixed": {
+   "parent": "fireheartcity:item/headphones_icon"
+  },
+  "ground": {
+   "parent": "fireheartcity:item/headphones_icon"
+  }
+ },
+ "overrides": [
+  {
+   "predicate": {
+    "fireheartcity:magma": 1
+   },
+   "model": "fireheartcity:item/headphones_magma"
+  }
+ ]
+}

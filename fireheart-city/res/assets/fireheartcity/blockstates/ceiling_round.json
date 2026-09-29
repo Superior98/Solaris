@@ -1,0 +1,10 @@
+{
+ "variants": {
+  "lit=true": {
+   "model": "fireheartcity:block/ceiling_round"
+  },
+  "lit=false": {
+   "model": "fireheartcity:block/ceiling_round_off"
+  }
+ }
+}

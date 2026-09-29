@@ -1,0 +1,16 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "category": "misc",
+ "pattern": [
+  "IGI",
+  "IRI",
+  "IBI"
+ ],
+ "key": {
+  "G": {"item": "minecraft:glass_pane"},
+  "R": {"item": "minecraft:redstone"},
+  "I": {"item": "minecraft:iron_nugget"},
+  "B": {"item": "minecraft:stone_button"}
+ },
+ "result": {"item": "fireheartcity:phone", "count": 1}
+}

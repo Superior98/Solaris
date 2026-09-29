@@ -1,0 +1,148 @@
+{
+ "police.shot": {
+  "sounds": [
+   {
+    "name": "fireheartcity:police/shot0"
+   },
+   {
+    "name": "fireheartcity:police/shot1"
+   },
+   {
+    "name": "fireheartcity:police/shot2"
+   }
+  ]
+ },
+ "police.rail": {
+  "sounds": [
+   {
+    "name": "fireheartcity:police/rail"
+   }
+  ]
+ },
+ "police.ult": {
+  "sounds": [
+   {
+    "name": "fireheartcity:police/ult",
+    "stream": true
+   }
+  ]
+ },
+ "police.finisher": {
+  "sounds": [
+   {
+    "name": "fireheartcity:police/finisher",
+    "stream": true
+   }
+  ]
+ },
+ "police.radio": {
+  "sounds": [
+   {
+    "name": "fireheartcity:police/radio"
+   }
+  ]
+ },
+ "stalker.breath": {
+  "sounds": [
+   {
+    "name": "fireheartcity:stalker/breath",
+    "stream": true
+   }
+  ]
+ },
+ "stalker.crack": {
+  "sounds": [
+   {
+    "name": "fireheartcity:stalker/crack"
+   }
+  ]
+ },
+ "stalker.scream": {
+  "sounds": [
+   {
+    "name": "fireheartcity:stalker/scream"
+   }
+  ]
+ },
+ "stalker.drone": {
+  "sounds": [
+   {
+    "name": "fireheartcity:stalker/drone",
+    "stream": true
+   }
+  ]
+ },
+ "kitchen.sizzle": {
+  "sounds": [
+   {
+    "name": "fireheartcity:kitchen/sizzle"
+   }
+  ]
+ },
+ "kitchen.chop": {
+  "sounds": [
+   {
+    "name": "fireheartcity:kitchen/chop"
+   }
+  ]
+ },
+ "kitchen.bubble": {
+  "sounds": [
+   {
+    "name": "fireheartcity:kitchen/bubble"
+   }
+  ]
+ },
+ "vehicle.engine_car": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/engine_car",
+    "stream": false
+   }
+  ]
+ },
+ "vehicle.engine_bike": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/engine_bike",
+    "stream": false
+   }
+  ]
+ },
+ "vehicle.engine_boat": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/engine_boat",
+    "stream": false
+   }
+  ]
+ },
+ "vehicle.horn_car": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/horn_car"
+   }
+  ]
+ },
+ "vehicle.horn_bike": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/horn_bike"
+   }
+  ]
+ },
+ "vehicle.start": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/start"
+   }
+  ]
+ },
+ "vehicle.skid": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/skid"
+   }
+  ]
+ }
+}

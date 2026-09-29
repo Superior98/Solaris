@@ -1,0 +1,9 @@
+{
+  "id" : "ba0f0db57f7a460888b0bdbeb9bea1de",
+  "name" : "StellarFox1",
+  "properties" : [ {
+    "name" : "textures",
+    "value" : "ewogICJ0aW1lc3RhbXAiIDogMTc5MDY0MDg2NDI4OCwKICAicHJvZmlsZUlkIiA6ICJiYTBmMGRiNTdmN2E0NjA4ODhiMGJkYmViOWJlYTFkZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJTdGVsbGFyRm94MSIsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9lYmRmZjBlZjM5NmE1YmJjNWRlOTQyYWJlNWM1NzE4MTU1Y2MzNTBkZDlmNjIyYWExNGIxZGQyM2U1YWM4MmVlIgogICAgfQogIH0KfQ=="
+  } ],
+  "profileActions" : [ ]
+}

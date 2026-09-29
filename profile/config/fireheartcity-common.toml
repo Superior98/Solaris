@@ -1,0 +1,19 @@
+
+[phones]
+	#How often residents text, post and scroll (1.0 = normal, 0 = never, 2.0 = twice as often)
+	#Range: 0.0 ~ 5.0
+	textRate = 1.0
+	#How often residents phone each other and you (1.0 = normal)
+	#Range: 0.0 ~ 5.0
+	callRate = 1.0
+	#Residents sometimes crack or lose their phones
+	phonesBreak = true
+
+[world]
+	#Build the Neon Heights expansion and the SolTech store automatically
+	autoBuild = true
+	#Residents always ride the Sky Ferry instead of skipping the trip when no player is near
+	ferryStrict = false
+	#Keep the day/night cycle running (clocks, watches and resident routines need it)
+	timeMoves = true
+

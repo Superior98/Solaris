@@ -1,0 +1,5 @@
+tellraw @a ["BD2 rearL speed ",{"block":"-28661767 126 12290045","nbt":"Speed"}," travel ",{"block":"-28661767 126 12290045","nbt":"WheelTravel"}]
+tellraw @a ["BD2 rearR speed ",{"block":"-28661767 126 12290049","nbt":"Speed"}," travel ",{"block":"-28661767 126 12290049","nbt":"WheelTravel"}]
+tellraw @a ["BD2 net ",{"block":"-28661767 126 12290045","nbt":"Network"}]
+tellraw @a ["BD2 engine net ",{"block":"-28661763 128 12290047","nbt":"Network"}]
+tellraw @a ["BD2 frontL travel ",{"block":"-28661759 126 12290046","nbt":"WheelTravel"}," frontR ",{"block":"-28661759 126 12290048","nbt":"WheelTravel"}]

@@ -1,0 +1,7 @@
+# Local secrets and temporary files added after restoring this snapshot.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+**/session.lock

@@ -1,0 +1,1 @@
+tellraw @a ["",{"text":"[Skyliner] state="},{"score":{"name":"#state","objective":"sky"}},{"text":" t="},{"score":{"name":"#t","objective":"sky"}},{"text":" lock="},{"score":{"name":"#lock","objective":"sky"}},{"text":" wait="},{"score":{"name":"#wait","objective":"sky"}}]

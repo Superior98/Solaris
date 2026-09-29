@@ -1,0 +1,293 @@
+---- Minecraft Crash Report ----
+// Embeddium instance tainted by mods: [valkyrienskies, oculus]
+// Please do not reach out for Embeddium support without removing these mods first.
+// -------
+// Don't do that.
+
+Time: 2026-09-15 20:58:34
+Description: Rendering Block Entity
+
+java.lang.NullPointerException: Cannot invoke "net.minecraft.client.renderer.texture.TextureAtlasSprite.m_118409_()" because the return value of "net.createmod.catnip.render.SpriteShiftEntry.getOriginal()" is null
+	at net.createmod.catnip.render.ShadeSeparatingSuperByteBuffer.lambda$shiftUVScrolling$1(ShadeSeparatingSuperByteBuffer.java:311) ~[Ponder-Forge-1.20.1-1.0.91.jar%23274!/:1.0.91] {re:classloading}
+	at net.createmod.catnip.render.ShadeSeparatingSuperByteBuffer.renderInto(ShadeSeparatingSuperByteBuffer.java:162) ~[Ponder-Forge-1.20.1-1.0.91.jar%23274!/:1.0.91] {re:classloading}
+	at com.simibubi.create.content.kinetics.belt.BeltRenderer.renderSafe(BeltRenderer.java:132) ~[create-1.20.1-6.0.8.jar%23179!/:6.0.8] {re:classloading}
+	at com.simibubi.create.content.kinetics.belt.BeltRenderer.renderSafe(BeltRenderer.java:48) ~[create-1.20.1-6.0.8.jar%23179!/:6.0.8] {re:classloading}
+	at com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer.m_6922_(SafeBlockEntityRenderer.java:24) ~[create-1.20.1-6.0.8.jar%23179!/:6.0.8] {re:mixin,re:classloading,pl:mixin:A}
+	at net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher.m_112284_(BlockEntityRenderDispatcher.java:90) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.json:entity_render_context.MixinBlockEntityRenderDispatcher,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.render_blockentity_distance_check.MixinBlockEntityRenderDispatcher,pl:mixin:A}
+	at net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher.m_112297_(BlockEntityRenderDispatcher.java:79) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.json:entity_render_context.MixinBlockEntityRenderDispatcher,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.render_blockentity_distance_check.MixinBlockEntityRenderDispatcher,pl:mixin:A}
+	at net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher.m_112278_(BlockEntityRenderDispatcher.java:104) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.json:entity_render_context.MixinBlockEntityRenderDispatcher,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.render_blockentity_distance_check.MixinBlockEntityRenderDispatcher,pl:mixin:A}
+	at net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher.m_112267_(BlockEntityRenderDispatcher.java:79) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.json:entity_render_context.MixinBlockEntityRenderDispatcher,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.render_blockentity_distance_check.MixinBlockEntityRenderDispatcher,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntity(SodiumWorldRenderer.java:526) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.redirect$bja000$addToList(SodiumWorldRenderer.java:784) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntities(SodiumWorldRenderer.java:457) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.redirect$cik000$renderShipBlockEntities(SodiumWorldRenderer.java:1821) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntities(SodiumWorldRenderer.java:413) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at net.minecraft.client.renderer.LevelRenderer.handler$zki000$onRenderBlockEntities(LevelRenderer.java:17295) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.renderer.LevelRenderer.m_109599_(LevelRenderer.java:1268) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.renderer.GameRenderer.m_109089_(GameRenderer.java:1126) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.renderer.GameRenderer.m_109093_(GameRenderer.java:909) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91383_(Minecraft.java:1146) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91374_(Minecraft.java:718) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.main.Main.main(Main.java:218) ~[1.20.1-47.4.20.jar:?] {re:classloading}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.relaunch(MinecraftLaunch.java:63) ~[theseus.jar%2386!/:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.main(MinecraftLaunch.java:28) ~[theseus.jar%2386!/:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Render thread
+Suspected Mods: 
+	Ponder (ponder), Version: 1.0.91
+		Issue tracker URL: https://github.com/Creators-of-Create/Ponder/issues
+		at TRANSFORMER/ponder@1.0.91/net.createmod.catnip.render.ShadeSeparatingSuperByteBuffer.lambda$shiftUVScrolling$1(ShadeSeparatingSuperByteBuffer.java:311)
+
+	Embeddium (embeddium), Version: 0.3.31+mc1.20.1
+		at TRANSFORMER/embeddium@0.3.31+mc1.20.1/me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntity(SodiumWorldRenderer.java:526)
+
+	Create (create), Version: 6.0.8
+		Issue tracker URL: https://github.com/Creators-of-Create/Create/issues
+		at TRANSFORMER/create@6.0.8/com.simibubi.create.content.kinetics.belt.BeltRenderer.renderSafe(BeltRenderer.java:132)
+
+	Valkyrien Skies 2 (valkyrienskies), Version: 2.4.11
+		Issue tracker URL: https://github.com/ValkyrienSkies/Valkyrien-Skies-2/issues
+		Mixin class: org.valkyrienskies.mod.mixin.mod_compat.sodium.MixinSodiumWorldRenderer
+		Target: me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer
+		at TRANSFORMER/embeddium@0.3.31+mc1.20.1/me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.redirect$cik000$renderShipBlockEntities(SodiumWorldRenderer.java:1821)
+
+	Oculus (oculus), Version: 1.8.0
+		Issue tracker URL: https://github.com/Asek3/Oculus/issues
+		Mixin class: net.irisshaders.iris.compat.sodium.mixin.shadow_map.MixinSodiumWorldRenderer
+		Target: me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer
+		at TRANSFORMER/embeddium@0.3.31+mc1.20.1/me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.redirect$bja000$addToList(SodiumWorldRenderer.java:784)
+Stacktrace:
+	at net.createmod.catnip.render.ShadeSeparatingSuperByteBuffer.lambda$shiftUVScrolling$1(ShadeSeparatingSuperByteBuffer.java:311) ~[Ponder-Forge-1.20.1-1.0.91.jar%23274!/:1.0.91] {re:classloading}
+	at net.createmod.catnip.render.ShadeSeparatingSuperByteBuffer.renderInto(ShadeSeparatingSuperByteBuffer.java:162) ~[Ponder-Forge-1.20.1-1.0.91.jar%23274!/:1.0.91] {re:classloading}
+	at com.simibubi.create.content.kinetics.belt.BeltRenderer.renderSafe(BeltRenderer.java:132) ~[create-1.20.1-6.0.8.jar%23179!/:6.0.8] {re:classloading}
+	at com.simibubi.create.content.kinetics.belt.BeltRenderer.renderSafe(BeltRenderer.java:48) ~[create-1.20.1-6.0.8.jar%23179!/:6.0.8] {re:classloading}
+	at com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer.m_6922_(SafeBlockEntityRenderer.java:24) ~[create-1.20.1-6.0.8.jar%23179!/:6.0.8] {re:mixin,re:classloading,pl:mixin:A}
+	at net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher.m_112284_(BlockEntityRenderDispatcher.java:90) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.json:entity_render_context.MixinBlockEntityRenderDispatcher,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.render_blockentity_distance_check.MixinBlockEntityRenderDispatcher,pl:mixin:A}
+	at net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher.m_112297_(BlockEntityRenderDispatcher.java:79) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.json:entity_render_context.MixinBlockEntityRenderDispatcher,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.render_blockentity_distance_check.MixinBlockEntityRenderDispatcher,pl:mixin:A}
+	at net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher.m_112278_(BlockEntityRenderDispatcher.java:104) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.json:entity_render_context.MixinBlockEntityRenderDispatcher,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.render_blockentity_distance_check.MixinBlockEntityRenderDispatcher,pl:mixin:A}
+	at net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher.m_112267_(BlockEntityRenderDispatcher.java:79) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.json:entity_render_context.MixinBlockEntityRenderDispatcher,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.render_blockentity_distance_check.MixinBlockEntityRenderDispatcher,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntity(SodiumWorldRenderer.java:526) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.redirect$bja000$addToList(SodiumWorldRenderer.java:784) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntities(SodiumWorldRenderer.java:457) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.redirect$cik000$renderShipBlockEntities(SodiumWorldRenderer.java:1821) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntities(SodiumWorldRenderer.java:413) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at net.minecraft.client.renderer.LevelRenderer.handler$zki000$onRenderBlockEntities(LevelRenderer.java:17295) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.renderer.LevelRenderer.m_109599_(LevelRenderer.java:1268) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.renderer.GameRenderer.m_109089_(GameRenderer.java:1126) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+-- Block Entity Details --
+Details:
+	Name: create:belt // com.simibubi.create.content.kinetics.belt.BeltBlockEntity
+	Block: Block{create:belt}[casing=false,facing=east,part=middle,slope=horizontal,waterlogged=false]
+	Block location: World: (1,71,6), Section: (at 1,7,6 in 0,4,0; chunk contains blocks 0,-64,0 to 15,319,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,-64,0 to 511,319,511)
+	Block: Block{create:belt}[casing=false,facing=east,part=middle,slope=horizontal,waterlogged=false]
+	Block location: World: (1,71,6), Section: (at 1,7,6 in 0,4,0; chunk contains blocks 0,-64,0 to 15,319,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,-64,0 to 511,319,511)
+Stacktrace:
+	at net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher.m_112278_(BlockEntityRenderDispatcher.java:104) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.json:entity_render_context.MixinBlockEntityRenderDispatcher,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.render_blockentity_distance_check.MixinBlockEntityRenderDispatcher,pl:mixin:A}
+	at net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher.m_112267_(BlockEntityRenderDispatcher.java:79) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:APP:mixins.oculus.json:entity_render_context.MixinBlockEntityRenderDispatcher,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.render_blockentity_distance_check.MixinBlockEntityRenderDispatcher,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntity(SodiumWorldRenderer.java:526) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.redirect$bja000$addToList(SodiumWorldRenderer.java:784) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntities(SodiumWorldRenderer.java:457) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.redirect$cik000$renderShipBlockEntities(SodiumWorldRenderer.java:1821) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at me.jellysquid.mods.sodium.client.render.SodiumWorldRenderer.renderBlockEntities(SodiumWorldRenderer.java:413) ~[embeddium-0.3.31+mc1.20.1.jar%23187!/:?] {re:mixin,re:classloading,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.MixinSodiumWorldRenderer,pl:mixin:APP:mixins.oculus.compat.sodium.json:shadow_map.SodiumWorldRendererAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:mod_compat.sodium.MixinSodiumWorldRenderer,pl:mixin:APP:valkyrienskies-forge.mixins.json:compat.sodium.MixinSodiumWorldRenderer,pl:mixin:A}
+	at net.minecraft.client.renderer.LevelRenderer.handler$zki000$onRenderBlockEntities(LevelRenderer.java:17295) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.renderer.LevelRenderer.m_109599_(LevelRenderer.java:1268) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.renderer.GameRenderer.m_109089_(GameRenderer.java:1126) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.renderer.GameRenderer.m_109093_(GameRenderer.java:909) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91383_(Minecraft.java:1146) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91374_(Minecraft.java:718) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.main.Main.main(Main.java:218) ~[1.20.1-47.4.20.jar:?] {re:classloading}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.relaunch(MinecraftLaunch.java:63) ~[theseus.jar%2386!/:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.main(MinecraftLaunch.java:28) ~[theseus.jar%2386!/:?] {}
+
+
+-- Affected level --
+Details:
+	All players: 1 total; [LocalPlayer['Fireheart_4743'/184, l='ClientLevel', x=-2.84, y=71.00, z=7.18]]
+	Chunk stats: 961, 609
+	Level dimension: minecraft:overworld
+	Level spawn location: World: (16,72,16), Section: (at 0,8,0 in 1,4,1; chunk contains blocks 16,-64,16 to 31,319,31), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,-64,0 to 511,319,511)
+	Level time: 21452 game time, 16892 day time
+	Server brand: forge
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.ClientLevel.m_6026_(ClientLevel.java:455) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,re:classloading,pl:mixin:APP:embeddium.mixins.json:features.render.world.ClientLevelMixin,pl:mixin:APP:createbigcannons-common.mixins.json:client.ClientLevelAccessor,pl:mixin:APP:mixins.oculus.vertexformat.json:block_rendering.MixinClientLevel,pl:mixin:APP:architectury.mixins.json:MixinClientLevel,pl:mixin:APP:valkyrienskies-common.mixins.json:accessors.client.multiplayer.ClientLevelAccessor,pl:mixin:APP:valkyrienskies-common.mixins.json:client.world.MixinClientLevel,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.block_tint.MixinClientLevel,pl:mixin:APP:valkyrienskies-common.mixins.json:feature.shipyard_entities.MixinClientLevel,pl:mixin:APP:embeddium.mixins.json:core.world.biome.ClientWorldMixin,pl:mixin:APP:embeddium.mixins.json:core.world.map.ClientWorldMixin,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91354_(Minecraft.java:2319) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.Minecraft.m_91374_(Minecraft.java:735) ~[client-1.20.1-20230612.114412-srg.jar%23196!/:?] {re:mixin,pl:accesstransformer:B,re:classloading,pl:accesstransformer:B,pl:mixin:A}
+	at net.minecraft.client.main.Main.main(Main.java:218) ~[1.20.1-47.4.20.jar:?] {re:classloading}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:111) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.clientService(CommonLaunchHandler.java:99) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at net.minecraftforge.fml.loading.targets.CommonClientLaunchHandler.lambda$makeService$0(CommonClientLaunchHandler.java:25) ~[fmlloader-1.20.1-47.4.20.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:30) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:53) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:71) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:108) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:78) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:26) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) ~[modlauncher-10.0.9.jar:?] {}
+	at cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:141) ~[bootstraplauncher-1.1.2.jar:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?] {}
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source) ~[?:?] {}
+	at java.lang.reflect.Method.invoke(Unknown Source) ~[?:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.relaunch(MinecraftLaunch.java:63) ~[theseus.jar%2386!/:?] {}
+	at com.modrinth.theseus.MinecraftLaunch.main(MinecraftLaunch.java:28) ~[theseus.jar%2386!/:?] {}
+
+
+-- Last reload --
+Details:
+	Reload number: 1
+	Reload reason: initial
+	Finished: Yes
+	Packs: vanilla, mod_resources
+
+-- System Details --
+Details:
+	Minecraft Version: 1.20.1
+	Minecraft Version ID: 1.20.1
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 17.0.20.1, Azul Systems, Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Azul Systems, Inc.
+	Memory: 967869336 bytes (923 MiB) / 4294967296 bytes (4096 MiB) up to 4294967296 bytes (4096 MiB)
+	CPUs: 12
+	Processor Vendor: GenuineIntel
+	Processor Name: 12th Gen Intel(R) Core(TM) i5-1235U
+	Identifier: Intel64 Family 6 Model 154 Stepping 4
+	Microarchitecture: Alder Lake
+	Frequency (GHz): 2.50
+	Number of physical packages: 1
+	Number of physical CPUs: 10
+	Number of logical CPUs: 12
+	Graphics card #0 name: Intel(R) Iris(R) Xe Graphics
+	Graphics card #0 vendor: Intel Corporation (0x8086)
+	Graphics card #0 VRAM (MB): 2048.00
+	Graphics card #0 deviceId: 0x46a8
+	Graphics card #0 versionInfo: DriverVersion=32.0.101.7085
+	Memory slot #0 capacity (MB): 8192.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MB): 8192.00
+	Memory slot #1 clockSpeed (GHz): 3.20
+	Memory slot #1 type: DDR4
+	Virtual memory max (MB): 26138.72
+	Virtual memory used (MB): 22693.62
+	Swap memory total (MB): 10048.86
+	Swap memory used (MB): 1190.21
+	JVM Flags: 2 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -Xmx4096M
+	Loaded Shaderpack: rethinking-voxels_r0.1-beta9.zip
+		Profile: ULTRA (+1 option changed by user)
+	Launched Version: 1.20.1
+	Backend library: LWJGL version 3.3.1 build 7
+	Backend API: Intel(R) Iris(R) Xe Graphics GL version 4.6.0 - Build 32.0.101.7085, Intel
+	Window size: 1920x1094
+	GL Caps: Using framebuffer using OpenGL 3.2
+	GL debug messages: 
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'forge'; Server brand changed to 'forge'
+	Type: Integrated Server (map_client.txt)
+	Graphics mode: fancy
+	Resource Packs: vanilla, mod_resources
+	Current Language: en_us
+	CPU: 12x 12th Gen Intel(R) Core(TM) i5-1235U
+	Server Running: true
+	Player Count: 1 / 8; [ServerPlayer['Fireheart_4743'/184, l='ServerLevel[Create!]', x=-2.84, y=71.00, z=7.18]]
+	Data Packs: vanilla, mod:ritchiesprojectilelib (incompatible), mod:createdieselgenerators, mod:railways, mod:cloth_config (incompatible), mod:forge, mod:farmersdelight, mod:kotlinforforge (incompatible), mod:flywheel, mod:ponder (incompatible), mod:create, mod:createbigcannons (incompatible), mod:createdeco (incompatible), mod:create_dragons_plus, mod:createcasing (incompatible), mod:architectury (incompatible), mod:kelvin (incompatible), mod:conditional_mixin (incompatible), mod:valkyrienskies (incompatible), mod:vs_clockwork (incompatible), mod:drivebywire (incompatible), mod:trackwork (incompatible), mod:create_enchantment_industry, mod:sliceanddice (incompatible), mod:createaddition (incompatible), create:dynamic_data, create_dragons_plus/runtime, mod:embeddium, mod:oculus
+	Enabled Feature Flags: minecraft:vanilla
+	World Generation: Stable
+	ModLauncher: 10.0.9+10.0.9+main.dcd20f30
+	ModLauncher launch target: forgeclient
+	ModLauncher naming: srg
+	ModLauncher services: 
+		mixin-0.8.5.jar mixin PLUGINSERVICE 
+		eventbus-6.2.33.jar eventbus PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar slf4jfixer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar object_holder_definalize PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar runtime_enum_extender PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar capability_token_subclass PLUGINSERVICE 
+		accesstransformers-8.0.4.jar accesstransformer PLUGINSERVICE 
+		fmlloader-1.20.1-47.4.20.jar runtimedistcleaner PLUGINSERVICE 
+		modlauncher-10.0.9.jar mixin TRANSFORMATIONSERVICE 
+		modlauncher-10.0.9.jar fml TRANSFORMATIONSERVICE 
+	FML Language Providers: 
+		minecraft@1.0
+		kotlinforforge@4.12.0
+		javafml@null
+		lowcodefml@null
+	Mod List: 
+		ritchiesprojectilelib-2.1.1+mc.1.20.1-forge.jar   |Ritchie's Projectile Library  |ritchiesprojectilelib         |2.1.1               |DONE      |Manifest: NOSIGNATURE
+		createdieselgenerators-1.20.1-1.3.12.jar          |Create: Diesel Generators     |createdieselgenerators        |1.20.1-1.3.12       |DONE      |Manifest: NOSIGNATURE
+		Steam_Rails-1.7.3+forge-mc1.20.1.jar              |Create: Steam 'n' Rails       |railways                      |1.7.3+forge-mc1.20.1|DONE      |Manifest: NOSIGNATURE
+		cloth-config-forge-11.1.106.jar                   |Cloth Config v10 API          |cloth_config                  |11.1.106            |DONE      |Manifest: NOSIGNATURE
+		forge-1.20.1-47.4.20-universal.jar                |Forge                         |forge                         |47.4.20             |DONE      |Manifest: NOSIGNATURE
+		embeddium-0.3.31+mc1.20.1.jar                     |Embeddium                     |embeddium                     |0.3.31+mc1.20.1     |DONE      |Manifest: NOSIGNATURE
+		client-1.20.1-20230612.114412-srg.jar             |Minecraft                     |minecraft                     |1.20.1              |DONE      |Manifest: a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		FarmersDelight-1.20.1-1.3.4.jar                   |Farmer's Delight              |farmersdelight                |1.20.1-1.3.4        |DONE      |Manifest: NOSIGNATURE
+		kffmod-4.12.0.jar                                 |Kotlin For Forge              |kotlinforforge                |4.12.0              |DONE      |Manifest: NOSIGNATURE
+		flywheel-forge-1.20.1-1.0.5.jar                   |Flywheel                      |flywheel                      |1.0.5               |DONE      |Manifest: NOSIGNATURE
+		Ponder-Forge-1.20.1-1.0.91.jar                    |Ponder                        |ponder                        |1.0.91              |DONE      |Manifest: NOSIGNATURE
+		create-1.20.1-6.0.8.jar                           |Create                        |create                        |6.0.8               |DONE      |Manifest: NOSIGNATURE
+		createbigcannons-5.11.4-mc.1.20.1-forge.jar       |Create Big Cannons            |createbigcannons              |5.11.4              |DONE      |Manifest: NOSIGNATURE
+		createdeco-2.0.3-1.20.1-forge.jar                 |Create Deco                   |createdeco                    |2.0.3-1.20.1-forge  |DONE      |Manifest: NOSIGNATURE
+		CreateDragonsPlus-1.11.8.jar                      |Create: Dragons Plus          |create_dragons_plus           |1.11.8              |DONE      |Manifest: NOSIGNATURE
+		Create Encased-1.20.1-1.8-ht2.jar                 |Create Encased                |createcasing                  |1.8-ht2             |DONE      |Manifest: NOSIGNATURE
+		oculus-mc1.20.1-1.8.0.jar                         |Oculus                        |oculus                        |1.8.0               |DONE      |Manifest: NOSIGNATURE
+		architectury-forge-9.1.12.jar                     |Architectury                  |architectury                  |9.1.12              |DONE      |Manifest: NOSIGNATURE
+		kelvin-forge-1.20.1-0.5.0+5c1c62c654.jar          |Kelvin                        |kelvin                        |1.20.1-0.5.0+5c1c62c|DONE      |Manifest: NOSIGNATURE
+		conditional-mixin-forge-0.6.4.jar                 |conditional mixin             |conditional_mixin             |0.6.4               |DONE      |Manifest: NOSIGNATURE
+		valkyrienskies-120-2.4.11.jar                     |Valkyrien Skies 2             |valkyrienskies                |2.4.11              |DONE      |Manifest: NOSIGNATURE
+		clockwork-0.5.6.jar                               |Clockwork                     |vs_clockwork                  |0.5.6               |DONE      |Manifest: NOSIGNATURE
+		drivebywire-1.20.1-0.1.1.jar                      |Drive-By-Wire Mod             |drivebywire                   |0.1.1               |DONE      |Manifest: NOSIGNATURE
+		trackwork-1.20.1-1.2.3.jar                        |Trackwork Mod                 |trackwork                     |1.2.3               |DONE      |Manifest: NOSIGNATURE
+		create-enchantment-industry-2.5.2.jar             |Create: Enchantment Industry  |create_enchantment_industry   |2.5.2               |DONE      |Manifest: NOSIGNATURE
+		sliceanddice-forge-3.6.0.jar                      |Create Slice & Dice           |sliceanddice                  |3.6.0               |DONE      |Manifest: NOSIGNATURE
+		createaddition-1.20.1-1.3.3.jar                   |Create Crafts & Additions     |createaddition                |1.20.1-1.3.3        |DONE      |Manifest: NOSIGNATURE
+	Crash Report UUID: 68ec6004-02ba-407d-876e-73608cc878dd
+	FML: 47.4
+	Forge: net.minecraftforge:47.4.20
+	Flywheel Backend: flywheel:off
