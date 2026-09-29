@@ -1,8 +1,32 @@
-# SOLARIS (formerly Fireheart City): Project Handoff, v1.12.0 (2026-09-29)
+# SOLARIS (formerly Fireheart City): Project Handoff, v1.20.1 (2026-09-29 15:10 AEST)
 
 This file carries the project into a new chat. Read this file first. The older, much longer `Fireheart_Project_Handoff.md` in this folder has the full history, the toolchain derivation, the block-ID lists and the generator code from earlier sessions. Use it as a reference when you need detail.
 
-## v1.20.0 - merge (latest, built and tested)
+## START HERE - current state (v1.20.1)
+- **Source of truth:** GitHub `Superior98/Solaris`, branch `claude/sharp-euler-yhclm1` (PR #1), folder `fireheart-city/` (`src/`, `res/`, `tools/`). Local build workspace was `/tmp/modbuild` (git master mirrors the branch). `build.sh`/`check.sh` need `cp.txt`, `srg2named.srg` and the named jars (see section 3 and the old handoff).
+- **Installed:** `fireheartcity-0.1.0.jar` v1.20.1 (3,284,779 bytes) is in `mods\` of the "Create_ Remastered" profile. magmagamer9 needs the same jar.
+- **Tests:** `/city test player` 82/83 on a fresh copy (the group-chat check fails only because of broken phones in the save). Re-running on a non-fresh world can also fail "phone invites" and "player TNT" (state already exists) - not bugs.
+- **Nothing client-visual since v1.13 has been seen by me in the real client except the hotel lobby/sauna fix.** Needs his feedback: the v1.14-v1.19 animations/sky effects, the new vehicle physics/visuals, GPS HUD, SolEats tracker.
+- **Useful commands:** player `/sol` (help), `/sol gps`, `/sol base`, `/sol garage give|park`, `/sol tutorial`; admin `/city garage replace`, `/city hotel`, `/city event <name>`, `/city repair`, `/city test player`.
+- **Secret base:** Stellar House study, 3x3 spruce hatch at 71 85 10 - sneak on it (owners StellarFox1, magmagamer9, Fireheart_4743); stand on the pad (no sneak) to go up. `/sol base` prints this and points the GPS there.
+
+## v1.20.1 - vehicles overhaul + fixes (built, server-booted, installed)
+- **Wheel spin fixed** (spun backwards): `wp.xRot = spin`, spin += moved / wheel radius (car 0.3125, bike 0.375). Direction from movement vs heading.
+- **Steering visuals fixed** (were mirrored): model space is post-yaw space rotated 180 deg about Z by `scale(-1,-1,1)`, so model +X is the vehicle's LEFT. Front wheels `yRot = +steerVis`, steering wheel `zRot = -steer*2.4`, indicator group `ind_l` (model -X) = right side. Yaw itself was always correct (D = +yaw = right turn).
+- **Drivetrain** (`Vehicle.input`): automatic gears `GEARS` (car 5, bike 6, boat 1), rpm per gear, upshift at rpm>0.94 with a 3-5 tick torque cut (shift sound, 45% backfire from 3rd), downshift at 68% of the lower gear top; torque curve 0.72+0.5*sin(pi*rpm) x sqrt(gear ratio); aero drag, engine braking, strong braking on S, reverse after holding S 5 ticks at a stop (30% of top speed). Top speeds: car 1.25, bike 1.45, boat 0.95 blocks/tick.
+- **Handling:** bicycle model yaw = v/wheelbase*tan(steer angle) with steer angle 36/30/28 deg / (1+1.5v) and understeer /(1+0.35v^2); steering ramps (0.12/tick in, 0.2 back). Lateral grip: car 0.45, bike 0.6, boat 0.1; Space = handbrake drift (grip 0.045, yaw x1.55, tyre smoke + skid loop). Slope gravity from ground height under both axles (only with a driver - parked cars don't roll). Airborne: no steering/throttle; landing thud + suspension dip.
+- **Crashes:** horizontal collision above 0.5 b/t -> crash sound, sparks, bounce back 22%.
+- **Visuals** (`VehicleRenderer`): car body pitches (accel/brake/slope), rolls in turns, absorbs kerbs (bodyY), wheels rendered separately so they stay planted; bike leans into turns and wheelies on hard launches in 1st; boat planes (bow up then levels), rolls, bigger wake/spray. New parts: steering wheel, dash, twin exhausts, plates, door handles, reverse lights (white when reversing), indicators (blink + tick when steering hard below 0.5 b/t), bike mirrors/disc/plate. Layers: paint, trim, glass, lamp, tail, rev, ind(ind_l/ind_r), wheels.
+- **Audio/HUD** (`VehicleClient`): engine pitch/volume from rpm and throttle, dip on shifts; looping skid (`vehicle.skid_loop`); new sounds crash/backfire/shift/indicator/land (`tools/sfx_vehicles.py`). HUD: rev arc, km/h, gear (R/N/1-6, F for boat), rpm, DRIFT/BRAKE flags. FOV widens up to 12% with speed. Remote vehicles derive speed/steer/gear/brake lights from movement.
+- **Sauna (live world, 2026-09-29):** his `sauna.zip` datapack (`sauna:build` builds relative to a `marker` tagged `sauna`) had been placed overlapping the hotel. Fixed in the live world with datapack `saves/Create!/datapacks/solaris_fix` (`solaris_fix:run`): restored every hotel block from the 09:54 world copy and moved the sauna +11 x, -6 z to x61..78 z30..43, marker to 59.7 72 37.6. `solaris_fix:undo` reverts. The datapack can be deleted.
+- Hotel: residents knocking at magmagamer9's house use `G_KNOCK`.
+
+## Missing from older sections (local work on v1.12, now merged)
+- **Watcher** (`client/Stalker.java`): phases WAITING > OMENS (footsteps, whispers, screen dims) > GLIMPSE x3 (closer each time) > WATCHING (creeps closer, breathing) > NOTICED (twitch, head crack, jaw drop, camera pulled to it, heartbeat, red pulse) > LUNGE > fade. The permanent black screen is fixed (afterT/dim/heart count down before returning to IDLE). Sounds stalker.step/heart/whisper/static/sting (`tools/sfx_stalker*.py`).
+- **Gus** (`Repair.java`): places blocks like a player - walks within 4.6 reach, holds the block item, swings, places; door/bed halves together; `canSurvive` check; `giveUp` retries 4 times with growing delay then ignores the spot. No more flying block displays.
+- **Stellar House cosy interior** (`StellarHome.cozy`, applied once via `CityData.stellarCozy`): wood floors/ceiling with beams, mushroom-stem partitions with labelled doorways, real staircase in the study (x69-73 z12-13), brick fireplace (88,85,18), sofas, rugs, lamps, TV nook, dining table, bedroom; warm ochre froglight room lights.
+
+## v1.20.0 - merge (built and tested)
 This branch merges the cloud session's v1.13-v1.19 work with the local session's parallel work, which was built on v1.12.0 (cbaa322): the Watcher black-screen fix and scarier Watcher, Gus placing blocks like a player, the cosy Stellar House interior, and the hotel/GPS/SolEats work below. Version is 1.20.0. It compiles against MC 1.20.1/Forge 47 without changes. `/city test player`: 82/83 (the group chat check depends on the save's broken phones), all lifeTests pass, `/city event` works for every event, and a full day soak logged no tick exceptions.
 
 ### Local-session features included
