@@ -90,6 +90,12 @@ public final class Perks {
             new Ach("rps", "Rock Solid", "Win rock-paper-scissors against a resident", 5),
             new Ach("wish", "Wish Upon a Star", "Be outside when a shooting star falls", 10),
             new Ach("rainbow", "Somewhere Over It", "See a rainbow over Solaris", 10),
+            new Ach("crowd", "Crowd Pleaser", "Get 3 residents to react to one emote", 10),
+            new Ach("legend", "Solaris Legend", "Reach the top reputation rank", 100),
+            new Ach("treasure5", "Treasure Hunter", "Find 5 daily treasures", 40),
+            new Ach("angler", "Angler", "Catch 10 fish", 15),
+            new Ach("birthday", "Another Year", "Celebrate your birthday in Solaris", 10),
+            new Ach("aurora", "Northern Lights", "See the aurora over Solaris", 15),
     };
 
     public static boolean unlock(ServerPlayer pl, CityData d, String id) {

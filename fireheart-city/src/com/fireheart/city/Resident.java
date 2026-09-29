@@ -603,6 +603,11 @@ public class Resident extends PathfinderMob {
             double sc = -0.5 + (p.trait == Trait.ADVENTUROUS || p.trait == Trait.CHEERFUL ? 0.9 : p.trait == Trait.LAIDBACK || p.trait == Trait.GRUMPY ? -0.6 : 0.2) + (p.fun < 40 ? 0.3 : 0) - (resting ? 2 : 0);
             opts.add(new Mind.Choice(k, "jog", "a good run clears my head", sc));
         }
+        if (!rain && (timeOfDay() < 3500 || timeOfDay() > 22500)) {
+            String k = isle ? "gardens" : "park";
+            double sc = -0.4 + (p.trait == Trait.DREAMY || p.trait == Trait.LAIDBACK ? 0.9 : p.trait == Trait.GRUMPY ? -0.6 : 0.1) + (p.fun < 40 ? 0.2 : 0) + (resting ? 0.6 : 0);
+            opts.add(new Mind.Choice(k, "yoga", "morning yoga sets me up for the day", sc));
+        }
         if (!rain && !isle) opts.add(new Mind.Choice(getRandom().nextFloat() < 0.7f ? "boardwalk" : "pier", "fishing", "the fish are biting", -0.1 + (p.trait == Trait.SHY ? 0.8 : 0) + (weekendNow() ? 0.3 : 0)));
         String boardKey = Gazette.nearestBoardKey(d, isle, blockPosition(), 200);
         if (boardKey != null) opts.add(new Mind.Choice(boardKey, "news", "catching up on the news", -0.6 + (p.trait == Trait.CURIOUS ? 0.6 : 0)));
@@ -879,6 +884,7 @@ public class Resident extends PathfinderMob {
                     case "shopping" -> "shopping at ";
                     case "fishing" -> "fishing at ";
                     case "jog" -> "jogging around ";
+                    case "yoga" -> "doing morning yoga at ";
                     case "lantern" -> "sending up lanterns at ";
                     case "sunbathe" -> sunTicks > 0 ? "sunbathing at " : "enjoying the sunshine at ";
                     case "party" -> "at " + star + " birthday party at ";
@@ -908,6 +914,7 @@ public class Resident extends PathfinderMob {
                     case "dance" -> "on the way to the Sky Organ party at ";
                     case "fishing" -> "going fishing at ";
                     case "jog" -> "jogging over to ";
+                    case "yoga" -> "heading to morning yoga at ";
                     case "lantern" -> "on the way to Lantern Night at ";
                     case "date" -> "on the way to a date at ";
                     case "bank" -> "popping over to ";
@@ -1546,6 +1553,7 @@ public class Resident extends PathfinderMob {
         }
         if (act.equals("leisure") && there && convo == null && eatTicks <= 0 && listenTicks <= 0) civicTick(p, d, dest, now);
         if (jogging() && convo == null && eatTicks <= 0) Pastimes.jogTick(this, p, dest);
+        if (act.equals("leisure") && there && "yoga".equals(leisureWhy) && convo == null && eatTicks <= 0 && !isSeated()) Hobbies.yogaTick(this, p, dest);
         long tod = timeOfDay();
         if ((tod > 13000 && tod < 23000) && !asleep && !isSleeping() && eatTicks <= 0 && heldTicks <= 40 && level().canSeeSky(blockPosition())) showItem("minecraft:lantern", 80);
 
@@ -2756,7 +2764,8 @@ public class Resident extends PathfinderMob {
                     this.getLookControl().setLookAt(pl, 30, 30);
                     gesture(G_WAVE, 40);
                     String extra = pr.fam > 40 ? " Good to see you again." : "";
-                    String bonus = Pastimes.greetExtra(this, me, pl, pr);
+                    String bday = Quests.birthdayLine(this, pn);
+                    String bonus = bday != null ? bday : Pastimes.greetExtra(this, me, pl, pr);
                     if (bonus != null) extra = " " + bonus;
                     CityData.Event fresh = Events.freshestUnshared(d, me, pn);
                     String memo = Mind.playerLine(me, pn, day, getRandom());

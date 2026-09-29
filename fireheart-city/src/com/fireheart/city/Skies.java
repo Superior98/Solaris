@@ -44,9 +44,14 @@ public final class Skies {
         return Math.floorMod(day, 28L) == 20;
     }
 
+    public static boolean meteorNight(long day) {
+        return Math.floorMod(day, 14L) == 6;
+    }
+
     public static String holiday(long day) {
         if (lanternNight(day)) return "Lantern Night §7- lanterns fly from Solaris Plaza at sunset";
         if (kindnessDay(day)) return "Kindness Day §7- everyone's handing out gifts and compliments";
+        if (meteorNight(day)) return "a Meteor Shower night §7- look up after dark";
         return null;
     }
 
@@ -71,6 +76,78 @@ public final class Skies {
         if (lanternNight(day)) lanternTick(sl, d, day);
         else if (!lanterns.isEmpty()) lanterns.clear();
         if (kindnessDay(day) && gt % 40 == 21) kindnessTick(sl, d, day);
+        if (gt % 10 == 7 && seasonIndex(day) == 3) auroraTick(sl, d);
+        chimeTick(sl);
+        if (gt % 20 == 11) mistTick(sl);
+    }
+
+    /* ------------------------------------------------------------ Aurora */
+
+    static final DustParticleOptions[] AURORA = {
+            new DustParticleOptions(new Vector3f(0.2f, 1f, 0.5f), 4f),
+            new DustParticleOptions(new Vector3f(0.3f, 0.9f, 0.8f), 4f),
+            new DustParticleOptions(new Vector3f(0.6f, 0.3f, 1f), 4f)
+    };
+
+    static void auroraTick(ServerLevel sl, CityData d) {
+        long tod = Math.floorMod(sl.getDayTime(), 24000L);
+        if (tod < 13500 || tod > 22000 || sl.isRaining()) return;
+        double t = sl.getGameTime() * 0.01;
+        for (ServerPlayer pl : sl.players()) {
+            if (!outside(pl)) continue;
+            if (sl.getGameTime() % 200 == 7) Perks.unlock(pl, d, "aurora");
+            double baseZ = pl.getZ() - 90;
+            for (int i = -30; i <= 30; i += 2) {
+                double x = pl.getX() + i * 3;
+                double z = baseZ + Math.sin(i * 0.15 + t) * 12;
+                int band = Math.floorMod(i / 8, AURORA.length);
+                for (int h = 0; h < 4; h++) {
+                    if (sl.getRandom().nextFloat() > 0.5f) continue;
+                    sl.sendParticles(pl, AURORA[band], true, x, 150 + h * 6 + Math.sin(i * 0.3 + t * 2) * 4, z, 1, 1.5, 2.5, 1.5, 0);
+                }
+            }
+        }
+    }
+
+    /* ------------------------------------------------------------ Clock tower chimes */
+
+    static final BlockPos CLOCK = new BlockPos(-26, 90, 20);
+    static int chimesLeft, chimeGap;
+
+    static void chimeTick(ServerLevel sl) {
+        long tod = Math.floorMod(sl.getDayTime(), 24000L);
+        if (tod % 1000 == 0) {
+            int hour = (int) ((tod / 1000 + 6) % 24);
+            if (hour >= 7 && hour <= 22) {
+                chimesLeft = hour % 12 == 0 ? 12 : hour % 12;
+                chimeGap = 0;
+            }
+        }
+        if (chimesLeft <= 0 || --chimeGap > 0) return;
+        chimeGap = 24;
+        chimesLeft--;
+        for (ServerPlayer pl : sl.players()) {
+            double dd = pl.distanceToSqr(Vec3.atCenterOf(CLOCK));
+            if (dd > 160 * 160) continue;
+            float vol = (float) Math.max(0.15, 1.0 - Math.sqrt(dd) / 170.0);
+            pl.playNotifySound(SoundEvents.BELL_BLOCK, SoundSource.AMBIENT, vol, 0.6f);
+        }
+    }
+
+    /* ------------------------------------------------------------ Morning mist */
+
+    static final BlockPos MARINA = new BlockPos(18, 63, 64);
+
+    static void mistTick(ServerLevel sl) {
+        long tod = Math.floorMod(sl.getDayTime(), 24000L);
+        if (!(tod > 22800 || tod < 1800) || sl.isRaining()) return;
+        for (ServerPlayer pl : sl.players()) {
+            if (pl.distanceToSqr(Vec3.atCenterOf(MARINA)) > 70 * 70) continue;
+            for (int i = 0; i < 6; i++) {
+                double x = MARINA.getX() + sl.getRandom().nextGaussian() * 25, z = MARINA.getZ() + sl.getRandom().nextGaussian() * 20;
+                sl.sendParticles(pl, ParticleTypes.CLOUD, true, x, MARINA.getY() + 0.6, z, 1, 1.5, 0.1, 1.5, 0.004);
+            }
+        }
     }
 
     /* ------------------------------------------------------------ Rainbow */
@@ -141,9 +218,10 @@ public final class Skies {
 
     static void starCheck(ServerLevel sl, CityData d) {
         long tod = Math.floorMod(sl.getDayTime(), 24000L);
-        if (tod < 13500 || tod > 22500 || sl.isRaining() || stars.size() > 2) return;
+        boolean shower = meteorNight(Calendar.worldDay(sl));
+        if (tod < 13500 || tod > 22500 || sl.isRaining() || stars.size() > (shower ? 8 : 2)) return;
         RandomSource rnd = sl.getRandom();
-        if (rnd.nextInt(45) != 0) return;
+        if (rnd.nextInt(shower ? 4 : 45) != 0) return;
         List<ServerPlayer> out = new ArrayList<>();
         for (ServerPlayer pl : sl.players()) if (outside(pl)) out.add(pl);
         if (out.isEmpty()) return;
@@ -155,10 +233,10 @@ public final class Skies {
         for (ServerPlayer p : out) {
             if (p.distanceToSqr(pl) > 120 * 120) continue;
             Perks.unlock(p, d, "wish");
-            if (rnd.nextFloat() < 0.5f) Perks.say(p, "§b✧ §7A shooting star! §fMake a wish...");
+            if (rnd.nextFloat() < (shower ? 0.08f : 0.5f)) Perks.say(p, shower ? "§b✧ §7Another one! The meteor shower is lighting up the sky." : "§b✧ §7A shooting star! §fMake a wish...");
         }
         for (Resident r : residents(sl, d)) {
-            if (r.distanceToSqr(pl) > 60 * 60 || r.isSleeping() || !r.isFree() || !r.level().canSeeSky(r.blockPosition().above()) || rnd.nextFloat() > 0.4f) continue;
+            if (r.distanceToSqr(pl) > 60 * 60 || r.isSleeping() || !r.isFree() || !r.level().canSeeSky(r.blockPosition().above()) || rnd.nextFloat() > (shower ? 0.1f : 0.4f)) continue;
             r.getLookControl().setLookAt(start.x, start.y, start.z);
             r.gesture(Resident.G_POINT, 40);
             r.say(r.pick("A shooting star! Make a wish!", "Did you see that?! A shooting star!", "Quick, everyone make a wish!", "*closes eyes and wishes*"), 60);

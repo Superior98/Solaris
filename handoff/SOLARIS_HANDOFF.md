@@ -2,6 +2,30 @@
 
 This file carries the project into a new chat. Read this file first. The older, much longer `Fireheart_Project_Handoff.md` in this folder has the full history, the toolchain derivation, the block-ID lists and the generator code from earlier sessions. Use it as a reference when you need detail.
 
+## 000000. v1.15.0 - feature batch 2 of 5 (2026-09-29, source only, not compiled)
+New files `Quests.java` (player) and `Hobbies.java` (residents); additions to `Skies`, `Perks.ACHS`, `Resident` (yoga leisure, birthday greeting), `FireheartCity` (ItemFishedEvent listener), `/sol` commands.
+22. **`/sol profile <name>`**: a resident's card (job, personality, mood, hunger, favourite food and hobby, home once you know them, partner, friends, savings goal, what they're doing, your friendship).
+23. **`/sol tip <name> <amount>`**: pay a nearby resident from the gold you carry; raises affection and they remember it.
+24. **`/sol emote wave|cheer|dance|bow|clap|laugh`**: nearby residents react (wave back, dance along, applaud); other players see the emote in chat.
+25. **`/sol rep`**: city reputation rank (Stranger -> Solaris Legend) from how residents feel about you.
+26. **Daily treasure hunt**: `/sol treasure` gives a riddle about a place; stand there to claim 15-30 coins plus a bonus item.
+27. **Player fishing**: residents nearby cheer your catches; your fish are counted.
+28. **Player birthdays**: `/sol birthday <1-28>`; on the day you get a banner, cake, 25 coins, fireworks, a news item, and every resident you meet wishes you happy birthday.
+29. **Picnics**: friends/partners idling together at the park, plaza, gardens, beach or pier share food (hunger, fun, affection, diary, news).
+30. **Selfies**: residents with phones take photos at places (flash, shutter sound) and post them on SolFeed, once per day.
+31. **Rain dancing**: cheerful, adventurous and dreamy residents sometimes dance in the rain.
+32. **Snowball fights**: in winter, free residents outdoors throw real snowballs at each other and throw back.
+33. **Morning yoga**: new early-morning leisure choice at the park/gardens; everyone there moves through the same poses in sync.
+34. **Passing hellos**: residents who know each other wave and greet by name when they pass, without stopping for a full chat.
+35. **Flying players**: residents point and shout when a player flies over with an elytra.
+36. **Mood moments**: very happy residents hum with music notes; very unhappy ones sigh.
+37. **Meteor showers** every 14 days (day%14==6): many more shooting stars; in the bulletin.
+38. **Aurora**: green/cyan/purple curtains in the northern sky on clear winter nights.
+39. **Clock tower chimes**: the bell rings the hour from 07:00 to 22:00 for players within 160 blocks of the clock tower.
+40. **Morning mist** drifting over the marina at dawn.
+41. **6 more achievements**: Crowd Pleaser, Solaris Legend, Treasure Hunter, Angler, Another Year, Northern Lights.
+Checked here with javac without MC jars: no syntax errors, no missing project methods/wrong arities.
+
 ## 00000. v1.14.0 - feature batch 1 of 5 (2026-09-29, source only, not compiled)
 Goal: 100 new features in batches of ~20. Batch 1 (21 features). New files `Perks.java` (player), `Skies.java` (world/sky), `Pastimes.java` (residents). Hooks: `Events.onLogin/onLevelTick`, `Chat.reply0` (after Romance), `Chat.useAi` (games skip Groq), `Resident` (dreams, greet extras, courier delivery, jog leisure), `/sol` subcommands.
 1. **Daily bonus** with 7-day streak (5-35 coins; bank savings if the player has an account, otherwise gold nuggets). `/sol daily`.
