@@ -18,13 +18,27 @@ import net.minecraft.world.phys.Vec3;
 public final class Hobbies {
     private Hobbies() {}
 
-    static final Map<String, Long> COOL = new HashMap<>();
+    static final Map<String, long[]> COOL = new HashMap<>();
 
+    /** True (and starts the cooldown) if {@code key} hasn't fired within {@code gap} ticks. */
     static boolean ready(String key, long now, long gap) {
-        Long t = COOL.get(key);
-        if (t != null && now - t < gap && now >= t) return false;
-        COOL.put(key, now);
+        long[] t = COOL.get(key);
+        if (t != null && now - t[0] < gap && now >= t[0]) return false;
+        COOL.put(key, new long[]{now, now + gap});
         return true;
+    }
+
+    static void prune(long now) {
+        COOL.values().removeIf(v -> v[1] < now || v[0] > now);
+    }
+
+    public static void reset() {
+        COOL.clear();
+        WET.clear();
+        LEAD.clear();
+        LEAD_AT.clear();
+        CUED.clear();
+        rainWas = false;
     }
 
     static boolean outside(Resident r) {
@@ -33,22 +47,23 @@ public final class Hobbies {
 
     public static void tick(ServerLevel sl, CityData d) {
         long gt = sl.getGameTime();
-        if (gt % 20 != 17) return;
-        if (COOL.size() > 4000) COOL.clear();
+        if (gt % 1200 == 17) prune(gt);
+        if (gt % 20 == 3) rainReplan(sl, d);
+        if (gt % 20 != 17 || !FhcConfig.ambient()) return;
         long day = Calendar.worldDay(sl);
         long tod = Math.floorMod(sl.getDayTime(), 24000L);
         RandomSource rnd = sl.getRandom();
         boolean winter = Skies.seasonIndex(day) == 3;
-        for (Resident r : Skies.residents(sl, d)) {
+        for (Resident r : Crowd.nearPlayers(sl, d)) {
             if (!r.isSleeping() && !r.inShuttle() && r.profile() != null) body(sl, r, gt, tod, winter, rnd);
         }
-        for (Resident r : Skies.residents(sl, d)) {
+        for (Resident r : Crowd.nearPlayers(sl, d)) {
             CityData.Profile p = r.profile();
             if (p == null || r.isSleeping() || r.inShuttle() || !r.isFree() || r.isSpeaking()) continue;
             if (passingHello(sl, d, r, p, gt, rnd)) continue;
             if (flyers(sl, r, gt, rnd)) continue;
             if (sl.isRaining() && outside(r) && rainDance(r, p, gt, rnd)) continue;
-            if (winter && !sl.isRaining() && outside(r) && snowball(sl, r, p, gt, rnd)) continue;
+            if (winter && FhcConfig.snowballs() && !sl.isRaining() && outside(r) && snowball(sl, r, p, gt, rnd)) continue;
             if (!sl.isRaining() && tod < 11500 && picnic(sl, d, r, p, day, rnd)) continue;
             if (selfie(sl, d, r, p, day, rnd)) continue;
             mood(sl, r, p, gt, rnd);
@@ -96,6 +111,13 @@ public final class Hobbies {
             r.gesture(Resident.G_WAVE, 30);
             o.gesture(Resident.G_WAVE, 30);
             boolean close = rel.friend() || op.id.equals(p.partner);
+            if (op.id.equals(p.partner)) {
+                r.say(r.pick("Hey, love!", "There's my favourite person!", "Hi sweetheart!", "Miss me already?"), 40);
+                r.gesture(Resident.G_BLOW_KISS, 30);
+                r.particles(ParticleTypes.HEART, 2);
+                o.say(o.pick("Hi you!", "Hey gorgeous!", "See you tonight!"), 40);
+                return true;
+            }
             r.say(close ? r.pick("Hey " + op.name + "!", op.name + "! Looking good!", "Oh hi " + op.name + ", can't stop!", "Morning, " + op.name + "!") : r.pick("Hi " + op.name + ".", "Hello!", "*nods at " + op.name + "*"), 40);
             if (close && rnd.nextFloat() < 0.6f) o.say(o.pick("Hi " + p.name + "!", "Hey you!", "See you later, " + p.name + "!"), 40);
             return true;
@@ -150,6 +172,48 @@ public final class Hobbies {
         return false;
     }
 
+    /** A player hit a resident with a snowball: in winter-fight spirit they throw one back (or complain if not in the mood). */
+    public static void snowballedBy(Resident r, net.minecraft.world.entity.player.Player pl) {
+        if (!(r.level() instanceof ServerLevel sl) || r.profile() == null) return;
+        long now = sl.getGameTime();
+        if (!ready("snowhit:" + r.profileId(), now, 30)) return;
+        CityData d = r.data();
+        CityData.Rel pr = d.playerRel(r.profileId(), pl.getName().getString());
+        boolean playful = pr.aff >= 0 && r.isFree() && r.profile().trait != Trait.GRUMPY;
+        r.getLookControl().setLookAt(pl, 40, 40);
+        if (!playful) {
+            r.gesture(Resident.G_ANGRY, 30);
+            r.say(r.pick("Hey! Cut it out!", "Very mature.", "I'm soaked!"), 40);
+            return;
+        }
+        r.gesture(Resident.G_THROW, 16);
+        r.swing(InteractionHand.MAIN_HAND);
+        Snowball sb = new Snowball(sl, r);
+        sb.setItem(new ItemStack(Items.SNOWBALL));
+        Vec3 dv = pl.getEyePosition().subtract(r.getEyePosition());
+        sb.shoot(dv.x, dv.y + dv.horizontalDistance() * 0.15, dv.z, 1.2f, 4f);
+        sl.addFreshEntity(sb);
+        sl.playSound(null, r.blockPosition(), SoundEvents.SNOWBALL_THROW, SoundSource.NEUTRAL, 0.5f, 0.8f);
+        if (sl.getRandom().nextFloat() < 0.5f) r.say(r.pick("Oh, it's ON!", "Take THAT!", "Snowball fight!", "You asked for it!"), 40);
+        r.profile().fun = Math.min(100, r.profile().fun + 3);
+    }
+
+    static boolean rainWas;
+
+    static void rainReplan(ServerLevel sl, CityData d) {
+        boolean raining = sl.isRaining();
+        if (raining && !rainWas) {
+            for (Resident r : Crowd.all(sl, d)) {
+                String w = r.leisureWhy();
+                if (w.equals("jog") || w.equals("yoga") || w.equals("sunbathe") || w.equals("fishing")) {
+                    r.replan();
+                    if (r.isFree() && sl.getRandom().nextFloat() < 0.3f) r.say(r.pick("Ugh, rain. Change of plans!", "So much for that. Inside it is!", "Rain check! Literally."), 50);
+                }
+            }
+        }
+        rainWas = raining;
+    }
+
     static void throwAt(ServerLevel sl, Resident from, Resident to) {
         from.getLookControl().setLookAt(to, 40, 40);
         from.gesture(Resident.G_THROW, 16);
@@ -186,6 +250,9 @@ public final class Hobbies {
             o.showItem(fb, 120);
             r.gesture(Resident.G_EAT, 100);
             o.gesture(Resident.G_EAT, 100);
+            sl.sendParticles(new net.minecraft.core.particles.ItemParticleOption(ParticleTypes.ITEM, Economy.stack(fa)), r.getX(), r.getEyeY() - 0.2, r.getZ(), 6, 0.15, 0.1, 0.15, 0.03);
+            sl.sendParticles(new net.minecraft.core.particles.ItemParticleOption(ParticleTypes.ITEM, Economy.stack(fb)), o.getX(), o.getEyeY() - 0.2, o.getZ(), 6, 0.15, 0.1, 0.15, 0.03);
+            sl.playSound(null, r.blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, 0.5f, 1.0f);
             r.say(r.pick("Picnic time! I brought " + Economy.label(fa) + ".", op.name + ", want to share? Picnic!", "Perfect day for a picnic."), 70);
             o.say(o.pick("Ooh, I've got " + Economy.label(fb) + "!", "Best idea you've had all week.", "Don't let the seagulls see!"), 70);
             p.hunger = Math.min(100, p.hunger + 12);
@@ -222,7 +289,15 @@ public final class Hobbies {
         sl.playSound(null, r.blockPosition(), SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.NEUTRAL, 0.4f, 1.6f);
         long tod = Math.floorMod(sl.getDayTime(), 24000L);
         String light = tod > 11500 && tod < 13000 ? "Sunset" : tod < 1500 || tod > 22500 ? "Sunrise" : sl.isRaining() ? "Rainy day" : "Lovely day";
-        String[] caps = {light + " at " + here.label + " 📸", "Me at " + here.label + ". Not bad, right?", "Found my new favourite spot: " + here.label, light + " vibes ☺"};
+        StringBuilder tags = new StringBuilder();
+        int tagged = 0;
+        for (Resident o : sl.getEntitiesOfClass(Resident.class, r.getBoundingBox().inflate(6, 2, 6), x -> x != r && x.profile() != null)) {
+            CityData.Rel rel = d.peekRel(p.id, o.profileId());
+            if (tagged >= 2 || rel == null || !rel.friend() && !o.profileId().equals(p.partner)) continue;
+            tags.append(tagged++ == 0 ? " with " : " and ").append(o.profile().name);
+            o.gesture(Resident.G_CHEER, 30);
+        }
+        String[] caps = {light + " at " + here.label + tags + " 📸", "Me" + tags + " at " + here.label + ". Not bad, right?", "Found my new favourite spot: " + here.label + tags, light + " vibes" + tags + " ☺"};
         Phones.post(d, p.id, caps[rnd.nextInt(caps.length)], day, Phones.tod(sl));
         p.log(r.routineDay()).note("I took a photo at " + here.label + " and posted it on SolFeed");
         return true;
@@ -235,6 +310,8 @@ public final class Hobbies {
         int m = p.mood();
         if (m >= 85 && ready("mood:" + p.id, now, 2400)) {
             sl.sendParticles(ParticleTypes.NOTE, r.getX(), r.getY() + 2.2, r.getZ(), 2, 0.3, 0.1, 0.3, 1.0);
+            float[] tune = {0.7f, 0.8f, 0.9f, 1.05f, 1.2f};
+            for (int i = 0; i < 3; i++) sl.playSound(null, r.blockPosition(), SoundEvents.NOTE_BLOCK_HARP.value(), SoundSource.NEUTRAL, 0.25f, tune[rnd.nextInt(tune.length)]);
             r.say(r.pick("♪ la la la ♪", "*hums happily*", "What a day!", "Life is good."), 40);
         } else if (m <= 25 && ready("mood:" + p.id, now, 2400)) {
             r.gesture(Resident.G_SIGH, 40);
@@ -244,17 +321,42 @@ public final class Hobbies {
 
     /* ------------------------------------------------------------ Yoga */
 
+    static final Map<String, String> LEAD = new HashMap<>();
+    static final Map<String, Long> LEAD_AT = new HashMap<>(), CUED = new HashMap<>();
+
     public static void yogaTick(Resident r, CityData.Profile p, Place dest) {
         if (!r.isFree() || r.isSeated()) return;
         r.getNavigation().stop();
-        long phase = (r.level().getGameTime() / 100) % 4;
-        r.setYRot(Math.floorMod(dest.key.hashCode(), 4) * 90f);
-        r.yBodyRot = r.getYRot();
+        long now = r.level().getGameTime();
+        long phase = (now / 100) % 4;
+        String lead = LEAD.get(dest.key);
+        Long seen = LEAD_AT.get(dest.key);
+        if (lead == null || seen == null || now - seen > 200 || now < seen) lead = r.profileId();
+        boolean instructor = lead.equals(r.profileId());
+        if (instructor) {
+            LEAD.put(dest.key, lead);
+            LEAD_AT.put(dest.key, now);
+        }
+        float facing = Math.floorMod(dest.key.hashCode(), 4) * 90f + (instructor ? 180f : 0f);
+        r.setYRot(facing);
+        r.yBodyRot = facing;
+        r.yHeadRot = facing;
         int g = phase == 0 ? Resident.G_STRETCH : phase == 1 ? Resident.G_YOGA_TREE : phase == 2 ? Resident.G_YOGA_WARRIOR : Resident.G_BOW;
         r.gesture(g, 45);
         p.fun = Math.min(100, p.fun + 1);
         p.social = Math.min(100, p.social + 1);
-        if (r.getRandom().nextFloat() < 0.05f) r.say(r.pick("Breathe in... and out.", "Downward creeper!", "Namaste, Solaris.", "My back just made a noise.", "Find your centre..."), 50);
+        Long cued = CUED.get(dest.key);
+        if (instructor && (cued == null || cued != now / 100)) {
+            CUED.put(dest.key, now / 100);
+            r.sayTo(switch ((int) phase) {
+                case 0 -> r.pick("Reach up tall... and breathe in.", "Stretch those arms up high!");
+                case 1 -> r.pick("Tree pose - find your balance!", "Lift one foot... wobbling is allowed!");
+                case 2 -> r.pick("Warrior pose, arms wide!", "Strong legs, soft shoulders.");
+                default -> r.pick("And bow... namaste, everyone.", "Lovely work. Namaste!");
+            }, 60);
+        } else if (!instructor && r.getRandom().nextFloat() < 0.03f) {
+            r.say(r.pick("My back just made a noise.", "How is everyone this bendy?", "Breathe in... and out.", "Downward creeper!"), 50);
+        }
         DayLog lg = p.log(r.routineDay());
         if (lg.once("yoga")) lg.note("I did morning yoga at " + dest.label);
     }

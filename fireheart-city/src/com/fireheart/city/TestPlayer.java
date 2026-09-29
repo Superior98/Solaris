@@ -267,6 +267,7 @@ public final class TestPlayer {
             mindTests(sl, d, fp);
             phoneTests(sl, d, fp);
             extrasTests(sl, d, fp);
+            lifeTests(sl, d, fp);
         } catch (Throwable t) {
             check("exception", false, t.toString());
             FireheartCity.LOG.error("Test failed", t);
@@ -295,6 +296,54 @@ public final class TestPlayer {
         FireheartCity.LOG.info("[Test] " + sum);
         src.sendSuccess(() -> Component.literal(sum), false);
         return fails == 0 ? 1 : 0;
+    }
+
+    /** Checks for the v1.13-1.19 systems: shared resident cache, daily bonus, achievements, quests, letters, calendar, health, chat variety. */
+    static void lifeTests(ServerLevel sl, CityData d, FakePlayer fp) {
+        long day = Calendar.worldDay(sl);
+        d.settings.keySet().removeIf(k -> k.startsWith("Tester|"));
+        check("resident cache", !Crowd.all(sl, d).isEmpty(), Crowd.all(sl, d).size() + " loaded");
+        String first = Perks.daily(fp, d, true);
+        String again = Perks.daily(fp, d, true);
+        check("daily bonus once a day", d.setting("Tester", "dailyDay", "").equals(String.valueOf(day)) && again.contains("Already"), first);
+        boolean unlocked = Perks.unlock(fp, d, "meet1");
+        check("achievement unlocks once", unlocked && !Perks.unlock(fp, d, "meet1"), "");
+        Quests.currentDay = day;
+        Quests.bump(d, "Tester", "talk");
+        Quests.bump(d, "Tester", "talk");
+        check("quest counters", Quests.count(d, "Tester", "talk", day) == 2, String.valueOf(Quests.count(d, "Tester", "talk", day)));
+        Quests.Task[] t = Quests.today("Tester", day);
+        check("three distinct daily quests", t.length == 3 && !t[0].key().equals(t[1].key()) && !t[1].key().equals(t[2].key()) && !t[0].key().equals(t[2].key()), t[0].key() + "," + t[1].key() + "," + t[2].key());
+        java.util.Set<String> heard = new java.util.HashSet<>();
+        for (int i = 0; i < Pastimes.STORIES.length; i++) heard.add(Pastimes.fresh("Tester|test", Pastimes.STORIES, sl.random));
+        check("stories don't repeat", heard.size() == Pastimes.STORIES.length, heard.size() + "/" + Pastimes.STORIES.length);
+        CityData.Profile mia = d.byName("mia");
+        if (mia != null) {
+            Letters.load(d);
+            int before = Letters.PENDING.size();
+            String sent = Letters.send(fp, d, mia.name, "Thank you for being a great friend!");
+            check("letter queued with a reply", Letters.PENDING.size() == before + 1 && Letters.PENDING.get(Letters.PENDING.size() - 1).text().contains(mia.name), sent);
+            Letters.PENDING.removeIf(r -> r.player().equals("Tester"));
+            Letters.save(d);
+            d.setSetting("res:" + mia.id, Health.K, String.valueOf(day));
+            Resident mr = loaded(sl, d, mia.id);
+            if (mr != null) {
+                mr.rethink();
+                String act = mr.activityName();
+                check("sick residents stay home", act.equals("evening") || act.equals("sleep"), act);
+            } else skip("sick residents stay home", "Mia not loaded");
+            d.setSetting("res:" + mia.id, Health.K, "-1");
+            if (mr != null) mr.rethink();
+            String wish = Quests.wishlist(fp, d, mia.name);
+            check("wishlist", wish.contains(mia.name), wish.split("\n")[0]);
+        } else skip("letters/health", "no Mia");
+        long sunday = day + Math.floorMod(6 - Calendar.weekday(day), 7);
+        check("calendar lists the fishing tournament", Happenings.on(sunday).stream().anyMatch(s -> s.startsWith("Fishing")), Calendar.name(sunday));
+        check("calendar command", Info.calendar(sl, d).contains("Solaris calendar"), "");
+        check("nickname", !Bonds.makeNick("StellarFox1", mia == null ? d.profiles.values().iterator().next() : mia).isEmpty(), Bonds.makeNick("StellarFox1", mia == null ? d.profiles.values().iterator().next() : mia));
+        check("seasons cycle", !Skies.seasonName(day).equals(Skies.seasonName(day + 7)), Skies.seasonName(day) + " -> " + Skies.seasonName(day + 7));
+        d.settings.keySet().removeIf(k -> k.startsWith("Tester|"));
+        d.setDirty();
     }
 
     static void phoneTests(ServerLevel sl, CityData d, FakePlayer fp) {

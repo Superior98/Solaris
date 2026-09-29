@@ -76,6 +76,26 @@ public final class Finale {
         }
     }
 
+    /** Admin: marry the first couple found, at today's 17:00 ceremony. */
+    static String forceWedding(ServerLevel sl, CityData d) {
+        long day = Calendar.worldDay(sl);
+        for (CityData.Profile p : d.profiles.values()) {
+            if (p.partner.isEmpty() || p.livesOnIsland()) continue;
+            CityData.Profile q = d.profiles.get(p.partner);
+            if (q == null || q.livesOnIsland() || d.setting(CITY, "wed:" + Resident.pairKey(p.id, q.id), "").equals("1")) continue;
+            d.setSetting(CITY, "wedLast", "-99");
+            CityData.Rel r = d.rel(p.id, q.id);
+            r.romance = Math.max(r.romance, 60);
+            wedDay = -1;
+            stage = 0;
+            d.setSetting(CITY, "wedPlan", "");
+            plan(sl, d, day);
+            wedDay = day;
+            return stage == 1 ? "§6Wedding planned for §f" + d.profiles.get(wedA).name + " & " + d.profiles.get(wedB).name + "§6 today. §7(/time set 10800 for the ceremony)" : "§cCouldn't plan the wedding.";
+        }
+        return "§cNo unmarried city couples right now.";
+    }
+
     static Resident entity(ServerLevel sl, CityData d, String id) {
         CityData.Profile p = d.profiles.get(id);
         return p == null || p.entity == null ? null : sl.getEntity(p.entity) instanceof Resident r ? r : null;
@@ -134,7 +154,7 @@ public final class Finale {
                 a.particles(ParticleTypes.HEART, 12);
                 b.particles(ParticleTypes.HEART, 12);
                 for (Resident g : guests) {
-                    g.gesture(sl.getRandom().nextBoolean() ? Resident.G_CLAP : Resident.G_CHEER, 80);
+                    g.gesture(sl.getRandom().nextBoolean() ? Resident.G_CLAP : Resident.G_CONFETTI, 80);
                     if (sl.getRandom().nextFloat() < 0.3f) g.say(g.pick("Woooo!", "Congratulations!", "I'm not crying, YOU'RE crying.", "Kiss! Kiss!"), 60);
                 }
                 sl.playSound(null, ALTAR, SoundEvents.PLAYER_LEVELUP, SoundSource.NEUTRAL, 1.5f, 0.8f);
@@ -143,6 +163,8 @@ public final class Finale {
                 r1.romance = 100;
                 r2.romance = 100;
                 d.setSetting(CITY, "wed:" + Resident.pairKey(pa.id, pb.id), "1");
+                d.setSetting(CITY, "wedDay:" + Resident.pairKey(pa.id, pb.id), String.valueOf(day));
+                Applause.confetti(sl, ALTAR.above(2), 40);
                 d.setSetting(CITY, "wedPlan", "");
                 d.event(day, "love", pa.name + " and " + pb.name + " got married at Solaris Plaza", ALTAR, pa.id, pb.id);
                 pa.mind.remember(pa, day, (int) tod, "love", "I married " + pb.name + " at Solaris Plaza", "plaza", 5, 10);
@@ -245,21 +267,37 @@ public final class Finale {
 
     /* ------------------------------------------------------------ Help */
 
-    public static String help() {
-        return "§6§l/sol commands" +
-                "\n§e/sol daily §7- daily bonus and streak   §e/sol achievements §7- your achievements" +
-                "\n§e/sol stats §7- your stats   §e/sol rep §7- your reputation   §e/sol friends §7- who you know" +
-                "\n§e/sol whereis <name> §7- find a resident   §e/sol profile <name> §7- their card   §e/sol diary <name> §7- close friends only" +
-                "\n§e/sol tip <name> <coins> §7- tip someone nearby   §e/sol mail <name> <message> §7- write a letter" +
-                "\n§e/sol emote <wave|cheer|dance|bow|clap|laugh> §7- residents react" +
-                "\n§e/sol courier §7- delivery jobs   §e/sol treasure §7- daily riddle   §e/sol horoscope §7- your day's luck" +
-                "\n§e/sol forecast §7- weather   §e/sol report §7- weekly city report   §e/sol top §7- leaderboards" +
-                "\n§e/sol birthday <1-28> §7- set your birthday   §e/sol bulletin on|off §7- morning news" +
-                "\n§e/sol tutorial §7- city tour   §e/sol garage §7- vehicles   §e/sol romance §7- relationship status" +
-                "\n§7Talk to residents in chat: ask for a joke, a story, a fun fact, a song, a hug, rock-paper-scissors...";
+    static final String[][] HELP = {
+            {"You", "daily", "achievements", "stats", "rep", "quests", "settings", "home set", "birthday <1-28>"},
+            {"People", "friends", "who", "whereis <name>", "profile <name>", "wishlist <name>", "memories <name>", "diary <name>", "couples"},
+            {"Do", "courier", "treasure", "treasure hint", "tip <name> <coins>", "mail <name> <msg>", "emote <wave|cheer|dance|bow|clap|laugh>", "selfie <name>", "donate <coins>", "propose"},
+            {"City", "calendar", "forecast", "report", "gossip", "top", "album", "horoscope", "bulletin on|off"},
+            {"More", "tutorial", "garage", "romance"}
+    };
+
+    public static void sendHelp(net.minecraft.commands.CommandSourceStack src) {
+        net.minecraft.network.chat.MutableComponent m = net.minecraft.network.chat.Component.literal("§6§l/sol commands §7(click one)");
+        for (String[] row : HELP) {
+            m.append(net.minecraft.network.chat.Component.literal("\n§7" + row[0] + ": "));
+            for (int i = 1; i < row.length; i++) {
+                String cmd = "/sol " + row[i];
+                boolean args = row[i].contains("<");
+                String base = args ? cmd.substring(0, cmd.indexOf('<')) : cmd;
+                m.append(net.minecraft.network.chat.Component.literal("§e" + row[i] + (i < row.length - 1 ? "§8, " : "")).withStyle(net.minecraft.network.chat.Style.EMPTY.withClickEvent(new net.minecraft.network.chat.ClickEvent(args ? net.minecraft.network.chat.ClickEvent.Action.SUGGEST_COMMAND : net.minecraft.network.chat.ClickEvent.Action.RUN_COMMAND, base))));
+            }
+        }
+        m.append(net.minecraft.network.chat.Component.literal("\n§7Say to residents in chat: §fjoke, story, fun fact, sing, hug, high five, rock paper scissors, flip a coin, race me to <place>, show me the way to <place>, hide and seek, what should I build?"));
+        src.sendSuccess(() -> m, false);
     }
 
     public static void tick(ServerLevel sl, CityData d) {
-        if (sl.getGameTime() % 20 == 19) weddingTick(sl, d);
+        if (sl.getGameTime() % 20 == 19 && FhcConfig.weddings()) weddingTick(sl, d);
+    }
+
+    public static void reset() {
+        wedDay = -1;
+        wedA = wedB = "";
+        stage = 0;
+        PLACED.clear();
     }
 }

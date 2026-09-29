@@ -359,7 +359,7 @@ public final class Intents {
         }
         if (any(t, " tell me a joke ", " joke ", " make me laugh ", " say something funny ")) {
             r.gesture(Resident.G_LAUGH, 40);
-            return pick(rnd, JOKES);
+            return Pastimes.fresh(pn + "|joke|" + p.id, JOKES, rnd);
         }
         if (any(t, " advice ", " what should i ", " help me decide ", " should i ")) return pick(rnd, "Honestly? Go with your gut. It's usually right.", "Sleep on it. Everything looks clearer in the morning.", "Do the thing you'll regret NOT doing.", "Ask Nell at the library - she's wiser than me!");
         if (any(t, " are you happy ", " are you sad ", " how do you feel ", " how are you feeling ", " you feeling ", " are you okay ", " are you alright ")) {

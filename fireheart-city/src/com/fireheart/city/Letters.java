@@ -27,6 +27,38 @@ public final class Letters {
     record Reply(String player, String resident, String text, long due) {}
 
     static final List<Reply> PENDING = new ArrayList<>();
+    static boolean loaded;
+    static final String POST = "~post", SEP = "\u0001", REC = "\u0002";
+
+    static void load(CityData d) {
+        if (loaded) return;
+        loaded = true;
+        PENDING.clear();
+        String s = d.setting(POST, "pending", "");
+        if (s.isEmpty()) return;
+        for (String rec : s.split(REC)) {
+            String[] f = rec.split(SEP, -1);
+            if (f.length == 4) PENDING.add(new Reply(f[0], f[1], f[2], Perks.parse(f[3])));
+        }
+    }
+
+    static void save(CityData d) {
+        StringBuilder sb = new StringBuilder();
+        for (Reply r : PENDING) {
+            if (sb.length() > 0) sb.append(REC);
+            sb.append(clean(r.player())).append(SEP).append(clean(r.resident())).append(SEP).append(clean(r.text())).append(SEP).append(r.due());
+        }
+        d.setSetting(POST, "pending", sb.toString());
+    }
+
+    static String clean(String s) {
+        return s.replace(SEP, " ").replace(REC, " ");
+    }
+
+    public static void reset() {
+        PENDING.clear();
+        loaded = false;
+    }
 
     public static String send(ServerPlayer pl, CityData d, String name, String message) {
         CityData.Profile p = Quests.byName(d, name);
@@ -49,8 +81,11 @@ public final class Letters {
         Mind.playerEvent(d, p, pn, day, rude ? "{P} sent me a nasty letter" : "{P} sent me a letter", rude ? -3 : kind ? 3 : 2, rude ? 5 : 3);
         p.log(day).note(rude ? "I got a rude letter from " + pn : "I got a letter from " + pn);
         String reply = replyFor(p, pn, low, kind, rude, pr.aff, sl.getRandom());
+        load(d);
         PENDING.add(new Reply(pn, p.id, reply, sl.getGameTime() + 1200 + sl.getRandom().nextInt(2400)));
+        save(d);
         if (total >= 5) Perks.unlock(pl, d, "penpal");
+        Quests.bump(d, pn, "letter");
         d.setDirty();
         sl.playSound(null, pl.blockPosition(), SoundEvents.BOOK_PAGE_TURN, SoundSource.PLAYERS, 0.8f, 1.0f);
         return "§6[Solaris Post] §fYour letter to §b" + p.name + "§f is on its way. §7They'll probably write back.";
@@ -67,11 +102,28 @@ public final class Letters {
         else if (Intents.any(low, " how are you ", " how's life ", " hows life ")) body = "I'm doing " + (p.mood() > 60 ? "great" : p.mood() > 35 ? "alright" : "not so great, honestly") + ". Work at " + p.job.work().label + " keeps me busy. How about you?";
         else if (kind) body = Lines.pick(rnd, "Your letter made my whole day!", "I pinned your letter to my fridge. Don't tell anyone.");
         else body = Lines.pick(rnd, "Thanks for writing! It's nice to get real post for once.", "Got your letter! Life in Solaris is good. Come visit " + p.job.work().label + " sometime.", "I don't get many letters - this was a lovely surprise.");
-        return body + " " + Lines.pick(rnd, "P.S. Try the " + Economy.label(Memory.favourite(p)) + " - trust me.", "P.S. Say hi next time you see me!", "") + sign;
+        String now = p.doing == null || p.doing.isEmpty() ? "" : " As I write this I'm " + p.doing + ".";
+        return body + (rnd.nextBoolean() ? now : "") + " " + Lines.pick(rnd, "P.S. Try the " + Economy.label(Memory.favourite(p)) + " - trust me.", "P.S. Say hi next time you see me!", "") + sign;
+    }
+
+    /** Queues a thank-you letter that arrives the next morning (at most one per resident per day). */
+    public static void thankYou(ServerLevel sl, CityData d, String pn, CityData.Profile p, String what) {
+        load(d);
+        String k = "thanks:" + p.id;
+        long day = Calendar.worldDay(sl);
+        if (d.setting(pn, k, "").equals(String.valueOf(day))) return;
+        d.setSetting(pn, k, String.valueOf(day));
+        long tod = Math.floorMod(sl.getDayTime(), 24000L);
+        long wait = Math.floorMod(24000L - tod + 500, 24000L);
+        long due = sl.getGameTime() + (wait < 1200 ? wait + 24000 : wait);
+        String text = Lines.pick(sl.getRandom(), "I just wanted to say thank you for " + what + ". It really made my day.", "Still smiling about " + what + " yesterday. Thank you!", "You didn't have to, but thank you for " + what + ". ☺") + "\n§7- " + p.name;
+        PENDING.add(new Reply(pn, p.id, text, due));
+        save(d);
     }
 
     static void deliver(ServerLevel sl, CityData d) {
         long now = sl.getGameTime();
+        int before = PENDING.size();
         Iterator<Reply> it = PENDING.iterator();
         while (it.hasNext()) {
             Reply r = it.next();
@@ -90,6 +142,7 @@ public final class Letters {
             paper.setHoverName(net.minecraft.network.chat.Component.literal("§eLetter from " + p.name));
             if (!pl.getInventory().add(paper)) pl.drop(paper, false);
         }
+        if (PENDING.size() != before) save(d);
     }
 
     /* ------------------------------------------------------------ Horoscope */
@@ -101,12 +154,24 @@ public final class Letters {
             "Your luck doubles near water.", "Say yes to the next invitation.", "An old face will bring good news.", "Today, generosity is its own reward."
     };
 
+    static CityData.Profile luckyResident(CityData d, String pn, long day) {
+        List<CityData.Profile> all = new ArrayList<>(d.profiles.values());
+        if (all.isEmpty()) return null;
+        return all.get(new java.util.Random(pn.hashCode() * 104729L + day * 31).nextInt(all.size()));
+    }
+
+    /** True if {@code residentId} is the player's lucky resident today (gifts to them count extra). */
+    public static boolean lucky(CityData d, String pn, long day, String residentId) {
+        CityData.Profile p = luckyResident(d, pn, day);
+        return p != null && p.id.equals(residentId);
+    }
+
     public static String horoscope(ServerPlayer pl, CityData d) {
         String pn = pl.getName().getString();
         long day = Calendar.worldDay(pl.serverLevel());
         java.util.Random r = new java.util.Random(pn.hashCode() * 7919L + day);
-        List<CityData.Profile> all = new ArrayList<>(d.profiles.values());
-        String friend = all.isEmpty() ? "a stranger" : all.get(r.nextInt(all.size())).name;
+        CityData.Profile lr = luckyResident(d, pn, day);
+        String friend = lr == null ? "a stranger" : lr.name;
         String[] places = Place.CITY_HANGOUTS;
         Place lucky = Place.get(places[r.nextInt(places.length)]);
         int stars = 1 + r.nextInt(5);
@@ -114,7 +179,7 @@ public final class Letters {
                 "\n§7Sign of the day: §f" + SIGNS[Math.floorMod(pn.hashCode(), SIGNS.length)] +
                 "\n§7Luck: §e" + "★".repeat(stars) + "§8" + "★".repeat(5 - stars) +
                 "\n§f" + OMENS[r.nextInt(OMENS.length)] +
-                "\n§7Lucky resident: §b" + friend + " §7· Lucky place: §f" + (lucky == null ? "the plaza" : lucky.label) +
+                "\n§7Lucky resident: §b" + friend + " §8(gifts to them count double today)§7 · Lucky place: §f" + (lucky == null ? "the plaza" : lucky.label) +
                 "\n§7Lucky number: §f" + (1 + r.nextInt(99));
     }
 
@@ -143,7 +208,7 @@ public final class Letters {
             if (!(e.getPlayer() instanceof ServerPlayer pl) || !(e.getLevel() instanceof ServerLevel sl)) return;
             BlockState st = e.getState();
             boolean plant = st.is(net.minecraft.tags.BlockTags.FLOWERS) || st.is(net.minecraft.world.level.block.Blocks.GRASS) || st.is(net.minecraft.world.level.block.Blocks.TALL_GRASS) || st.is(net.minecraft.world.level.block.Blocks.FERN);
-            if (!plant || !e.getPos().closerThan(CITY, 220) || sl.getRandom().nextInt(40) != 0) return;
+            if (!plant || !FhcConfig.luckyFinds() || !e.getPos().closerThan(CITY, 220) || sl.getRandom().nextInt(40) != 0) return;
             CityData d = CityData.get(sl);
             String pn = pl.getName().getString();
             long day = Calendar.worldDay(sl);
@@ -185,6 +250,8 @@ public final class Letters {
     }
 
     public static void tick(ServerLevel sl, CityData d) {
-        if (sl.getGameTime() % 40 == 29 && !PENDING.isEmpty()) deliver(sl, d);
+        if (sl.getGameTime() % 40 != 29) return;
+        load(d);
+        if (!PENDING.isEmpty()) deliver(sl, d);
     }
 }

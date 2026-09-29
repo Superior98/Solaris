@@ -2,6 +2,115 @@
 
 This file carries the project into a new chat. Read this file first. The older, much longer `Fireheart_Project_Handoff.md` in this folder has the full history, the toolchain derivation, the block-ID lists and the generator code from earlier sessions. Use it as a reference when you need detail.
 
+## 0000000000. v1.19.0 - 50 improvements + 50 features (2026-09-29, source only, not compiled)
+New files: `Crowd` (per-tick resident cache), `Bonds` (friendship milestones, nicknames, anniversaries, proposals, goodnight texts), `Applause`, `Errands` (hide and seek, races, guiding, home visits, litter; uses the new `Resident.errand(...)` override), `Health` (colds), `Streets` (street life), `Happenings` (scheduled events + `/city event`), `Info` (calendar/who/couples/gossip/memories/selfie/album). New config section `[life]` in fireheartcity-common.toml. Checked here with javac without MC jars (no syntax errors, no missing project symbols) plus an audit of every Minecraft/Forge name not used before v1.13.
+
+### Improvements
+1. `Crowd`: loaded residents looked up once per tick for all ambient systems.
+2. Ambient moments only run for residents within `ambientRange` (default 96) of a player.
+3. Cooldowns expire individually instead of the whole map being cleared.
+4. Static event state resets on server stop (switching worlds in singleplayer).
+5. Pending letter replies are saved in the world (settings `~post|pending`).
+6. `/sol courier cancel`; parcels for missing residents or a day overdue are taken back.
+7. Speech bubbles stay up long enough to read (30 + 2 ticks per character, max 200).
+8. Config `[life]`: ambientMoments, ambientRange, weddings, festivals, skyEffects, chimes, snowballs, luckyFinds.
+9. `/city event <name>` forces wedding, rainbow, sick, meteor, lantern, kindness, spooky, starlight, blossom, quiz, karaoke, movie, fishing, run, beach (prints the /time to use).
+10. `/city test player` gains 11 checks (resident cache, daily bonus, achievements, quest counters, distinct quests, no-repeat stories, letters, sick-day schedule, wishlist, calendar, nicknames, seasons).
+11. `/sol settings`: clickable per-player toggles (chimes, sky effects, bulletin, gifts, action-bar hints, home visits, goodnight texts).
+12. `/sol whereis` also finds online players.
+13. `/sol achievements` shows progress (e.g. 3/5 couriers).
+14. Daily streak: one missed day a week is forgiven.
+15. Courier compass on the action bar while holding a parcel (distance, direction, time left).
+16. `/sol treasure hint`: warmer/colder and rough distance.
+17. Horoscope lucky resident: gifts to them count double that day.
+18. Rock-paper-scissors win/loss record per resident.
+19. Jokes, stories, fun facts and compliments don't repeat until you've heard them all.
+20. Hugs raise affection once per resident per day.
+21. Tips give less affection each extra time the same day.
+22. Letter replies sometimes mention what the resident is doing right now.
+23. 20% of rainbows are double rainbows.
+24. Shooting stars have coloured trails (white/gold/blue/green) that fade.
+25. Aurora strength and colours vary night to night.
+26. Lanterns drift on a shared nightly wind and shrink as they rise.
+27. On the first day of each season residents greet you with it.
+28. Chimes respect settings and are quieter indoors.
+29. Bulletin: all today's events, birthdays, sick count, clickable Quests/Treasure/Calendar/Horoscope.
+30. Joggers run laps through 4 waypoints around the place.
+31. Yoga: the first resident there becomes the instructor, faces the class and calls out each pose.
+32. Picnics: food crumbs and eating sounds.
+33. Hit a free, friendly resident with a snowball and they throw one back (grumpy ones complain; no longer counted as punching).
+34. Selfie posts tag friends standing nearby.
+35. Partners greet each other with pet names and a blown kiss.
+36. Happy humming plays harp notes.
+37. Card games: curious residents are better at them; wins are counted.
+38. Bystanders react to rival arguments.
+39. Morning coffee gives a pace boost for 2.5 minutes.
+40. Fireflies only appear over grass, flowers and leaves.
+41. Quick gestures (throw, high five, sneeze, salute, punches) blend in 2 ticks; naps/reading/sighs in 9.
+42. Standing residents glance around now and then (client).
+43. Seated residents lean back and relax (client).
+44. Idle residents step out of the way of moving vehicles.
+45. `/city stuck`: where residents get stuck most (4x4 areas), to find map problems.
+46. When rain starts, joggers, yoga, sunbathers and anglers change plans.
+47. Monster scares go in residents' diaries.
+48. Residents comment on armour (elytra, netherite, diamond, turtle helmet, pumpkin head).
+49. Every 10 achievements: +50 coin milestone bonus.
+50. `/sol` and `/sol help` show a clickable, grouped command list.
+Also fixed: greeting gifts/birthday lines were being overwritten by other greeting text; residents on errands no longer sit down mid-trip; residents at work turn down games; game/guide replies bypass Groq.
+
+### Features
+1. **Home visits**: `/sol home set`; close friends (affection 60+) sometimes walk over during leisure, knock, visit with a small gift, or text you if you're out.
+2. **Daily quests**: `/sol quests`, 3 of 12 tasks a day, 15 coins each, +20 for all three.
+3. **Sunday fishing tournament** at the boardwalk (09:00-14:00), residents and players, 30-coin prize.
+4. **Friendship milestones**: at affection 50 a Friendship Bracelet, at 80 a Best Friends Locket (named keepsakes; texted if they're not nearby).
+5. **Nicknames**: fond residents give you one and use it.
+6. **`/sol wishlist <name>`**.
+7. **Quiz night** (Thursdays 17:24, library): 5 questions, answer in chat, residents compete, 25-coin prize.
+8. **Karaoke night** (Fridays, Magma Beach Bar).
+9. **Movie night** (Saturdays, cinema) with reactions and snacks.
+10. **Fun Run** (every 14 days, 08:30 plaza -> old pier): join by standing at the plaza; placings and prizes.
+11. **Beach days** on summer weekends.
+12. **Spooky Night** (autumn, day 18): jack o'lanterns, soul particles, treats.
+13. **Starlight Festival** (winter, day 25): gift exchange, presents for you, a star over the plaza.
+14. **Blossom Day** (spring, day 3): flowers and petals.
+15. **Colds**: residents get sick (more in winter), stay home coughing, a friend brings soup; give them soup to cure them.
+16. **Litter**: residents pick up items left on the ground and hand them to the nearest player.
+17. **Comforting**: friends hug residents who are feeling low.
+18. **Applause**: residents nearby cheer when you unlock an achievement.
+19. **Hungry residents** ask for a bite when you hold food.
+20. **Constellations**: a named constellation in the northern sky each clear night; residents point them out.
+21. **`/sol donate`**: City Fund; every 250 coins city-wide triggers a plaza celebration.
+22. **`/sol calendar`**: next 14 days of events, weddings and birthdays.
+23. **`/sol who`**.
+24. **`/sol couples`**.
+25. **`/sol gossip`**.
+26. **`/sol memories <name>`**: what a resident remembers about you, and their trust.
+27. Handshake on first meeting (G_SHAKE).
+28. Police salute players with good reputation (G_SALUTE).
+29. Sweethearts and partners blow kisses (G_BLOW_KISS).
+30. Bench naps in the evening (G_NAP).
+31. Whistling while walking (G_WHISTLE).
+32. Confetti at weddings, fun runs and City Fund milestones (G_CONFETTI).
+33. Knocking at your door (G_KNOCK).
+34. Coughing (G_COUGH).
+35. Picking things up (G_PICKUP).
+36. Welcome back after 3+ days away.
+37. Reactions when you ride past on a horse, boat, minecart or Solaris vehicle.
+38. **`/sol selfie <name>`**: posted to SolFeed.
+39. Thank-you letters the next morning after big gifts, tips or on-time deliveries.
+40. Anniversaries every 28 days for married couples (a date) and your sweetheart (a text).
+41. **Proposals**: `/sol propose` to your sweetheart (romance 80+); plaza wedding with vows (type "I do").
+42. Shy and dreamy residents go home during thunderstorms.
+43. **Hide and seek**: say "hide and seek"; they hide out of sight, 3 minutes to find them.
+44. **Races**: "race me to the pier".
+45. **Guides**: "show me the way to the library" - they walk you there and wait if you fall behind.
+46. **`/sol album`**: SolFeed posts that mention you.
+47. First snow and first blossoms days.
+48. Umbrella sharing between partners and friends walking together.
+49. Residents dance near jukeboxes that are playing.
+50. Goodnight texts from your sweetheart around 20:15.
+10 new achievements (40 total).
+
 ## 000000000. v1.18.0 - batch 5, features 93-100 (2026-09-29, source only, not compiled)
 New file `Finale.java`; `/sol` with no arguments now prints help.
 93. **Resident weddings**: on a weekend morning a couple (partners on both sides, romance >= 60, not yet married, at most one wedding a week, city-side homes) announces a wedding. Banner + news, and everyone in the city plans to be at Solaris Plaza. From 16:54 (tod 10900) the mayor (or a guest) officiates in 8 steps two in-game minutes apart: welcome, vows, "I do" x2, pronounced married (hugs, hearts, guests clap and cheer, fireworks, city event, memories, diary, romance 100), finale fireworks. Postponed if the couple isn't at the plaza by 18:12. State in settings under `~city` (`wedPlan`, `wedLast`, `wed:<pair>`).

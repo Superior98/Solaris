@@ -49,7 +49,8 @@ public class Resident extends PathfinderMob {
             G_THUMBS = 19, G_SURPRISED = 20, G_NOD = 21, G_HEADSHAKE = 22, G_BOW = 23, G_HEADPHONES = 24, G_REMOTE = 25, G_PETTING = 26,
             G_GUARD = 27, G_JAB_R = 28, G_JAB_L = 29, G_UPPERCUT = 30, G_KICK = 31, G_SLAM = 32, G_DASH = 33, G_TASER = 34, G_VICTORY = 35, G_AIM = 36, G_ULT = 37, G_HAMMER = 38, G_HOSE = 39, G_COOK = 40,
             G_READ = 41, G_SIP = 42, G_HIGHFIVE = 43, G_HUG = 44, G_JOG = 45, G_YOGA_TREE = 46, G_YOGA_WARRIOR = 47, G_SNEEZE = 48, G_FAN = 49, G_THROW = 50,
-            G_CARDS = 51, G_LOOKUP = 52, G_HOWL = 53, G_SIGH = 54, G_FEED = 55, G_PHOTO = 56, G_SING = 57, G_ARGUE = 58, G_WINDED = 59;
+            G_CARDS = 51, G_LOOKUP = 52, G_HOWL = 53, G_SIGH = 54, G_FEED = 55, G_PHOTO = 56, G_SING = 57, G_ARGUE = 58, G_WINDED = 59,
+            G_SHAKE = 60, G_SALUTE = 61, G_BLOW_KISS = 62, G_NAP = 63, G_WHISTLE = 64, G_CONFETTI = 65, G_KNOCK = 66, G_COUGH = 67, G_PICKUP = 68;
     private static final EntityDataAccessor<Integer> SKIN = SynchedEntityData.defineId(Resident.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<String> SPEECH = SynchedEntityData.defineId(Resident.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> GESTURE = SynchedEntityData.defineId(Resident.class, EntityDataSerializers.INT);
@@ -312,6 +313,7 @@ public class Resident extends PathfinderMob {
 
     private String computeActivity() {
         long t = timeOfDay();
+        if (!level().isClientSide && Health.sick(this)) return t >= 14500 && t < 23000 ? "sleep" : "evening";
         if (!level().isClientSide && Party.forcedNow((ServerLevel) level())) return "leisure";
         if (!level().isClientSide && Festival.live(profileId)) return "leisure";
         if (!level().isClientSide && Meets.due(profileId)) return "leisure";
@@ -379,7 +381,7 @@ public class Resident extends PathfinderMob {
 
     public boolean isFree() {
         String a = activityName();
-        return skyPhase() == 0 && !inShuttle() && convo == null && phoneMode != 2 && eatTicks <= 0 && listenTicks <= 0 && !a.equals("sleep") && !isSleeping() && !Elevator.isRider(this);
+        return !onErrand() && skyPhase() == 0 && !inShuttle() && convo == null && phoneMode != 2 && eatTicks <= 0 && listenTicks <= 0 && !a.equals("sleep") && !isSleeping() && !Elevator.isRider(this);
     }
 
     public boolean isEating() {
@@ -681,10 +683,40 @@ public class Resident extends PathfinderMob {
         return null;
     }
 
+    public BlockPos errandTarget;
+    public long errandUntil;
+    public double errandSpeed = 1.0;
+    public String errandKind = "";
+
+    /** Sends the resident somewhere for a while (games, guiding, visits, tidying), overriding their routine. */
+    public void errand(BlockPos to, int ticks, double speed, String kind) {
+        errandTarget = to;
+        errandUntil = level().getGameTime() + ticks;
+        errandSpeed = speed;
+        errandKind = kind;
+        rethink();
+    }
+
+    public boolean onErrand() {
+        if (errandTarget == null) return false;
+        if (level().getGameTime() >= errandUntil) {
+            errandTarget = null;
+            errandKind = "";
+            return false;
+        }
+        return true;
+    }
+
+    public void endErrand() {
+        errandTarget = null;
+        errandKind = "";
+    }
+
     public BlockPos navTarget() {
         if (Elevator.controls(this)) return null;
         BlockPos emergency = emergencyTarget();
         if (emergency != null) return emergency;
+        if (onErrand()) return errandTarget;
         if (Festival.live(profileId) && !onIsland() && activityName().equals("leisure")) return Festival.target(this);
         if (pcUsing != null && level() instanceof ServerLevel sl1 && Computers.isPc(sl1, pcUsing)) return pcUsing.relative(sl1.getBlockState(pcUsing).getValue(ComputerBlock.FACING));
         if (seekPlayer != null && level() instanceof ServerLevel sl0) {
@@ -786,10 +818,17 @@ public class Resident extends PathfinderMob {
         return companion;
     }
 
+    public long boostUntil;
+
+    public String leisureWhy() {
+        return leisureWhy;
+    }
+
     /** Personal walking pace: some residents stride, some amble. */
     public double gait() {
         CityData.Profile p = profile();
         double g = 0.92 + Math.floorMod(profileId.hashCode(), 17) / 17.0 * 0.16;
+        if (level().getGameTime() < boostUntil) g += 0.06;
         if (p == null) return g;
         if (p.trait == Trait.ADVENTUROUS || p.trait == Trait.CHEERFUL) g += 0.04;
         if (p.trait == Trait.LAIDBACK || p.trait == Trait.DREAMY) g -= 0.05;
@@ -936,6 +975,10 @@ public class Resident extends PathfinderMob {
                     case "yoga" -> "doing morning yoga at ";
                     case "lantern" -> "sending up lanterns at ";
                     case "wedding" -> "at a wedding at ";
+                    case "quiz" -> "at quiz night at ";
+                    case "karaoke" -> "singing karaoke at ";
+                    case "movie" -> "watching a movie at ";
+                    case "funrun" -> "at the fun run start at ";
                     case "sunbathe" -> sunTicks > 0 ? "sunbathing at " : "enjoying the sunshine at ";
                     case "party" -> "at " + star + " birthday party at ";
                     case "dance" -> "dancing at the Sky Organ party at ";
@@ -967,6 +1010,10 @@ public class Resident extends PathfinderMob {
                     case "yoga" -> "heading to morning yoga at ";
                     case "lantern" -> "on the way to Lantern Night at ";
                     case "wedding" -> "on the way to a wedding at ";
+                    case "quiz" -> "on the way to quiz night at ";
+                    case "karaoke" -> "on the way to karaoke at ";
+                    case "movie" -> "on the way to movie night at ";
+                    case "funrun" -> "heading to the fun run at ";
                     case "date" -> "on the way to a date at ";
                     case "bank" -> "popping over to ";
                     case "lottery" -> "heading to the lottery draw at ";
@@ -1047,7 +1094,7 @@ public class Resident extends PathfinderMob {
         if (sayLog) FireheartCity.LOG.info("[Say] " + profileId + ": " + text);
         if (Bank.debug && (Bank.inBuilding(blockPosition()) || blockPosition().closerThan(Bank.ATM_SPOT, 4))) FireheartCity.LOG.info("[Bank] " + profileId + ": " + text);
         this.entityData.set(SPEECH, text);
-        this.speechTicks = ticks;
+        this.speechTicks = Math.max(ticks, Math.min(200, 30 + text.length() * 2));
         if (gestureTicks <= 0 && eatTicks <= 0 && !isSleeping() && !text.startsWith("\u260e")) {
             int eg = emoteFor(text);
             if (eg != G_NONE) gesture(eg, 40);
@@ -1290,7 +1337,8 @@ public class Resident extends PathfinderMob {
         int w = 0;
         boolean awake = !isSleeping() && !inShuttle() && !activityName().equals("sleep");
         boolean out = awake && outdoors();
-        if (out && level().isRaining() && !Furniture.onSeat(this)) {
+        boolean sharing = companion != null && !companion.isRemoved() && companion.distanceToSqr(this) < 2.4 * 2.4 && getId() > companion.getId();
+        if (out && level().isRaining() && !Furniture.onSeat(this) && !sharing) {
             w |= W_UMBRELLA;
             if (now - lastUmbrellaLine > 4000 && getRandom().nextFloat() < 0.08f && convo == null) {
                 lastUmbrellaLine = now;
@@ -1307,6 +1355,10 @@ public class Resident extends PathfinderMob {
                 say(pick("Brrr! It's freezing out here.", "Should've brought a jacket...", "My teeth are chattering!", onIsland() ? "It gets so cold up here at night!" : "Is it winter already?"), 50);
                 ((ServerLevel) level()).sendParticles(ParticleTypes.SNOWFLAKE, getX(), getY() + 1.8, getZ(), 6, 0.3, 0.2, 0.3, 0.01);
             }
+        }
+        if (sharing && out && level().isRaining() && now - lastUmbrellaLine > 6000 && getRandom().nextFloat() < 0.2f && convo == null && companion.profile() != null) {
+            lastUmbrellaLine = now;
+            say(pick("Mind if I squeeze under your umbrella, " + companion.profile().name + "?", "Umbrella buddies!", "Scoot over, I'm getting soaked!"), 50);
         }
         if (sunTicks > 0) {
             w |= W_SUN;
@@ -1467,7 +1519,7 @@ public class Resident extends PathfinderMob {
             }
             Place dest = destination();
             boolean away = dest != null && getVehicle().blockPosition().distSqr(dest.pos) > 12 * 12;
-            if (--sitTicks <= 0 || !act.equals(sitAct) || fleeTicks > 0 || away || act.equals("sleep") || Elevator.isRider(this) || Elevator.isQueued(this) || isFollowing()) {
+            if (--sitTicks <= 0 || !act.equals(sitAct) || fleeTicks > 0 || away || act.equals("sleep") || Elevator.isRider(this) || Elevator.isQueued(this) || isFollowing() || onErrand()) {
                 stopRiding();
                 sitTicks = 0;
                 sitAct = "";
@@ -1479,7 +1531,7 @@ public class Resident extends PathfinderMob {
             return true;
         }
         sitAct = "";
-        if (convo != null || fleeTicks > 0 || inShuttle() || eatTicks > 0) {
+        if (convo != null || fleeTicks > 0 || inShuttle() || eatTicks > 0 || onErrand()) {
             seatTarget = null;
             return false;
         }
@@ -1752,6 +1804,8 @@ public class Resident extends PathfinderMob {
                 say(pick("A " + what + "! Run!", "Aaah! A " + what + "!", "Nope, nope, nope!"), 50);
                 gesture(G_SURPRISED, 30);
                 Events.sighting(d, this, what);
+                DayLog scare = p.log(routineDay());
+                if (scare.once("scare")) scare.note("A " + what + " gave me a real fright near " + Dialogue.here(this));
                 Vec3 threat = m.position();
                 for (Resident o : sl.getEntitiesOfClass(Resident.class, getBoundingBox().inflate(10, 3, 10), x -> x != this && x.fleeTicks <= 0 && x.isFree() && x.profile() != null && x.profile().job != Job.POLICE && x.profile().job != Job.FIREFIGHTER)) {
                     if (getRandom().nextFloat() > 0.7f || !o.hasLineOfSight(this)) continue;
@@ -2813,18 +2867,21 @@ public class Resident extends PathfinderMob {
                     lastGreet.put(pn, now);
                     addressed(level(), pn);
                     this.getLookControl().setLookAt(pl, 30, 30);
-                    gesture(G_WAVE, 40);
+                    boolean sweet = me.id.equals(Romance.sweetheart(d, pn));
+                    gesture(sweet ? G_BLOW_KISS : G_WAVE, 40);
+                    if (sweet) particles(ParticleTypes.HEART, 3);
                     String extra = pr.fam > 40 ? " Good to see you again." : "";
-                    String bday = Quests.birthdayLine(this, pn);
-                    String bonus = bday != null ? bday : Pastimes.greetExtra(this, me, pl, pr);
-                    if (bonus != null) extra = " " + bonus;
+                    String bonus = Quests.birthdayLine(this, pn);
+                    if (bonus == null) bonus = Bonds.maybeNickname(this, me, pn, pr);
+                    if (bonus == null) bonus = Pastimes.greetExtra(this, me, pl, pr);
                     CityData.Event fresh = Events.freshestUnshared(d, me, pn);
                     String memo = Mind.playerLine(me, pn, day, getRandom());
                     String postSeen = Extras.postLine(d, me, pn, day);
-                    if (postSeen != null) extra = " " + postSeen;
+                    if (bonus != null) extra = " " + bonus;
+                    else if (postSeen != null) extra = " " + postSeen;
                     else if (memo != null && getRandom().nextFloat() < 0.6f) extra = " " + memo;
                     else if (fresh != null && getRandom().nextBoolean()) extra = " Did you hear? " + Events.sentence(fresh.text) + "!";
-                    sayTo(Dialogue.greeting(timeOfDay()) + ", " + pn + "!" + extra, 80);
+                    sayTo(Dialogue.greeting(timeOfDay()) + ", " + Bonds.callName(d, me, pn, getRandom()) + "!" + extra, 80);
                     pr.fam = Math.min(100, pr.fam + 1);
                 } else if (!pr.met && getRandom().nextFloat() < 0.25f) {
                     lastGreet.put(pn, now);
@@ -2908,6 +2965,7 @@ public class Resident extends PathfinderMob {
         String pn = player.getName().getString();
         addressed(level(), pn);
         CityData.Rel pr = d.playerRel(p.id, pn);
+        if (player instanceof ServerPlayer sp5 && Errands.found(sp5, this)) return InteractionResult.SUCCESS;
         if (p.job == Job.BANKER && Bank.onDuty(this) && convo == null && player instanceof ServerPlayer sp) {
             pr.met = true;
             pr.fam = Math.min(100, pr.fam + 2);
@@ -2931,7 +2989,7 @@ public class Resident extends PathfinderMob {
             if (Favours.maybeAsk((ServerLevel) level(), d, this, p, sp2, getRandom())) return InteractionResult.SUCCESS;
         }
         this.getLookControl().setLookAt(player, 30, 30);
-        gesture(G_WAVE, 30);
+        gesture(pr.met ? G_WAVE : G_SHAKE, 40);
         if (!pr.met) {
             pr.met = true;
             pr.fam = 10;
@@ -3009,6 +3067,14 @@ public class Resident extends PathfinderMob {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (!level().isClientSide && source.getDirectEntity() instanceof net.minecraft.world.entity.projectile.Snowball && source.getEntity() instanceof Player sp) {
+            try {
+                Hobbies.snowballedBy(this, sp);
+            } catch (Throwable t) {
+                if (errors++ < 20) FireheartCity.LOG.error("Snowball reaction failed", t);
+            }
+            return false;
+        }
         if (!level().isClientSide && source.getEntity() instanceof Player pl) {
             try {
                 onPunched(pl);
@@ -3095,6 +3161,10 @@ public class Resident extends PathfinderMob {
         showItem(id, 60);
         CityData.Rel pr = d.playerRel(p.id, pn);
         pr.aff = Math.min(100, pr.aff + (fav ? 8 : precious ? 6 : 3));
+        if (Letters.lucky(d, pn, dd, p.id)) {
+            pr.aff = Math.min(100, pr.aff + (fav ? 8 : precious ? 6 : 3));
+            particles(ParticleTypes.HAPPY_VILLAGER, 6);
+        }
         pr.fam = Math.min(100, pr.fam + 2);
         int emo = fav || precious ? 4 : 2;
         Mind.playerEvent(d, p, pn, dd, "{P} gave me " + label + (fav ? ", my favourite" : ""), emo, fav || precious ? 7 : 4);
@@ -3113,6 +3183,9 @@ public class Resident extends PathfinderMob {
             sayTo(t < -20 ? pick("...Thanks, I guess. Doesn't make up for everything.", "Hmph. Fine. Thank you.") : pick("Aww, thank you, " + pn + "!", "That's really sweet of you!", "Ooh, " + label + "! Thanks!"), 80);
         }
         d.news(dd, pn + " gave " + p.name + " " + label + ".");
+        Quests.bump(d, pn, "gift");
+        Health.onGift(this, p, id, player);
+        if (fav || precious) Letters.thankYou((ServerLevel) level(), d, pn, p, "the " + label);
         d.setDirty();
         return true;
     }

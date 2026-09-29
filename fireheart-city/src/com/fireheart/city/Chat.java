@@ -47,6 +47,7 @@ public final class Chat {
         if (pl == null || msg == null || msg.startsWith("/")) return;
         pl.getServer().execute(() -> {
             try {
+                if (Happenings.quizAnswer(pl, msg)) return;
                 handle(pl, msg);
             } catch (Throwable t) {
                 FireheartCity.LOG.error("Resident chat reply failed", t);
@@ -114,6 +115,7 @@ public final class Chat {
         r.getLookControl().setLookAt(pl, 30, 30);
         if (r.convo != null) r.leaveConversation("Oh, one sec - " + pl.getName().getString() + " is talking to me.");
         Resident.addressed(r.level(), pl.getName().getString());
+        if (fresh) Quests.bump(r.data(), pl.getName().getString(), "talk");
         if (useAi(t, c) && Groq.available()) {
             String pn = pl.getName().getString();
             String convoKey = pn + "|" + r.profileId();
@@ -171,6 +173,8 @@ public final class Chat {
     }
 
     static String reply0(ServerPlayer pl, Resident r, String t, boolean named, Ctx c, long now) {
+        String vow = Bonds.vowChat(pl, t);
+        if (vow != null) return vow;
         CityData d = r.data();
         CityData.Profile p = r.profile();
         String pn = pl.getName().getString();

@@ -37,15 +37,15 @@ public final class Skies {
     }
 
     public static boolean lanternNight(long day) {
-        return Math.floorMod(day, 28L) == 10;
+        return Math.floorMod(day, 28L) == 10 || Happenings.forced("lantern", day);
     }
 
     public static boolean kindnessDay(long day) {
-        return Math.floorMod(day, 28L) == 20;
+        return Math.floorMod(day, 28L) == 20 || Happenings.forced("kindness", day);
     }
 
     public static boolean meteorNight(long day) {
-        return Math.floorMod(day, 14L) == 6;
+        return Math.floorMod(day, 14L) == 6 || Happenings.forced("meteor", day);
     }
 
     public static String holiday(long day) {
@@ -56,9 +56,7 @@ public final class Skies {
     }
 
     static List<Resident> residents(ServerLevel sl, CityData d) {
-        List<Resident> out = new ArrayList<>();
-        for (CityData.Profile p : d.profiles.values()) if (p.entity != null && sl.getEntity(p.entity) instanceof Resident r) out.add(r);
-        return out;
+        return Crowd.all(sl, d);
     }
 
     static boolean outside(ServerPlayer pl) {
@@ -67,18 +65,66 @@ public final class Skies {
 
     public static void tick(ServerLevel sl, CityData d) {
         long gt = sl.getGameTime();
-        if (gt % 20 == 5) rainbowCheck(sl, d);
-        if (rainbow > 0) rainbowTick(sl, d);
-        if (gt % 20 == 9) starCheck(sl, d);
-        if (!stars.isEmpty()) starTick(sl);
-        if (gt % 10 == 3) seasonTick(sl);
         long day = Calendar.worldDay(sl);
-        if (lanternNight(day)) lanternTick(sl, d, day);
-        else if (!lanterns.isEmpty()) lanterns.clear();
-        if (kindnessDay(day) && gt % 40 == 21) kindnessTick(sl, d, day);
-        if (gt % 10 == 7 && seasonIndex(day) == 3) auroraTick(sl, d);
-        chimeTick(sl);
-        if (gt % 20 == 11) mistTick(sl);
+        boolean sky = FhcConfig.skyEffects();
+        if (sky) {
+            if (gt % 20 == 5) rainbowCheck(sl, d);
+            if (rainbow > 0) rainbowTick(sl, d);
+            if (gt % 20 == 9) starCheck(sl, d);
+            if (!stars.isEmpty()) starTick(sl);
+            if (gt % 10 == 3) seasonTick(sl);
+            if (gt % 10 == 7 && seasonIndex(day) == 3) auroraTick(sl, d);
+            if (gt % 20 == 11) mistTick(sl);
+            if (gt % 16 == 5) constellationTick(sl);
+        }
+        if (FhcConfig.festivals()) {
+            if (lanternNight(day)) lanternTick(sl, d, day);
+            else if (!lanterns.isEmpty()) lanterns.clear();
+            if (kindnessDay(day) && gt % 40 == 21) kindnessTick(sl, d, day);
+        }
+        if (FhcConfig.chimes()) chimeTick(sl);
+    }
+
+    public static void reset() {
+        wasRaining = false;
+        rainbow = 0;
+        stars.clear();
+        lanterns.clear();
+        lanternPlanned = -1;
+        kind.clear();
+        kindDay = -1;
+        chimesLeft = 0;
+    }
+
+    /* ------------------------------------------------------------ Constellations */
+
+    static final String[] CONST_NAMES = {"the Fox", "the Heart", "the Anvil", "the Creeper", "the Sky Ferry"};
+    static final int[][][] CONSTELLATIONS = {
+            {{0, 0}, {3, 2}, {6, 1}, {9, 3}, {7, 6}, {4, 6}, {1, 4}, {10, 7}, {12, 5}},
+            {{0, 3}, {2, 5}, {4, 5}, {5, 3}, {6, 5}, {8, 5}, {10, 3}, {5, -1}},
+            {{0, 5}, {10, 5}, {9, 3}, {6, 3}, {6, 0}, {2, 0}, {2, 3}, {0, 3}},
+            {{1, 7}, {3, 7}, {6, 7}, {8, 7}, {3, 4}, {6, 4}, {2, 1}, {7, 1}, {4, 2}, {5, 2}},
+            {{0, 2}, {3, 0}, {8, 0}, {11, 2}, {8, 3}, {3, 3}, {5, 6}, {6, 6}}
+    };
+    static final DustParticleOptions STAR = new DustParticleOptions(new Vector3f(0.95f, 0.95f, 1f), 2.4f);
+
+    public static String constellation(long day) {
+        return CONST_NAMES[(int) Math.floorMod(day, (long) CONST_NAMES.length)];
+    }
+
+    static void constellationTick(ServerLevel sl) {
+        long tod = Math.floorMod(sl.getDayTime(), 24000L);
+        if (tod < 13500 || tod > 22000 || sl.isRaining()) return;
+        int idx = (int) Math.floorMod(Calendar.worldDay(sl), (long) CONSTELLATIONS.length);
+        int[][] pts = CONSTELLATIONS[idx];
+        for (ServerPlayer pl : sl.players()) {
+            if (!outside(pl) || !Perks.opt(pl, "sky")) continue;
+            double cx = pl.getX() - 16, cy = pl.getY() + 70, cz = pl.getZ() - 110;
+            for (int i = 0; i < pts.length; i++) {
+                if (sl.getRandom().nextFloat() < 0.12f) continue;
+                sl.sendParticles(pl, STAR, true, cx + pts[i][0] * 3.5, cy + pts[i][1] * 3.5, cz, 1, 0.05, 0.05, 0.05, 0);
+            }
+        }
     }
 
     /* ------------------------------------------------------------ Aurora */
@@ -93,16 +139,20 @@ public final class Skies {
         long tod = Math.floorMod(sl.getDayTime(), 24000L);
         if (tod < 13500 || tod > 22000 || sl.isRaining()) return;
         double t = sl.getGameTime() * 0.01;
+        java.util.Random night = new java.util.Random(Calendar.worldDay(sl) * 7349L);
+        float strength = 0.25f + night.nextFloat() * 0.75f;
+        int shift = night.nextInt(AURORA.length);
         for (ServerPlayer pl : sl.players()) {
+            if (!Perks.opt(pl, "sky")) continue;
             if (!outside(pl)) continue;
             if (sl.getGameTime() % 200 == 7) Perks.unlock(pl, d, "aurora");
             double baseZ = pl.getZ() - 90;
             for (int i = -30; i <= 30; i += 2) {
                 double x = pl.getX() + i * 3;
                 double z = baseZ + Math.sin(i * 0.15 + t) * 12;
-                int band = Math.floorMod(i / 8, AURORA.length);
+                int band = Math.floorMod(i / 8 + shift, AURORA.length);
                 for (int h = 0; h < 4; h++) {
-                    if (sl.getRandom().nextFloat() > 0.5f) continue;
+                    if (sl.getRandom().nextFloat() > 0.5f * strength) continue;
                     sl.sendParticles(pl, AURORA[band], true, x, 150 + h * 6 + Math.sin(i * 0.3 + t * 2) * 4, z, 1, 1.5, 2.5, 1.5, 0);
                 }
             }
@@ -128,8 +178,8 @@ public final class Skies {
         chimesLeft--;
         for (ServerPlayer pl : sl.players()) {
             double dd = pl.distanceToSqr(Vec3.atCenterOf(CLOCK));
-            if (dd > 160 * 160) continue;
-            float vol = (float) Math.max(0.15, 1.0 - Math.sqrt(dd) / 170.0);
+            if (dd > 160 * 160 || !Perks.opt(pl, "chimes")) continue;
+            float vol = (float) Math.max(0.15, 1.0 - Math.sqrt(dd) / 170.0) * (outside(pl) ? 1f : 0.4f);
             pl.playNotifySound(SoundEvents.BELL_BLOCK, SoundSource.AMBIENT, vol, 0.6f);
         }
     }
@@ -142,6 +192,7 @@ public final class Skies {
         long tod = Math.floorMod(sl.getDayTime(), 24000L);
         if (!(tod > 22800 || tod < 1800) || sl.isRaining()) return;
         for (ServerPlayer pl : sl.players()) {
+            if (!Perks.opt(pl, "sky")) continue;
             if (pl.distanceToSqr(Vec3.atCenterOf(MARINA)) > 70 * 70) continue;
             for (int i = 0; i < 6; i++) {
                 double x = MARINA.getX() + sl.getRandom().nextGaussian() * 25, z = MARINA.getZ() + sl.getRandom().nextGaussian() * 20;
@@ -153,6 +204,7 @@ public final class Skies {
     /* ------------------------------------------------------------ Rainbow */
 
     static boolean wasRaining;
+    static boolean doubleRainbow;
     static int rainbow;
     static final BlockPos ARC = new BlockPos(-20, 68, -60);
     static final float[][] BANDS = {{1f, 0.1f, 0.1f}, {1f, 0.5f, 0f}, {1f, 0.95f, 0.1f}, {0.2f, 0.9f, 0.2f}, {0.2f, 0.5f, 1f}, {0.3f, 0.2f, 0.8f}, {0.6f, 0.2f, 0.9f}};
@@ -162,9 +214,10 @@ public final class Skies {
         long tod = Math.floorMod(sl.getDayTime(), 24000L);
         if (wasRaining && !raining && tod < 11000 && rainbow <= 0) {
             rainbow = 1600;
+            doubleRainbow = sl.getRandom().nextFloat() < 0.2f;
             for (ServerPlayer pl : sl.players()) {
                 if (pl.distanceToSqr(Vec3.atCenterOf(ARC)) > 220 * 220) continue;
-                Perks.say(pl, "§d🌈 A rainbow over Solaris! §7Look north.");
+                Perks.say(pl, doubleRainbow ? "§d🌈🌈 A DOUBLE rainbow over Solaris! §7Look north." : "§d🌈 A rainbow over Solaris! §7Look north.");
                 if (outside(pl)) Perks.unlock(pl, d, "rainbow");
             }
             int n = 0;
@@ -187,14 +240,18 @@ public final class Skies {
         }
         float fade = Math.min(1f, rainbow / 400f);
         for (ServerPlayer pl : sl.players()) {
+            if (!Perks.opt(pl, "sky")) continue;
             if (pl.distanceToSqr(Vec3.atCenterOf(ARC)) > 220 * 220) continue;
-            for (int b = 0; b < BANDS.length; b++) {
-                DustParticleOptions dust = new DustParticleOptions(new Vector3f(BANDS[b][0], BANDS[b][1], BANDS[b][2]), 4f * fade + 0.5f);
-                double rad = 48 - b * 1.6;
-                for (int a = 0; a <= 36; a++) {
-                    if (sl.getRandom().nextFloat() > 0.55f) continue;
-                    double ang = Math.PI * a / 36.0;
-                    sl.sendParticles(pl, dust, true, ARC.getX() + Math.cos(ang) * rad * 1.4, ARC.getY() + Math.sin(ang) * rad, ARC.getZ(), 1, 0.4, 0.4, 0.4, 0);
+            for (int arc = 0; arc < (doubleRainbow ? 2 : 1); arc++) {
+                for (int b = 0; b < BANDS.length; b++) {
+                    float[] c = BANDS[arc == 0 ? b : BANDS.length - 1 - b];
+                    DustParticleOptions dust = new DustParticleOptions(new Vector3f(c[0], c[1], c[2]), (4f * fade + 0.5f) * (arc == 0 ? 1f : 0.6f));
+                    double rad = (arc == 0 ? 48 : 60) - b * 1.6;
+                    for (int a = 0; a <= 36; a++) {
+                        if (sl.getRandom().nextFloat() > (arc == 0 ? 0.55f : 0.3f)) continue;
+                        double ang = Math.PI * a / 36.0;
+                        sl.sendParticles(pl, dust, true, ARC.getX() + Math.cos(ang) * rad * 1.4, ARC.getY() + Math.sin(ang) * rad, ARC.getZ(), 1, 0.4, 0.4, 0.4, 0);
+                    }
                 }
             }
         }
@@ -206,13 +263,21 @@ public final class Skies {
         Vec3 pos;
         final Vec3 vel;
         int life;
+        final int max;
+        DustParticleOptions tint;
 
         Star(Vec3 pos, Vec3 vel, int life) {
             this.pos = pos;
             this.vel = vel;
             this.life = life;
+            this.max = life;
         }
     }
+
+    static final DustParticleOptions[] STAR_TINTS = {
+            new DustParticleOptions(new Vector3f(1f, 1f, 1f), 1.6f), new DustParticleOptions(new Vector3f(1f, 0.85f, 0.4f), 1.6f),
+            new DustParticleOptions(new Vector3f(0.5f, 0.75f, 1f), 1.6f), new DustParticleOptions(new Vector3f(0.5f, 1f, 0.6f), 1.6f)
+    };
 
     static final List<Star> stars = new ArrayList<>();
 
@@ -229,7 +294,9 @@ public final class Skies {
         double a = rnd.nextDouble() * Math.PI * 2;
         Vec3 start = pl.position().add(Math.cos(a) * 60, 70 + rnd.nextInt(30), Math.sin(a) * 60);
         Vec3 vel = new Vec3(-Math.cos(a) * 2.4 + rnd.nextGaussian() * 0.6, -0.9, -Math.sin(a) * 2.4 + rnd.nextGaussian() * 0.6);
-        stars.add(new Star(start, vel, 24 + rnd.nextInt(10)));
+        Star st = new Star(start, vel, 24 + rnd.nextInt(10));
+        st.tint = STAR_TINTS[rnd.nextInt(STAR_TINTS.length)];
+        stars.add(st);
         for (ServerPlayer p : out) {
             if (p.distanceToSqr(pl) > 120 * 120) continue;
             Perks.unlock(p, d, "wish");
@@ -250,9 +317,11 @@ public final class Skies {
             for (int k = 0; k < 3; k++) {
                 Vec3 p = s.pos.add(s.vel.scale(k / 3.0));
                 for (ServerPlayer pl : sl.players()) {
+                    if (!Perks.opt(pl, "sky")) continue;
                     if (pl.distanceToSqr(p) > 250 * 250) continue;
                     sl.sendParticles(pl, ParticleTypes.END_ROD, true, p.x, p.y, p.z, 1, 0.05, 0.05, 0.05, 0);
-                    if (k == 0) sl.sendParticles(pl, ParticleTypes.FIREWORK, true, p.x, p.y, p.z, 1, 0.1, 0.1, 0.1, 0.01);
+                    if (s.tint != null) sl.sendParticles(pl, s.tint, true, p.x, p.y, p.z, 1, 0.08, 0.08, 0.08, 0);
+                    if (k == 0 && s.life > s.max / 3) sl.sendParticles(pl, ParticleTypes.FIREWORK, true, p.x, p.y, p.z, 1, 0.1, 0.1, 0.1, 0.01);
                 }
             }
             s.pos = s.pos.add(s.vel);
@@ -268,6 +337,7 @@ public final class Skies {
         ParticleOptions fx = si == 3 && !sl.isRaining() ? ParticleTypes.SNOWFLAKE : si == 0 && tod < 12500 ? ParticleTypes.CHERRY_LEAVES : null;
         if (fx == null) return;
         for (ServerPlayer pl : sl.players()) {
+            if (!Perks.opt(pl, "sky")) continue;
             if (!outside(pl) || pl.getY() > 150 && si == 0) continue;
             sl.sendParticles(pl, fx, false, pl.getX(), pl.getY() + 8, pl.getZ(), si == 3 ? 10 : 3, 10, 3, 10, si == 3 ? 0.02 : 0.0);
         }
@@ -278,7 +348,6 @@ public final class Skies {
     static final BlockPos PLAZA = new BlockPos(-20, 71, 30);
     static final List<Star> lanterns = new ArrayList<>();
     static long lanternPlanned = -1;
-    static final DustParticleOptions GLOW = new DustParticleOptions(new Vector3f(1f, 0.6f, 0.15f), 1.8f);
 
     static void lanternTick(ServerLevel sl, CityData d, long day) {
         long tod = Math.floorMod(sl.getDayTime(), 24000L);
@@ -310,14 +379,17 @@ public final class Skies {
                 }
             }
         }
+        java.util.Random windRng = new java.util.Random(day * 131L);
+        double wx = (windRng.nextDouble() - 0.5) * 0.04, wz = (windRng.nextDouble() - 0.5) * 0.04;
         Iterator<Star> it = lanterns.iterator();
         while (it.hasNext()) {
             Star s = it.next();
-            s.pos = s.pos.add(s.vel.x + Math.sin((500 - s.life) * 0.05) * 0.01, s.vel.y, s.vel.z);
+            s.pos = s.pos.add(s.vel.x + wx + Math.sin((500 - s.life) * 0.05) * 0.01, s.vel.y, s.vel.z + wz);
             if (sl.getGameTime() % 3 == 0) {
+                DustParticleOptions glow = new DustParticleOptions(new Vector3f(1f, 0.6f, 0.15f), 0.5f + 1.5f * s.life / (float) s.max);
                 for (ServerPlayer pl : sl.players()) {
-                    if (pl.distanceToSqr(s.pos) > 200 * 200) continue;
-                    sl.sendParticles(pl, GLOW, true, s.pos.x, s.pos.y, s.pos.z, 2, 0.08, 0.1, 0.08, 0);
+                    if (pl.distanceToSqr(s.pos) > 200 * 200 || !Perks.opt(pl, "sky")) continue;
+                    sl.sendParticles(pl, glow, true, s.pos.x, s.pos.y, s.pos.z, 2, 0.08, 0.1, 0.08, 0);
                     if (s.life % 12 == 0) sl.sendParticles(pl, ParticleTypes.SMALL_FLAME, true, s.pos.x, s.pos.y - 0.2, s.pos.z, 1, 0.02, 0.02, 0.02, 0);
                 }
             }
@@ -331,7 +403,7 @@ public final class Skies {
     static long kindDay = -1;
     static final String[] GIFTS = {"minecraft:poppy", "minecraft:dandelion", "minecraft:cookie", "minecraft:apple", "minecraft:cornflower", "minecraft:sweet_berries"};
 
-    static void kindnessTick(ServerLevel sl, CityData d, long day) {
+    public static void kindnessTick(ServerLevel sl, CityData d, long day) {
         if (kindDay != day) {
             kindDay = day;
             kind.clear();

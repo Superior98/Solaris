@@ -33,6 +33,33 @@ public final class Nav {
         return sees(level, a.add(0, 0.6, 0), b.add(0, 0.6, 0), who) && sees(level, a.add(0, 1.5, 0), b.add(0, 1.5, 0), who);
     }
 
+    static final java.util.Map<Long, int[]> STUCK = new java.util.HashMap<>();
+
+    /** Remembers where residents get stuck, so map problems can be found with /city stuck. */
+    public static void stuckAt(BlockPos p, boolean rescued) {
+        long key = BlockPos.asLong(p.getX() >> 2 << 2, p.getY(), p.getZ() >> 2 << 2);
+        int[] v = STUCK.computeIfAbsent(key, k -> new int[2]);
+        v[0]++;
+        if (rescued) v[1]++;
+        if (STUCK.size() > 500) STUCK.clear();
+    }
+
+    public static String stuckReport() {
+        if (STUCK.isEmpty()) return "§7No stuck residents recorded since the server started.";
+        java.util.List<java.util.Map.Entry<Long, int[]>> list = new java.util.ArrayList<>(STUCK.entrySet());
+        list.sort((a, b) -> b.getValue()[0] - a.getValue()[0]);
+        StringBuilder sb = new StringBuilder("§6Stuck hotspots §7(4x4 areas, times stuck / teleported):");
+        for (int i = 0; i < Math.min(10, list.size()); i++) {
+            BlockPos p = BlockPos.of(list.get(i).getKey());
+            sb.append("\n§f").append(p.toShortString()).append(" §7- ").append(list.get(i).getValue()[0]).append(" / ").append(list.get(i).getValue()[1]);
+        }
+        return sb.toString();
+    }
+
+    public static void reset() {
+        STUCK.clear();
+    }
+
     public static boolean sees(Level level, Vec3 from, Vec3 to, Entity who) {
         return level.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, who)).getType() == HitResult.Type.MISS;
     }

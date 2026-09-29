@@ -65,7 +65,7 @@ public class ResidentModel extends PlayerModel<Resident> {
         }
         if (age < e.cGestAt) e.cGestAt = age;
         float lt = age - e.cGestAt;
-        float w = Mth.clamp(lt / BLEND, 0f, 1f);
+        float w = Mth.clamp(lt / blendTime(g), 0f, 1f);
         w = w * w * (3f - 2f * w);
         save(base);
         if (w < 1f && e.cGestPrev != g) {
@@ -87,9 +87,24 @@ public class ResidentModel extends PlayerModel<Resident> {
         rightPants.copyFrom(rightLeg);
     }
 
-    /** Standing weight shifts, breathing, and a forward lean when running. */
+    private static float blendTime(int g) {
+        return switch (g) {
+            case Resident.G_THROW, Resident.G_HIGHFIVE, Resident.G_SNEEZE, Resident.G_SURPRISED, Resident.G_JAB_R, Resident.G_JAB_L,
+                 Resident.G_UPPERCUT, Resident.G_KICK, Resident.G_DASH, Resident.G_COUGH, Resident.G_SALUTE -> 2f;
+            case Resident.G_NAP, Resident.G_SIGH, Resident.G_READ -> 9f;
+            default -> BLEND;
+        };
+    }
+
+    /** Standing weight shifts, breathing, idle glances, a relaxed seated pose and a forward lean when running. */
     private void idle(Resident e, float t, float limbAmount) {
-        if (e.isSleeping() || e.isPassenger() || e.skyPhase() > 0) return;
+        if (e.isSleeping() || e.skyPhase() > 0) return;
+        if (e.isPassenger()) {
+            body.xRot -= 0.06f;
+            head.xRot -= 0.04f;
+            head.zRot += Mth.sin(t * 0.02f) * 0.05f;
+            return;
+        }
         body.xRot += Mth.sin(t * 0.09f) * 0.012f;
         if (limbAmount < 0.08f) {
             float cyc = t * 0.004f;
@@ -105,6 +120,8 @@ public class ResidentModel extends PlayerModel<Resident> {
             }
             body.zRot += 0.025f * side * k;
             head.zRot -= 0.02f * side * k;
+            float glance = Mth.sin(t * 0.013f) * Mth.sin(t * 0.031f + e.getId());
+            if (Math.abs(glance) > 0.55f) head.yRot += (glance - Math.signum(glance) * 0.55f) * 0.9f;
         } else if (limbAmount > 0.55f) {
             float lean = (limbAmount - 0.55f) * 0.35f;
             body.xRot += lean;
@@ -584,6 +601,82 @@ public class ResidentModel extends PlayerModel<Resident> {
                 leftArm.zRot = -0.5f;
                 head.xRot = -0.1f + Mth.sin(t * 0.9f) * 0.05f;
                 body.xRot = 0.06f;
+            }
+            case Resident.G_SHAKE -> {
+                rightArm.xRot = -1.2f + Mth.sin(t * 1.4f) * 0.12f;
+                rightArm.yRot = -0.15f;
+                rightArm.zRot = 0f;
+                head.xRot = 0.08f;
+                body.xRot = 0.05f;
+            }
+            case Resident.G_SALUTE -> {
+                rightArm.xRot = -2.35f;
+                rightArm.yRot = -0.9f;
+                rightArm.zRot = 0.6f;
+                leftArm.xRot = 0f;
+                leftArm.zRot = -0.05f;
+                head.xRot = -0.05f;
+                body.xRot = -0.03f;
+            }
+            case Resident.G_BLOW_KISS -> {
+                if (lt < 8f) {
+                    rightArm.xRot = -2.05f;
+                    rightArm.yRot = -0.6f;
+                } else {
+                    float k = Mth.clamp((lt - 8f) / 5f, 0f, 1f);
+                    rightArm.xRot = Mth.lerp(k, -2.05f, -1.45f);
+                    rightArm.yRot = Mth.lerp(k, -0.6f, 0.05f);
+                }
+                rightArm.zRot = 0f;
+                head.zRot = 0.18f;
+                head.xRot = -0.05f;
+            }
+            case Resident.G_NAP -> {
+                head.xRot = 0.6f + Mth.sin(t * 0.05f) * 0.08f;
+                head.zRot = 0.15f;
+                body.xRot = 0.08f;
+                rightArm.xRot = -0.3f;
+                leftArm.xRot = -0.3f;
+                rightArm.zRot = 0.05f;
+                leftArm.zRot = -0.05f;
+            }
+            case Resident.G_WHISTLE -> {
+                head.xRot = -0.12f;
+                head.zRot = Mth.sin(t * 0.3f) * 0.06f;
+                leftArm.xRot = -0.15f;
+                leftArm.zRot = -0.08f;
+            }
+            case Resident.G_CONFETTI -> {
+                float k = Mth.clamp(lt / 4f, 0f, 1f);
+                rightArm.xRot = Mth.lerp(k, -1.0f, -2.8f);
+                leftArm.xRot = Mth.lerp(k, -1.0f, -2.8f);
+                rightArm.zRot = Mth.lerp(k, 0f, -0.55f);
+                leftArm.zRot = Mth.lerp(k, 0f, 0.55f);
+                rightArm.yRot = 0f;
+                leftArm.yRot = 0f;
+                head.xRot = -0.3f;
+            }
+            case Resident.G_KNOCK -> {
+                rightArm.xRot = -1.6f + Mth.abs(Mth.sin(t * 1.2f)) * 0.3f;
+                rightArm.yRot = -0.1f;
+                rightArm.zRot = 0f;
+                head.xRot = 0f;
+            }
+            case Resident.G_COUGH -> {
+                float k = Mth.sin(t * 1.8f);
+                head.xRot = 0.35f + k * 0.1f;
+                body.xRot = 0.18f + k * 0.04f;
+                rightArm.xRot = -2.0f;
+                rightArm.yRot = -0.6f;
+                rightArm.zRot = 0.2f;
+            }
+            case Resident.G_PICKUP -> {
+                float k = Mth.sin(Mth.clamp(lt / 20f, 0f, 1f) * Mth.PI);
+                body.xRot = 0.85f * k;
+                head.xRot = 0.8f * k;
+                rightArm.xRot = -0.3f - 0.4f * k;
+                rightArm.yRot = -0.1f;
+                leftArm.xRot = 0.1f;
             }
             case Resident.G_WINDED -> {
                 body.xRot = 0.5f + Mth.sin(t * 0.5f) * 0.05f;

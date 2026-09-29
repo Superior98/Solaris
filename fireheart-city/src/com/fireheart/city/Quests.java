@@ -58,7 +58,12 @@ public final class Quests {
         String pn = pl.getName().getString();
         CityData.Rel pr = d.playerRel(p.id, pn);
         pr.met = true;
-        pr.aff = Math.min(100, pr.aff + Math.min(10, 1 + amount / 5));
+        long today = Calendar.worldDay(sl);
+        String tk = "tips:" + p.id;
+        String[] tv = d.setting(pn, tk, "-1:0").split(":");
+        int tipsToday = tv.length == 2 && Perks.parse(tv[0]) == today ? (int) Perks.parse(tv[1]) : 0;
+        d.setSetting(pn, tk, today + ":" + (tipsToday + 1));
+        pr.aff = Math.min(100, pr.aff + Math.max(0, Math.min(10, 1 + amount / 5) / (1 + tipsToday)));
         Mind.playerEvent(d, p, pn, r.day(), "{P} tipped me " + amount + " coins", amount >= 20 ? 3 : 2, amount >= 20 ? 6 : 3);
         r.getLookControl().setLookAt(pl, 30, 30);
         r.showItem("minecraft:gold_nugget", 40);
@@ -66,6 +71,8 @@ public final class Quests {
         r.particles(ParticleTypes.HAPPY_VILLAGER, 5);
         r.sayTo(amount >= 20 ? r.pick("Whoa, " + amount + " coins?! You're too generous, " + pn + "!", "I don't know what to say - thank you so much!") : r.pick("Aw, thanks " + pn + "!", "A tip! That's really kind.", "You didn't have to do that. But thanks!"), 80);
         sl.playSound(null, r.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.NEUTRAL, 0.5f, 1.4f);
+        bump(d, pn, "tip");
+        if (amount >= 10) Letters.thankYou(sl, d, pn, p, "the generous tip");
         d.setDirty();
         return "§6You tipped " + p.name + " " + amount + " coins.";
     }
@@ -114,6 +121,7 @@ public final class Quests {
             }, 50);
         }
         if (n >= 3) Perks.unlock(pl, d, "crowd");
+        if (n > 0) bump(d, pn, "emote");
         return "";
     }
 
@@ -175,6 +183,20 @@ public final class Quests {
         return Place.get(c.place()) != null ? c : CLUES[0];
     }
 
+    public static String hint(ServerPlayer pl, CityData d) {
+        String pn = pl.getName().getString();
+        long day = Calendar.worldDay(pl.serverLevel());
+        if (d.setting(pn, "treasure", "").equals(String.valueOf(day))) return "§6[Treasure] §7You already found today's treasure.";
+        Place p = Place.get(todays(day, pn).place());
+        if (p == null) return "§6[Treasure] §7The map is smudged today...";
+        int dist = (int) Math.sqrt(pl.blockPosition().distSqr(p.pos));
+        int last = (int) Perks.parse(d.setting(pn, "treasureLast", "-1"));
+        d.setSetting(pn, "treasureLast", String.valueOf(dist));
+        String feel = last < 0 ? "" : dist < last - 3 ? "§aWarmer! " : dist > last + 3 ? "§bColder... " : "§7About the same. ";
+        String how = dist < 15 ? "It's very close!" : dist < 40 ? "You're close." : dist < 100 ? "It's a fair walk away." : (p.island != pl.getY() > 150 ? "It's not even on this level of the city." : "It's far from here.");
+        return "§6[Treasure] " + feel + "§f" + how;
+    }
+
     public static String treasure(ServerPlayer pl, CityData d) {
         String pn = pl.getName().getString();
         long day = Calendar.worldDay(pl.serverLevel());
@@ -199,6 +221,7 @@ public final class Quests {
             sl.sendParticles(ParticleTypes.TOTEM_OF_UNDYING, pl.getX(), pl.getY() + 1, pl.getZ(), 40, 0.6, 0.8, 0.6, 0.3);
             sl.playSound(null, pl.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.8f, 1.2f);
             Calendar.banner(pl, "§6✦ Treasure found!", "§e+" + coins + " coins §7at " + p.label);
+            bump(d, pn, "treasure");
             int found = (int) Perks.parse(d.setting(pn, "treasures", "0")) + 1;
             d.setSetting(pn, "treasures", String.valueOf(found));
             if (found >= 5) Perks.unlock(pl, d, "treasure5");
@@ -215,6 +238,8 @@ public final class Quests {
             String pn = pl.getName().getString();
             int n = (int) Perks.parse(d.setting(pn, "fish", "0")) + 1;
             d.setSetting(pn, "fish", String.valueOf(n));
+            bump(d, pn, "fish");
+            Happenings.playerFish(sl, d, pn);
             if (n >= 10) Perks.unlock(pl, d, "angler");
             boolean big = false;
             for (ItemStack st : e.getDrops()) if (st.is(Items.SALMON) || st.is(Items.PUFFERFISH) || st.is(Items.TROPICAL_FISH) || !st.isEdible()) big = true;
@@ -272,9 +297,141 @@ public final class Quests {
         return r.pick("HAPPY BIRTHDAY, " + pn + "! 🎂", "It's your birthday?! Happy birthday, " + pn + "!", "Happy birthday! Any big plans?");
     }
 
+    /* ------------------------------------------------------------ Daily quests */
+
+    record Task(String key, String text, int need) {}
+
+    static final Task[] TASKS = {
+            new Task("talk", "Chat with 3 residents", 3), new Task("courier", "Deliver a courier parcel", 1), new Task("treasure", "Find today's treasure", 1),
+            new Task("fish", "Catch 3 fish", 3), new Task("tip", "Tip a resident", 1), new Task("hug", "Hug 2 residents", 2),
+            new Task("letter", "Send a letter", 1), new Task("emote", "Emote near residents twice", 2), new Task("gift", "Give a resident a gift", 1),
+            new Task("game", "Play hide and seek, race, or get guided somewhere", 1), new Task("rps", "Win rock-paper-scissors", 1), new Task("selfie", "Take a selfie with a resident", 1)
+    };
+
+    static Task[] today(String pn, long day) {
+        java.util.Random r = new java.util.Random(pn.hashCode() * 6151L + day * 409);
+        java.util.List<Task> pool = new java.util.ArrayList<>(java.util.List.of(TASKS));
+        java.util.Collections.shuffle(pool, r);
+        return new Task[]{pool.get(0), pool.get(1), pool.get(2)};
+    }
+
+    /** Counts one step of a daily-quest activity for the player. */
+    static long currentDay = -1;
+
+    public static void bump(CityData d, String pn, String key) {
+        if (pn == null || pn.isEmpty() || currentDay < 0) return;
+        String[] v = d.setting(pn, "qd:" + key, "-1:0").split(":");
+        int n = v.length == 2 && Perks.parse(v[0]) == currentDay ? (int) Perks.parse(v[1]) : 0;
+        d.setSetting(pn, "qd:" + key, currentDay + ":" + (n + 1));
+    }
+
+    static int count(CityData d, String pn, String key, long day) {
+        String[] v = d.setting(pn, "qd:" + key, "-1:0").split(":");
+        return v.length == 2 && Perks.parse(v[0]) == day ? (int) Perks.parse(v[1]) : 0;
+    }
+
+    public static String quests(ServerPlayer pl, CityData d) {
+        String pn = pl.getName().getString();
+        long day = Calendar.worldDay(pl.serverLevel());
+        StringBuilder sb = new StringBuilder("§6§lToday's quests §7(" + Calendar.stamp(day) + ")");
+        String done = d.setting(pn, "qdone:" + day, "");
+        for (Task t : today(pn, day)) {
+            int n = Math.min(t.need(), count(d, pn, t.key(), day));
+            boolean ok = done.contains("|" + t.key() + "|");
+            sb.append("\n").append(ok ? "§a✔ " : "§7☐ ").append("§f").append(t.text()).append(" §8(").append(n).append("/").append(t.need()).append(") §e15 coins");
+        }
+        return sb.append("\n§7Finish all three for a §e20§7 coin bonus.").toString();
+    }
+
+    static void questCheck(ServerLevel sl, CityData d) {
+        long day = Calendar.worldDay(sl);
+        for (ServerPlayer pl : sl.players()) {
+            String pn = pl.getName().getString();
+            String done = d.setting(pn, "qdone:" + day, "");
+            int finished = 0;
+            for (Task t : today(pn, day)) {
+                boolean ok = done.contains("|" + t.key() + "|");
+                if (!ok && count(d, pn, t.key(), day) >= t.need()) {
+                    done = done + "|" + t.key() + "|";
+                    d.setSetting(pn, "qdone:" + day, done);
+                    Perks.reward(pl, d, 15, "Daily quest: " + t.text());
+                    Perks.say(pl, "§6[Quest] §a✔ " + t.text() + " §e+15 coins");
+                    pl.playNotifySound(SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.5f, 1.6f);
+                    ok = true;
+                }
+                if (ok) finished++;
+            }
+            if (finished == 3 && !done.contains("|all|")) {
+                d.setSetting(pn, "qdone:" + day, done + "|all|");
+                Perks.reward(pl, d, 20, "All daily quests done");
+                int total = (int) Perks.parse(d.setting(pn, "questsDone", "0")) + 1;
+                d.setSetting(pn, "questsDone", String.valueOf(total));
+                Calendar.banner(pl, "§6All quests done!", "§e+20 bonus coins §7· " + total + " days completed");
+                if (total >= 10) Perks.unlock(pl, d, "quests10");
+            }
+        }
+    }
+
+    /* ------------------------------------------------------------ Wishlists */
+
+    public static String wishlist(ServerPlayer pl, CityData d, String name) {
+        CityData.Profile p = byName(d, name);
+        if (p == null) return "§cNobody called " + name + " lives in Solaris.";
+        String pn = pl.getName().getString();
+        if (!d.playerRel(p.id, pn).met) return "§7You'd need to meet " + p.name + " first.";
+        String trait = switch (p.trait) {
+            case CHEERFUL -> "cake";
+            case SHY, CURIOUS -> "a good book";
+            case ADVENTUROUS -> "an emerald";
+            case FRIENDLY, DREAMY -> "fresh flowers";
+            case TALKATIVE -> "cookies";
+            case LAIDBACK -> "sweet berries";
+            default -> "a diamond (to cheer them up)";
+        };
+        StringBuilder sb = new StringBuilder("§6§l" + p.name + "'s wishlist");
+        sb.append("\n§7♥ Favourite food: §f").append(Economy.label(Memory.favourite(p))).append(" §8(counts extra)");
+        sb.append("\n§7♥ Would love: §f").append(trait);
+        if (!p.wantDevice.isEmpty()) sb.append("\n§7♥ Saving up for: §f").append(TechStore.deviceName(p.wantDevice)).append(" §8(from SolTech)");
+        else if (!p.goal.isEmpty()) sb.append("\n§7♥ Dreaming of: §f").append(p.goal);
+        if (p.hunger < 40) sb.append("\n§7♥ Right now: §fanything to eat - they're hungry!");
+        if (Letters.lucky(d, pn, Calendar.worldDay(pl.serverLevel()), p.id)) sb.append("\n§d✦ Your horoscope says gifts to " + p.name + " count double today!");
+        return sb.toString();
+    }
+
+    /* ------------------------------------------------------------ Donations */
+
+    public static String donate(ServerPlayer pl, CityData d, int amount) {
+        if (!Bank.takeCash(pl, amount)) return "§cYou don't have " + amount + " coins in gold on you.";
+        ServerLevel sl = pl.serverLevel();
+        String pn = pl.getName().getString();
+        long before = Perks.parse(d.setting(Finale.CITY, "spirit", "0"));
+        long after = before + amount;
+        d.setSetting(Finale.CITY, "spirit", String.valueOf(after));
+        int mine = (int) Perks.parse(d.setting(pn, "donated", "0")) + amount;
+        d.setSetting(pn, "donated", String.valueOf(mine));
+        if (mine >= 100) Perks.unlock(pl, d, "donor");
+        for (Resident r : sl.getEntitiesOfClass(Resident.class, pl.getBoundingBox().inflate(10), x -> x.profile() != null && x.isFree())) {
+            r.gesture(Resident.G_CLAP, 40);
+            r.say(r.pick("That's so generous!", "Thank you for helping the city, " + pn + "!", "Solaris thanks you!"), 50);
+            break;
+        }
+        if (before / 250 != after / 250) {
+            long day = Calendar.worldDay(sl);
+            d.news(day, "Thanks to generous donors, the Solaris City Fund reached " + (after / 250 * 250) + " coins! Celebration at the plaza!");
+            for (CityData.Profile p : d.profiles.values()) p.fun = Math.min(100, p.fun + 10);
+            Fireworks.burst(sl, Finale.ALTAR.above(6), 12, 100, 7);
+            Applause.confetti(sl, Finale.ALTAR.above(2), 30);
+            for (ServerPlayer o : sl.players()) Calendar.banner(o, "§6✦ City Fund milestone!", "§e" + (after / 250 * 250) + " coins raised · thank you, " + pn);
+        }
+        d.setDirty();
+        return "§6You donated §e" + amount + "§6 coins to the Solaris City Fund. §7(City spirit: " + after + " · you've given " + mine + ")";
+    }
+
     public static void tick(ServerLevel sl, CityData d) {
         long gt = sl.getGameTime();
+        currentDay = Calendar.worldDay(sl);
         if (gt % 20 == 15) treasureCheck(sl, d);
         if (gt % 100 == 67) birthdayCheck(sl, d);
+        if (gt % 40 == 27) questCheck(sl, d);
     }
 }

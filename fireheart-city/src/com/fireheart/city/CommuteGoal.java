@@ -32,6 +32,7 @@ public class CommuteGoal extends Goal {
     @Override
     public boolean canUse() {
         if (mob.emergencyTarget() != null) return true;
+        if (mob.onErrand() && mob.convo == null && !mob.inShuttle()) return dist(mob.errandTarget) > 4.0D;
         if (mob.convo != null || mob.inShuttle() || mob.isEating() || Elevator.controls(mob) || mob.sunbathing() || mob.dancing() || mob.listening() || mob.jogging()) return false;
         BlockPos t = mob.navTarget();
         return t != null && dist(t) > 9.0D;
@@ -40,6 +41,7 @@ public class CommuteGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         if (mob.emergencyTarget() != null) return true;
+        if (mob.onErrand() && mob.convo == null && !mob.inShuttle()) return dist(mob.errandTarget) > 1.5D;
         if (mob.convo != null || mob.inShuttle() || mob.isEating() || Elevator.controls(mob) || mob.listening() || mob.jogging()) return false;
         BlockPos t = mob.navTarget();
         return t != null && dist(t) > 2.0D;
@@ -109,6 +111,7 @@ public class CommuteGoal extends Goal {
 
     private double baseSpeed() {
         if (mob.emergencyTarget() != null) return 1.6D;
+        if (mob.onErrand()) return mob.errandSpeed;
         double s = (mob.activityName().equals("leisure") ? 0.8D : 1.0D) * mob.gait();
         if (mob.level().isRaining() && mob.level().canSeeSky(mob.blockPosition())) s *= 1.2D;
         return s;
@@ -140,6 +143,7 @@ public class CommuteGoal extends Goal {
         }
         if (stuckTicks >= DETOUR && stage < 2) {
             stage = 2;
+            Nav.stuckAt(mob.blockPosition(), false);
             Vec3 side = LandRandomPos.getPos(mob, 7, 3);
             if (side != null && mob.getNavigation().moveTo(side.x, side.y, side.z, speed > 0 ? speed : 1.0D)) {
                 detourTicks = 50;
@@ -162,6 +166,7 @@ public class CommuteGoal extends Goal {
         }
         if (stuckTicks >= RESCUE) {
             if (mob.stuckRescue()) {
+                Nav.stuckAt(t, true);
                 bestDist = dist(t);
                 resetStuck();
                 return true;

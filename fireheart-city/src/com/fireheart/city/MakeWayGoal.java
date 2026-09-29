@@ -49,6 +49,17 @@ public class MakeWayGoal extends Goal {
             }
             return false;
         }
+        for (Vehicle v : mob.level().getEntitiesOfClass(Vehicle.class, mob.getBoundingBox().inflate(4, 1, 4))) {
+            Vec3 move = new Vec3(v.getX() - v.xo, 0, v.getZ() - v.zo);
+            Vec3 rel = new Vec3(mob.getX() - v.getX(), 0, mob.getZ() - v.getZ());
+            if (move.lengthSqr() < 0.01 || move.dot(rel) <= 0) continue;
+            Vec3 side = new Vec3(-move.z, 0, move.x).normalize();
+            if (side.dot(rel) < 0) side = side.scale(-1);
+            if (pick(side, rel)) {
+                if (mob.getRandom().nextFloat() < 0.4f) mob.say(mob.pick("Whoa, watch it!", "Car!", "Slow down!"), 30);
+                return true;
+            }
+        }
         if (!mob.getNavigation().isDone()) return false;
         for (Resident o : mob.level().getEntitiesOfClass(Resident.class, mob.getBoundingBox().inflate(0.4, 0.5, 0.4), x -> x != mob && x.getId() < mob.getId() && !x.isPassenger())) {
             Vec3 rel = new Vec3(mob.getX() - o.getX(), 0, mob.getZ() - o.getZ());

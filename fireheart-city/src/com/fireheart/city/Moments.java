@@ -18,13 +18,13 @@ public final class Moments {
 
     public static void tick(ServerLevel sl, CityData d) {
         long gt = sl.getGameTime();
-        if (gt % 10 == 1) fireflies(sl);
-        if (gt % 20 != 7) return;
+        if (gt % 10 == 1 && FhcConfig.skyEffects()) fireflies(sl);
+        if (gt % 20 != 7 || !FhcConfig.ambient()) return;
         long day = Calendar.worldDay(sl);
         long tod = Math.floorMod(sl.getDayTime(), 24000L);
         int season = Skies.seasonIndex(day);
         RandomSource rnd = sl.getRandom();
-        for (Resident r : Skies.residents(sl, d)) {
+        for (Resident r : Crowd.nearPlayers(sl, d)) {
             CityData.Profile p = r.profile();
             if (p == null || r.isSleeping() || r.inShuttle() || r.isSpeaking() || !r.isFree()) continue;
             if (rnd.nextFloat() > 0.2f) continue;
@@ -54,6 +54,13 @@ public final class Moments {
             r.sayTo(r.pick("Oh great, it's " + op.name + ".", "You still owe me an apology, " + op.name + ".", "Don't even start, " + op.name + ".", "Nice of you to finally show up, " + op.name + "."), 70);
             o.sayTo(o.pick("Whatever, " + p.name + ".", "I'm not doing this today.", "Keep walking, " + p.name + ".", "Says YOU."), 70);
             r.particles(ParticleTypes.ANGRY_VILLAGER, 3);
+            int watchers = 0;
+            for (Resident b : sl.getEntitiesOfClass(Resident.class, r.getBoundingBox().inflate(8, 2, 8), x -> x != r && x != o && x.profile() != null && x.isFree() && !x.isSpeaking())) {
+                if (watchers++ >= 2 || !b.canSee(r, 8)) continue;
+                b.getLookControl().setLookAt(r, 30, 30);
+                b.gesture(rnd.nextBoolean() ? Resident.G_SURPRISED : Resident.G_FACEPALM, 40);
+                b.say(b.pick("Ooh, drama!", "Not these two again...", "Should someone step in?", "*pretends not to listen*"), 50);
+            }
             p.social = Math.max(0, p.social - 3);
             op.social = Math.max(0, op.social - 3);
             if (rnd.nextFloat() < 0.15f) {
@@ -90,7 +97,11 @@ public final class Moments {
             o.gesture(Resident.G_CARDS, 160);
             o.showItem(game.equals("cards") ? "minecraft:paper" : "minecraft:stone_button", 120);
             r.say(r.pick("Fancy a game of " + game + ", " + op.name + "?", "Rematch at " + game + "? I've been practising.", game.substring(0, 1).toUpperCase() + game.substring(1) + "? You're on."), 60);
-            boolean iWin = rnd.nextBoolean();
+            double edge = skill(p) - skill(op);
+            boolean iWin = rnd.nextDouble() < 0.5 + edge;
+            String wk = "cardsWon";
+            CityData.Profile winner = iWin ? p : op;
+            d.setSetting("res:" + winner.id, wk, String.valueOf(Perks.parse(d.setting("res:" + winner.id, wk, "0")) + 1));
             Resident w = iWin ? r : o, l = iWin ? o : r;
             w.gesture(Resident.G_CHEER, 50);
             l.gesture(Resident.G_FACEPALM, 50);
@@ -105,6 +116,15 @@ public final class Moments {
             return true;
         }
         return false;
+    }
+
+    static double skill(CityData.Profile p) {
+        return switch (p.trait) {
+            case CURIOUS -> 0.12;
+            case ADVENTUROUS, TALKATIVE -> 0.05;
+            case DREAMY, LAIDBACK -> -0.05;
+            default -> 0;
+        };
     }
 
     /* ------------------------------------------------------------ Jokes between residents */
@@ -146,6 +166,7 @@ public final class Moments {
         if (!r.activityName().equals("morning") || r.isEating() || rnd.nextFloat() > 0.3f || !ready("coffee:" + p.id + ":" + day, now, 24000)) return false;
         r.showItem("minecraft:honey_bottle", 160);
         r.gesture(Resident.G_SIP, 150);
+        r.boostUntil = r.level().getGameTime() + 3000;
         r.say(r.pick("*sips coffee* Okay. NOW I'm awake.", "Coffee first, talking later.", "Mmm, morning coffee.", "Is it too early for a second cup?"), 60);
         p.fun = Math.min(100, p.fun + 2);
         return true;
@@ -210,6 +231,12 @@ public final class Moments {
             r.say(r.pick("Good morning, sun!", "Sunrise. A brand new day.", "I love being up this early."), 60);
             return true;
         }
+        if (tod > 13600 && tod < 21500 && rnd.nextFloat() < 0.04f && ready("const:" + p.id + ":" + day, now, 24000)) {
+            r.getLookControl().setLookAt(r.getX() - 16, r.getEyeY() + 70, r.getZ() - 110);
+            r.gesture(Resident.G_LOOKUP, 60);
+            r.say(r.pick("Look up north - you can see " + Skies.constellation(day) + " tonight!", "There's " + Skies.constellation(day) + ". My favourite constellation.", "Clear night. " + Skies.constellation(day) + " is out."), 70);
+            return true;
+        }
         if (sl.getMoonPhase() == 0 && tod > 13500 && tod < 22000 && rnd.nextFloat() < 0.08f && ready("moon:" + p.id + ":" + day, now, 24000)) {
             r.getLookControl().setLookAt(r.getX(), r.getEyeY() + 50, r.getZ() + 20);
             boolean silly = p.trait == Trait.CHEERFUL || p.trait == Trait.ADVENTUROUS;
@@ -230,10 +257,14 @@ public final class Moments {
         if (Skies.seasonIndex(day) != 1 || tod < 13000 || tod > 20000 || sl.isRaining()) return;
         RandomSource rnd = sl.getRandom();
         for (ServerPlayer pl : sl.players()) {
-            if (!Skies.outside(pl) || pl.getY() > 150) continue;
-            for (int i = 0; i < 5; i++) {
+            if (!Skies.outside(pl) || pl.getY() > 150 || !Perks.opt(pl, "sky")) continue;
+            for (int i = 0; i < 7; i++) {
                 double x = pl.getX() + rnd.nextGaussian() * 9, z = pl.getZ() + rnd.nextGaussian() * 9;
-                double y = pl.getY() + 0.5 + rnd.nextDouble() * 2.5;
+                int top = sl.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) Math.floor(x), (int) Math.floor(z));
+                net.minecraft.world.level.block.state.BlockState ground = sl.getBlockState(new net.minecraft.core.BlockPos((int) Math.floor(x), top - 1, (int) Math.floor(z)));
+                if (!ground.is(net.minecraft.world.level.block.Blocks.GRASS_BLOCK) && !ground.is(net.minecraft.tags.BlockTags.FLOWERS) && !ground.is(net.minecraft.tags.BlockTags.LEAVES)) continue;
+                if (Math.abs(top - pl.getY()) > 6) continue;
+                double y = top + 0.4 + rnd.nextDouble() * 2.2;
                 sl.sendParticles(pl, FIREFLY, false, x, y, z, 1, 0.1, 0.1, 0.1, 0);
             }
         }
