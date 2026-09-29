@@ -83,7 +83,10 @@ public final class Kitchen {
     }
 
     /** Starts the cooking scene for a new order. Returns how long until the dish is ready (ticks). */
+    public static String lastCook = "";
+
     public static int cook(ServerLevel sl, CityData d, String shop, String source, String pn) {
+        lastCook = "";
         Job j = job(shop);
         Place place = Place.get(shop);
         if (j == null || place == null) return 200;
@@ -93,7 +96,11 @@ public final class Kitchen {
             Resident r = Phones.entity(sl, p);
             if (r != null && r.activityName().equals("work") && r.distanceToSqr(Vec3.atCenterOf(place.pos)) < 30 * 30 && !ACTIVE.containsKey(r.getUUID())) cook = r;
         }
-        if (cook == null) return 200;
+        if (cook == null) {
+            for (CityData.Profile p : d.profiles.values()) if (p.job == j) lastCook = p.name;
+            return 900;
+        }
+        lastCook = cook.profile() == null ? "" : cook.profile().name;
         BlockPos stove = findStove(sl, place.pos);
         if (stove == null) stove = cook.blockPosition().relative(cook.getDirection()).below();
         Session s = new Session();

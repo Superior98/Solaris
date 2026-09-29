@@ -61,7 +61,8 @@ public final class TourHud {
         ticks++;
         titleT++;
         lineT++;
-        if (lineT % 2 == 0 && lineT / 2 <= line.length() && lineT / 2 % 3 == 0 && !line.isEmpty())
+        int prev = Math.min(line.length(), (lineT - 1) / 2 * 3 + 3), now = Math.min(line.length(), lineT / 2 * 3 + 3);
+        if (now > prev && prev < line.length() && lineT % 4 == 0 && !line.substring(prev, now).isBlank())
             mc.player.playSound(net.minecraft.sounds.SoundEvents.NOTE_BLOCK_HAT.value(), 0.08f, 1.8f + (lineT % 7) * 0.05f);
         if (look != null && mc.player.isPassenger()) {
             Vec3 eye = mc.player.getEyePosition();

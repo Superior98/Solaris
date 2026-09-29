@@ -28,7 +28,9 @@ public final class Knowledge {
         f("SolEats delivers food right to you. Pip brings it round.", "soleats", "fireeats");
         f("SolTech is the tech store - phones, TVs, headphones, and the new SolBox console.", "soltech", "firetech", "tech store");
         f("The Magma Beach Bar is down on the new beach east of Ember Heights - Gus built it for magmagamer9.", "beach bar", "magma beach", "bar");
-        f("magmagamer9's hotel is up on the hill by the beach, around 51 78 33.", "hotel", "magmagamer9");
+        f("magmagamer9's hotel is the white building at 49 72 35 - Marco runs the front desk, just ring the bell. Finn, Priya and Mateo live there, and you can book Room 4 for a night.", "hotel", "magma hotel", "marco", "room 4");
+        f("magmagamer9 lives in his own house on the west side of town, around -48 71 42 - the one with the Welcome Home sign. We drop by to say hi sometimes.", "magmagamer9", "magma", "his house", "magmagamer9's house", "brother");
+        f("StellarFox1 lives in the Stellar House up on the hill by the beach. Rumour is there's something under it... but nobody's allowed down there.", "stellarfox1", "stellar house", "secret base");
         f("Gus is the city's repair technician - if a creeper blows something up, he rebuilds it.", "gus", "repair", "fix", "broken");
         f("The SolBox is the newest console - plug it in near a TV and play on the big screen with a controller!", "solbox", "console", "xbox");
         f("The Sky Organ is the big music stage up on Neon Heights. The concerts are unreal.", "sky organ", "organ", "music area");

@@ -106,6 +106,7 @@ public class FireheartCity {
     public static final RegistryObject<DeviceItem> CONSOLE = ITEMS.register("console", () -> new DeviceItem("console", new net.minecraft.world.item.Item.Properties().stacksTo(1)));
     public static final RegistryObject<DeviceItem> WATCH = ITEMS.register("watch", () -> new DeviceItem("watch", new net.minecraft.world.item.Item.Properties().stacksTo(1)));
     public static final RegistryObject<Dishes.DishItem> DISH = ITEMS.register("dish", () -> new Dishes.DishItem(new net.minecraft.world.item.Item.Properties().stacksTo(16).food(new net.minecraft.world.food.FoodProperties.Builder().nutrition(6).saturationMod(0.6f).build())));
+    public static final RegistryObject<Gps.GpsItem> GPS = ITEMS.register("gps", () -> new Gps.GpsItem(new net.minecraft.world.item.Item.Properties().stacksTo(1)));
     public static final RegistryObject<net.minecraft.world.item.Item> SIDEARM = ITEMS.register("sidearm", () -> new net.minecraft.world.item.Item(new net.minecraft.world.item.Item.Properties().stacksTo(1)));
     public static final RegistryObject<DeviceItem> HEADPHONES = ITEMS.register("headphones", () -> new DeviceItem("headphones", new net.minecraft.world.item.Item.Properties().stacksTo(1)));
 
@@ -158,6 +159,7 @@ public class FireheartCity {
         MinecraftForge.EVENT_BUS.addListener(Events::onStopped);
         MinecraftForge.EVENT_BUS.addListener(ParrotLove::onInteract);
         MinecraftForge.EVENT_BUS.addListener(Bank::onClick);
+        MinecraftForge.EVENT_BUS.addListener(Hotel::onClick);
         MinecraftForge.EVENT_BUS.addListener(Chat::onChat);
         MinecraftForge.EVENT_BUS.addListener(Quests::onFished);
         MinecraftForge.EVENT_BUS.addListener(Letters::onBreak);
@@ -173,6 +175,7 @@ public class FireheartCity {
             for (int c = 0; c < Phones.COLORS.length; c++) e.accept(PhoneItem.make(c, 2));
             e.accept(TV_ITEM);
             e.accept(TABLET);
+            e.accept(GPS.get());
             e.accept(CONSOLE);
             e.accept(SOLBOX_ITEM);
             e.accept(MAILBOX_ITEM);

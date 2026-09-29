@@ -144,5 +144,47 @@
     "name": "fireheartcity:vehicle/skid"
    }
   ]
+ },
+ "stalker.step": {
+  "sounds": [
+   {
+    "name": "fireheartcity:stalker/step0"
+   },
+   {
+    "name": "fireheartcity:stalker/step1"
+   },
+   {
+    "name": "fireheartcity:stalker/step2"
+   }
+  ]
+ },
+ "stalker.heart": {
+  "sounds": [
+   {
+    "name": "fireheartcity:stalker/heart"
+   }
+  ]
+ },
+ "stalker.whisper": {
+  "sounds": [
+   {
+    "name": "fireheartcity:stalker/whisper",
+    "stream": true
+   }
+  ]
+ },
+ "stalker.static": {
+  "sounds": [
+   {
+    "name": "fireheartcity:stalker/static"
+   }
+  ]
+ },
+ "stalker.sting": {
+  "sounds": [
+   {
+    "name": "fireheartcity:stalker/sting"
+   }
+  ]
  }
 }

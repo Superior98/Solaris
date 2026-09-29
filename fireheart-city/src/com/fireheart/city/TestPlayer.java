@@ -38,6 +38,38 @@ public final class TestPlayer {
         return sl.getEntity(p.entity) instanceof Resident r ? r : null;
     }
 
+    static void v113Tests(ServerLevel sl, CityData d, FakePlayer fp, String key) {
+        long now = sl.getGameTime();
+        Post.Letter o = Post.send(d, "diner", key, "test order", "parcel", Calendar.worldDay(sl));
+        o.gift = "minecraft:bread";
+        o.giftCount = 1;
+        o.placed = now - 100;
+        o.ready = now + 200;
+        o.cook = "Leo";
+        int s1 = Extras.eatsStatus(o, now);
+        o.stage = 1;
+        o.out = now + 200;
+        int s3 = Extras.eatsStatus(o, now + 300);
+        o.stage = 2;
+        int s4 = Extras.eatsStatus(o, now + 400);
+        check("SolEats tracker: cooking -> on the way -> delivered", s1 == 1 && s3 == 3 && s4 == 4, s1 + "/" + s3 + "/" + s4 + " " + Extras.eatsDetail(o, now, 1));
+        o.stage = 0;
+        o.ready = now - 5;
+        check("SolEats tracker: packed when ready", Extras.eatsStatus(o, now) == 2, Extras.eatsDetail(o, now, 2));
+        o.stage = 2;
+        BlockPos tp = new BlockPos(52, 70, -36);
+        net.minecraft.world.level.block.state.BlockState was = sl.getBlockState(tp);
+        int before = Repair.pending(sl);
+        net.minecraft.world.entity.item.PrimedTnt tnt = new net.minecraft.world.entity.item.PrimedTnt(sl, tp.getX() + 0.5, tp.getY(), tp.getZ() + 0.5, fp);
+        net.minecraft.world.level.Explosion ex = new net.minecraft.world.level.Explosion(sl, tnt, tp.getX() + 0.5, tp.getY() + 0.5, tp.getZ() + 0.5, 2f, false, net.minecraft.world.level.Explosion.BlockInteraction.KEEP);
+        Repair.onExplosion(sl, ex, java.util.List.of(tp));
+        check("player TNT damage gets queued for Gus", Repair.pending(sl) > before || was.isAir(), before + " -> " + Repair.pending(sl) + " (" + was + ")");
+        check("hotel places + rooms", Place.get("hotel1") != null && Place.get("magma_house") != null && Hotel.isRoom("hotel4") && !Hotel.isRoom("hotel_desk"), Hotel.status(sl).replace('\n', ' '));
+        CityData.Profile marco = d.profiles.get("marco");
+        check("Marco is the hotel concierge", marco != null && marco.job == Job.CONCIERGE, marco == null ? "missing" : marco.home);
+        check("GPS knows the destinations", Gps.keys().contains("magma_house") && Gps.keys().contains("hotel") && Gps.keys().contains("stellar_house"), String.valueOf(Gps.keys().size()));
+    }
+
     static void mindTests(ServerLevel sl, CityData d, FakePlayer fp) {
         long day = Calendar.worldDay(sl);
         Resident g = null, h = null;
@@ -267,6 +299,7 @@ public final class TestPlayer {
             mindTests(sl, d, fp);
             phoneTests(sl, d, fp);
             extrasTests(sl, d, fp);
+            v113Tests(sl, d, fp, key);
             lifeTests(sl, d, fp);
         } catch (Throwable t) {
             check("exception", false, t.toString());

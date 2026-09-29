@@ -253,7 +253,8 @@ public class CityData extends SavedData {
         }
 
         public Place homePlace() {
-            return Place.get(home);
+            String stay = Hotel.stayRoom(id);
+            return Place.get(stay != null ? stay : home);
         }
 
         public boolean livesOnIsland() {
@@ -471,7 +472,7 @@ public class CityData extends SavedData {
     public final Map<Long, String> mailboxes = new LinkedHashMap<>();
     public final Map<Long, List<String>> mail = new LinkedHashMap<>();
     public final Map<Long, List<String>> parcels = new LinkedHashMap<>();
-    public boolean mailboxSetup, expanded, oldTowerGone, hallBuilt, organInHall, fireworkMachineBuilt, policeBunks, fireBunks, stellarHome, beachBar;
+    public boolean mailboxSetup, expanded, oldTowerGone, hallBuilt, organInHall, fireworkMachineBuilt, policeBunks, fireBunks, stellarHome, beachBar, stellarCozy;
     public long fireworkShowDay = -1;
     public String cinemaUrl = "";
     public final List<String> uploads = new ArrayList<>();
@@ -858,6 +859,7 @@ public class CityData extends SavedData {
         tag.putBoolean("hallBuilt", hallBuilt);
         tag.putBoolean("organInHall", organInHall);
         tag.putBoolean("beachBar", beachBar);
+        tag.putBoolean("stellarCozy", stellarCozy);
         tag.putBoolean("fireworkMachineBuilt", fireworkMachineBuilt);
         tag.putBoolean("policeBunks", policeBunks);
         tag.putBoolean("fireBunks", fireBunks);
@@ -1066,6 +1068,7 @@ public class CityData extends SavedData {
         d.hallBuilt = tag.getBoolean("hallBuilt");
         d.organInHall = tag.getBoolean("organInHall");
         d.beachBar = tag.getBoolean("beachBar");
+        d.stellarCozy = tag.getBoolean("stellarCozy");
         d.fireworkMachineBuilt = tag.getBoolean("fireworkMachineBuilt");
         d.policeBunks = tag.getBoolean("policeBunks");
         d.fireBunks = tag.getBoolean("fireBunks");

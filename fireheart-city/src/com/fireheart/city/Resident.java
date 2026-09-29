@@ -110,6 +110,7 @@ public class Resident extends PathfinderMob {
     private boolean bankerShift;
     private boolean musicianShift;
     private boolean deskShift;
+    private boolean hotelShift;
     private boolean nightCop;
     private int bankWait;
     public Conversation convo;
@@ -326,6 +327,11 @@ public class Resident extends PathfinderMob {
             if (t < 8500) return "sleep";
             return t < 11500 ? "leisure" : "morning";
         }
+        if (hotelShift) {
+            if (t < 6000 || t >= 23000) return "leisure";
+            if (t < 18000) return "work";
+            return t < 18400 ? "evening" : "sleep";
+        }
         if (deskShift) {
             if (t < 5000 || t >= 22500) return "leisure";
             if (t < 15800) return "work";
@@ -351,6 +357,7 @@ public class Resident extends PathfinderMob {
         boolean beforeWork = workStart > 20000 ? (t >= 22500 && t < workStart) : (t >= 22500 || t < workStart);
         if (beforeWork) return false;
         if (nightCop) return t >= 12500 && t < 23600;
+        if (hotelShift) return t >= 6000 && t < 18000;
         if (deskShift) return t >= 5000 && t < 15800;
         if (musicianShift) return t >= 4800 && t < 12600;
         if (Calendar.weekend(rday)) return false;
@@ -630,6 +637,10 @@ public class Resident extends PathfinderMob {
             double sc = -0.6 + (p.trait == Trait.ADVENTUROUS ? 1.6 : p.trait == Trait.CURIOUS || p.trait == Trait.CHEERFUL ? 0.6 : p.trait == Trait.SHY || p.trait == Trait.GRUMPY ? -0.8 : 0) + (p.fun < 40 ? 0.5 : 0) + (weekendNow() ? 0.4 : 0) - (resting ? 2 : 0);
             opts.add(new Mind.Choice(SkyTower.KEY, "skydive", "I want to go skydiving!", sc));
         }
+        if (!isle && level() instanceof ServerLevel hsl && !p.id.equals("marco")) {
+            opts.add(new Mind.Choice("magma_house", "visit", "dropping by magmagamer9's place", -0.3 + Hotel.visitScore(this, hsl) + (p.social < 45 ? 0.4 : 0) + (p.trait == Trait.FRIENDLY || p.trait == Trait.TALKATIVE || p.trait == Trait.CHEERFUL ? 0.3 : 0)));
+            opts.add(new Mind.Choice("hotel", "hangout", "hanging out in magmagamer9's hotel lobby", -0.1 + (rain ? 0.6 : 0)));
+        }
         opts.add(new Mind.Choice(p.home, "home", resting ? "I need a quiet day" : "a quiet night in", -0.3 + (resting ? 2.5 : 0) + (p.fun > 85 ? 0.6 : 0) + (p.trait == Trait.GRUMPY || p.trait == Trait.SHY ? 0.4 : 0)));
         String[] local;
         if (rain) local = isle ? Place.ISLE_INDOOR : Place.CITY_INDOOR;
@@ -732,6 +743,8 @@ public class Resident extends PathfinderMob {
         if (clerkSpot != null) return clerkSpot;
         BlockPos desk = Reception.guestSpot(this);
         if (desk != null) return desk;
+        BlockPos hdesk = Hotel.guestSpot(this);
+        if (hdesk != null) return hdesk;
         Place dest = destination();
         if (dest == null) return null;
         int myF = Elevator.floorOfEntity(this);
@@ -1196,6 +1209,7 @@ public class Resident extends PathfinderMob {
         }
         musicianShift = p.job == Job.MUSICIAN;
         deskShift = p.job == Job.RECEPTIONIST;
+        hotelShift = p.job == Job.CONCIERGE;
         nightCop = Cast.nightShift(p.id);
         if (speechTicks > 0 && --speechTicks == 0) this.entityData.set(SPEECH, "");
         if (gestureTicks > 0 && --gestureTicks == 0) this.entityData.set(GESTURE, 0);
@@ -2697,6 +2711,8 @@ public class Resident extends PathfinderMob {
             return;
         }
         if (t == null) return;
+        BlockPos lobby = Hotel.catchUpSpot(this, dest);
+        if (lobby != null) t = lobby;
         if (this.blockPosition().distSqr(t) > 40 * 40 && sl.isPositionEntityTicking(t)) {
             this.teleportTo(t.getX() + 0.5, t.getY(), t.getZ() + 0.5);
         }

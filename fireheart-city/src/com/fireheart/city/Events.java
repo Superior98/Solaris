@@ -123,6 +123,8 @@ public final class Events {
             if (e.getEntity() instanceof net.minecraft.server.level.ServerPlayer sp) {
                 VoiceServer.announce(sp);
                 Romance.onLogin(sp, d);
+                Gps.onLogin(sp);
+                Hotel.onLogin(sp);
                 Perks.onLogin(sp, d);
                 if (!d.setting(sp.getName().getString(), "toured", "0").equals("1")) Tour.offer(sp);
                 long wd = Calendar.worldDay(sl);
@@ -164,6 +166,7 @@ public final class Events {
         Phones.reset();
         Elevator.reset();
         Reception.reset();
+        Hotel.reset();
         OrganConsole.reset();
         FireworkMachine.reset();
         Police.reset();
@@ -232,6 +235,9 @@ public final class Events {
             FireDept.tick(sl, CityData.get(sl));
             StellarHome.tick(sl, CityData.get(sl));
             Repair.tick(sl, CityData.get(sl));
+            Extras.eatsTick(sl, CityData.get(sl));
+            Hotel.tick(sl, CityData.get(sl));
+            Gps.tick(sl);
             if (sl.getGameTime() % 200 == 91) BeachBar.tick(sl, CityData.get(sl));
             if (sl.getGameTime() % 40 == 23) Traders.scan(sl, CityData.get(sl));
             if (sl.getGameTime() % 100 == 57) Romance.tick(sl, CityData.get(sl));

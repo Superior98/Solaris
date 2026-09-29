@@ -25,7 +25,7 @@ import net.minecraft.util.RandomSource;
 public final class Romance {
     private Romance() {}
 
-    static final Set<String> WOMEN = Set.of("mia", "ava", "rosa", "nina", "ivy", "zara", "luna", "nova", "nell", "remy", "ellie", "kira", "sofia");
+    static final Set<String> WOMEN = Set.of("mia", "ava", "rosa", "nina", "ivy", "zara", "luna", "nova", "nell", "remy", "ellie", "kira", "sofia", "priya");
     static final Map<UUID, String[]> PENDING = new HashMap<>();
 
     public static boolean female(String residentId) {

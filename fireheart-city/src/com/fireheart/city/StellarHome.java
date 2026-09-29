@@ -62,8 +62,8 @@ public final class StellarHome {
     record Lift(String name, int x, int z, int bottom, int top, int r, boolean secret, String hatch) {}
 
     static final List<Lift> LIFTS = List.of(
-            new Lift("secret", 71, 10, BF, F, 1, true, FLOOR),
-            new Lift("stairs", 92, 11, F, C1, 0, false, FLOOR),
+            new Lift("secret", 71, 10, BF, F, 1, true, "minecraft:spruce_planks"),
+            new Lift("stairs", 92, 11, F, C1, 0, false, "minecraft:spruce_planks"),
             new Lift("beach", 63, 20, 71, F, 0, false, FLOOR));
 
     record Door(int x1, int y1, int z1, int x2, int y2, int z2, String closed) {}
@@ -87,7 +87,9 @@ public final class StellarHome {
     static int streakHead;
 
     static {
-        ROOMS.add(new Room("study", 67, F + 1, 8, 75, F + 5, 20, lightsGrid(68, C1, 9, 74, 19)));
+        List<BlockPos> studyLights = lightsGrid(68, C1, 9, 74, 19);
+        studyLights.removeIf(p -> p.getX() >= 71 && p.getX() <= 73 && p.getZ() >= 12 && p.getZ() <= 13);
+        ROOMS.add(new Room("study", 67, F + 1, 8, 75, F + 5, 20, studyLights));
         ROOMS.add(new Room("living", 76, F + 1, 8, 88, F + 5, 20, lightsGrid(77, C1, 9, 87, 19)));
         ROOMS.add(new Room("kitchen", 89, F + 1, 8, 97, F + 5, 20, lightsGrid(90, C1, 9, 96, 19)));
         ROOMS.add(new Room("suite", 71, C1 + 1, 10, 93, C1 + 5, 18, lightsGrid(72, R, 11, 92, 17)));
@@ -103,6 +105,18 @@ public final class StellarHome {
         List<BlockPos> out = new ArrayList<>();
         for (int x = x1; x <= x2; x += 3) for (int z = z1; z <= z2; z += 3) out.add(new BlockPos(x, y, z));
         return out;
+    }
+
+    public static final BlockPos HATCH = new BlockPos(71, F + 1, 10);
+
+    public static String baseInfo(ServerPlayer p) {
+        if (!owner(p)) return "§c✦ ASTRA: I don't know what you're talking about.";
+        Gps.set(p, HATCH, "Secret base hatch (sneak on it)");
+        return "§b§l✦ Stellar Command §7(owners: StellarFox1, magmagamer9, Fireheart_4743)\n"
+                + "§f1. Go into the §eStudy§f on the ground floor of the Stellar House (§e" + HATCH.getX() + " " + HATCH.getY() + " " + HATCH.getZ() + "§f).\n"
+                + "§f2. Stand on the §e3x3 wooden hatch§f in the floor and §esneak§f - ASTRA scans you and drops you down the secret lift.\n"
+                + "§f3. You land in the base (§ey 57§f). To go back up, stand on the glowing pad and §edon't sneak§f - it lifts you out.\n"
+                + "§7Anyone else gets \"Access denied\" and the laser grid zaps them. §bGPS is now pointing you to the hatch.";
     }
 
     public static boolean owner(ServerPlayer p) {
@@ -127,6 +141,7 @@ public final class StellarHome {
         roof(b);
         pool(b);
         crest(b);
+        cozy(b);
         b.sign(80, F + 2, Z1 - 1, "minecraft:dark_oak_wall_sign[facing=north]", "§b§l✦ STELLAR ✦", "§f§lHOUSE", "§7home of", "§bStellarFox1");
         FireheartCity.LOG.info("Built StellarFox1's house and secret base (" + b.placed + " blocks)");
     }
@@ -312,6 +327,151 @@ public final class StellarHome {
         for (int x = X1; x <= X2; x++) b.set(x, C1 + 1, Z2, x % 2 == 0 ? GLASS : "minecraft:light_blue_stained_glass_pane");
     }
 
+    static final String WARM_ON = "minecraft:ochre_froglight[axis=y]", WARM_OFF = "minecraft:spruce_planks";
+    static final java.util.Set<String> COZY_ROOMS = java.util.Set.of("study", "living", "kitchen");
+    static final String SOFA = "another_furniture:light_blue_sofa[facing=%s,type=single]|create:light_blue_seat";
+    static final String CHAIR = "another_furniture:spruce_chair[facing=%s,tucked=false,variant=1]|create:light_blue_seat";
+    static final String TABLE = "another_furniture:spruce_table[facing=north]|minecraft:spruce_fence";
+
+    static void lamp(Builder b, int x, int y, int z) {
+        b.set(x, y, z, "another_furniture:light_blue_lamp[facing=up,base=true,lit=true]|minecraft:lantern");
+        b.set(x, y + 1, z, "another_furniture:light_blue_lamp[facing=up,base=false,lit=true]|minecraft:air");
+    }
+
+    static void rug(Builder b, int x1, int z1, int x2, int z2, int y, String inner, String edge) {
+        for (int x = x1; x <= x2; x++) for (int z = z1; z <= z2; z++) b.set(x, y, z, x == x1 || x == x2 || z == z1 || z == z2 ? edge : inner);
+    }
+
+    /** Turns the lab-like interior into a warm home: wood floors and ceiling, a real staircase, labelled doorways, a fireplace, rugs, lamps and plants. */
+    static void cozy(Builder b) {
+        int y = F + 1;
+        for (int x = 67; x <= 97; x++) for (int z = 8; z <= 20; z++) {
+            boolean liftTube = x >= 91 && x <= 93 && z >= 11 && z <= 12;
+            for (int yy = y; yy < C1; yy++) if (!liftTube) b.set(x, yy, z, "minecraft:air");
+            if (!(x == 92 && z == 11)) b.set(x, F, z, x <= 74 ? "minecraft:spruce_planks" : x <= 88 ? "minecraft:dark_oak_planks" : "minecraft:birch_planks");
+            b.set(x, C1, z, "minecraft:spruce_planks");
+        }
+        for (int x = 71; x <= 93; x++) for (int z = 10; z <= 18; z++) for (int yy = C1 + 1; yy < R; yy++) {
+            if (x == 92 && z == 11) continue;
+            b.set(x, yy, z, "minecraft:air");
+        }
+        for (int px : new int[]{75, 88}) {
+            for (int z = 8; z <= 20; z++) for (int yy = y; yy < C1; yy++) {
+                boolean door = z >= 13 && z <= 15 && yy <= y + 2;
+                boolean post = z == 8 || z == 12 || z == 16 || z == 20;
+                b.set(px, yy, z, door ? "minecraft:air" : post ? "minecraft:stripped_dark_oak_log[axis=y]" : yy == y + 3 && z >= 13 && z <= 15 ? "minecraft:dark_oak_planks" : "minecraft:mushroom_stem");
+            }
+            b.set(px, F, 13, "minecraft:dark_oak_planks");
+            b.set(px, F, 14, "minecraft:dark_oak_planks");
+            b.set(px, F, 15, "minecraft:dark_oak_planks");
+        }
+        b.sign(74, y + 3, 14, "minecraft:spruce_wall_sign[facing=west]", "", "§6Living Room", "§7→", "");
+        b.sign(76, y + 3, 14, "minecraft:spruce_wall_sign[facing=east]", "", "§6Study", "§7← stairs up", "");
+        b.sign(87, y + 3, 14, "minecraft:spruce_wall_sign[facing=west]", "", "§6Kitchen", "§7→", "");
+        b.sign(89, y + 3, 14, "minecraft:spruce_wall_sign[facing=east]", "", "§6Living Room", "§7←", "");
+        for (int bx : new int[]{78, 84, 94}) for (int z = 8; z <= 20; z++) b.set(bx, C1 - 1, z, "minecraft:stripped_dark_oak_log[axis=z]");
+
+        for (int z = 12; z <= 13; z++) {
+            for (int i = 0; i < 5; i++) {
+                int sx = 69 + i, sy = y + i;
+                for (int yy = y; yy < sy; yy++) b.set(sx, yy, z, "minecraft:spruce_planks");
+                b.set(sx, sy, z, "minecraft:spruce_stairs[facing=east,half=bottom]");
+            }
+            for (int x = 71; x <= 73; x++) b.set(x, C1, z, "minecraft:air");
+        }
+        for (int x = 71; x <= 73; x++) {
+            b.set(x, C1 + 1, 11, "minecraft:spruce_fence[north=false,south=false,east=true,west=true]");
+            b.set(x, C1 + 1, 14, "minecraft:spruce_fence[north=false,south=false,east=true,west=true]");
+        }
+        b.sign(68, y, 14, "minecraft:spruce_sign[rotation=4]", "", "§6↑ Bedroom", "§7upstairs", "");
+        for (int z = 14; z <= 19; z++) for (int yy = y; yy <= y + 2; yy++) b.set(67, yy, z, yy == y + 2 && z % 2 == 0 ? "minecraft:chiseled_bookshelf[facing=east]|minecraft:bookshelf" : "minecraft:bookshelf");
+        b.set(68, y, 19, "fireheartcity:computer[facing=east]|minecraft:crafting_table");
+        b.set(69, y, 19, String.format(CHAIR, "west"));
+        rug(b, 70, 15, 73, 18, y, "minecraft:light_blue_carpet", "minecraft:white_carpet");
+        b.set(72, y, 19, String.format(SOFA, "north"));
+        b.set(73, y, 19, String.format(SOFA, "north"));
+        lamp(b, 74, y, 19);
+        b.set(74, y, 16, "minecraft:potted_fern");
+        b.set(68, y, 9, "minecraft:potted_azalea_bush");
+        b.set(74, y, 9, TABLE);
+        b.set(74, y + 1, 9, "minecraft:candle[candles=2,lit=true]");
+
+        for (int z = 8; z <= 20; z++) for (int x = 81; x <= 83; x++) b.set(x, y, z, x == 82 ? "minecraft:light_blue_carpet" : "minecraft:white_carpet");
+        for (int z = 17; z <= 19; z++) {
+            b.set(88, F, z, "minecraft:bricks");
+            b.set(87, F, z, "minecraft:bricks");
+            for (int yy = y; yy < C1; yy++) {
+                b.set(89, yy, z, "minecraft:bricks");
+                b.set(88, yy, z, z == 18 && yy <= y + 1 ? "minecraft:air" : "minecraft:bricks");
+            }
+        }
+        b.set(88, y, 18, "minecraft:campfire[lit=true,signal_fire=false,facing=west,waterlogged=false]");
+        for (int z = 17; z <= 19; z++) b.set(87, y + 2, z, "minecraft:dark_oak_slab[type=top]");
+        b.set(87, y + 3, 17, "minecraft:candle[candles=3,lit=true]");
+        b.set(87, y + 3, 19, "minecraft:potted_flowering_azalea_bush");
+        for (int z = 16; z <= 20; z++) b.set(84, y, z, String.format(SOFA, "east"));
+        rug(b, 85, 16, 86, 20, y, "minecraft:light_blue_carpet", "minecraft:light_blue_carpet");
+        b.set(85, y, 18, TABLE);
+        b.set(85, y + 1, 18, "minecraft:candle[candles=1,lit=true]");
+        lamp(b, 84, y, 15);
+        b.set(76, y, 10, TABLE);
+        b.set(76, y + 1, 10, "fireheartcity:tv[facing=east,on=true]|minecraft:black_concrete");
+        b.set(76, y, 9, "minecraft:potted_bamboo");
+        b.set(76, y, 11, "minecraft:potted_bamboo");
+        for (int z = 9; z <= 11; z++) b.set(79, y, z, String.format(SOFA, "west"));
+        rug(b, 77, 9, 78, 11, y, "minecraft:white_carpet", "minecraft:white_carpet");
+        for (int z = 16; z <= 19; z++) for (int yy = y; yy <= y + 1; yy++) b.set(76, yy, z, "minecraft:bookshelf");
+        b.set(78, y, 18, String.format(SOFA, "west"));
+        b.set(79, y, 20, "minecraft:jukebox");
+        b.set(76, y, 20, "minecraft:potted_fern");
+        for (int[] l : new int[][]{{80, 11}, {80, 17}, {85, 12}, {71, 16}, {92, 15}, {95, 9}}) b.set(l[0], C1 - 1, l[1], "minecraft:lantern[hanging=true]");
+
+        for (int x = 90; x <= 97; x++) {
+            if (x >= 91 && x <= 93) { b.set(x, y + 2, 8, "minecraft:barrel[facing=south]"); continue; }
+            b.set(x, y + 2, 8, "minecraft:barrel[facing=south]");
+        }
+        for (int x = 90; x <= 96; x++) {
+            b.set(x, y, 8, x % 3 == 0 ? "farmersdelight:stove[facing=south,lit=false]|minecraft:smoker[facing=south]" : "minecraft:spruce_planks");
+            b.set(x, y + 1, 8, x % 3 == 1 ? "farmersdelight:cutting_board[facing=south]|minecraft:air" : x == 95 ? "minecraft:potted_red_tulip" : "minecraft:air");
+        }
+        b.set(97, y, 8, "minecraft:iron_block");
+        b.set(97, y + 1, 8, "minecraft:iron_block");
+        for (int x = 91; x <= 95; x++) for (int z = 14; z <= 14; z++) b.set(x, y, z, "minecraft:spruce_planks");
+        for (int x = 91; x <= 95; x += 2) b.set(x, y + 1, 14, x == 93 ? "minecraft:potted_orange_tulip" : "minecraft:candle[candles=1,lit=true]");
+        for (int x = 92; x <= 94; x++) {
+            b.set(x, y, 18, TABLE);
+            b.set(x, y, 17, String.format(CHAIR, "south"));
+            b.set(x, y, 19, String.format(CHAIR, "north"));
+        }
+        b.set(93, y + 1, 18, "minecraft:candle[candles=3,lit=true]");
+        b.set(97, y, 20, "minecraft:potted_bamboo");
+        b.set(90, y, 20, "minecraft:potted_fern");
+
+        int u = C1 + 1;
+        for (int x = 77; x <= 78; x++) {
+            b.set(x, u, 10, "minecraft:light_blue_bed[facing=north,part=head]");
+            b.set(x, u, 11, "minecraft:light_blue_bed[facing=north,part=foot]");
+        }
+        b.set(76, u, 10, "another_furniture:spruce_drawer[facing=south,open=false]|minecraft:barrel[facing=up]");
+        b.set(79, u, 10, "another_furniture:spruce_drawer[facing=south,open=false]|minecraft:barrel[facing=up]");
+        b.set(76, u + 1, 10, "minecraft:candle[candles=2,lit=true]");
+        b.set(79, u + 1, 10, "minecraft:candle[candles=2,lit=true]");
+        rug(b, 75, 12, 80, 15, u, "minecraft:light_blue_carpet", "minecraft:white_carpet");
+        for (int x = 84; x <= 88; x++) b.set(x, u, 13, String.format(SOFA, "south"));
+        rug(b, 83, 14, 89, 16, u, "minecraft:white_carpet", "minecraft:light_blue_carpet");
+        b.set(86, u, 15, TABLE);
+        b.set(86, u, 17, "fireheartcity:tv[facing=north,on=true]|minecraft:black_concrete");
+        for (int z = 13; z <= 16; z++) for (int yy = u; yy <= u + 1; yy++) b.set(93, yy, z, "minecraft:bookshelf");
+        b.set(92, u, 17, "minecraft:ender_chest[facing=west]");
+        lamp(b, 82, u, 10);
+        b.set(71, u, 10, "minecraft:potted_flowering_azalea_bush");
+        b.set(71, u, 18, "minecraft:potted_fern");
+        b.set(81, u, 18, "another_furniture:spruce_shelf[facing=north,horizontal=single]|minecraft:spruce_slab[type=top]");
+        for (int[] l : new int[][]{{75, 16}, {82, 13}, {90, 12}, {86, 11}}) b.set(l[0], R - 1, l[1], "minecraft:lantern[hanging=true]");
+        b.sign(75, u, 13, "minecraft:spruce_sign[rotation=12]", "", "§6↓ Downstairs", "", "");
+        ROOM_LIT.clear();
+    }
+
     static void roof(Builder b) {
         for (int x = 70; x <= 94; x++) for (int z = 9; z <= 19; z++) if (x == 70 || x == 94 || z == 9 || z == 19) b.set(x, R + 1, z, "minecraft:light_blue_stained_glass_pane");
         int cx = 88, cz = 14;
@@ -368,9 +528,16 @@ public final class StellarHome {
 
     public static void tick(ServerLevel sl, CityData d) {
         long now = sl.getGameTime();
+        if (d.stellarHome && !d.stellarCozy && now % 100 == 61 && loaded(sl)) {
+            d.stellarCozy = true;
+            d.setDirty();
+            cozy(new Builder(sl));
+            for (ServerPlayer p : sl.players()) if (owner(p)) p.displayClientMessage(Component.literal("§6✦ ASTRA: §fI've made the house a little cosier, StellarFox1. Stairs to the bedroom are in the study."), false);
+        }
         if (!d.stellarHome) {
             if (now % 100 != 53 || !loaded(sl)) return;
             d.stellarHome = true;
+            d.stellarCozy = true;
             d.setDirty();
             build(sl);
             for (ServerPlayer p : sl.players()) if (owner(p)) p.displayClientMessage(Component.literal("§b✦ ASTRA: §fYour Stellar House is ready above the beach, StellarFox1. §7(/city home)"), false);
@@ -502,8 +669,9 @@ public final class StellarHome {
             Boolean was = ROOM_LIT.get(r.name());
             if (was != null && was == want) continue;
             ROOM_LIT.put(r.name(), want);
-            for (BlockPos p : r.lights()) b.set(p.getX(), p.getY(), p.getZ(), want ? STAR : OFF);
-            if (occupied && was != null) sl.playSound(null, r.x1() + (r.x2() - r.x1()) / 2.0, r.y1() + 2, r.z1() + (r.z2() - r.z1()) / 2.0, SoundEvents.BEACON_POWER_SELECT, SoundSource.BLOCKS, 0.25f, 2f);
+            boolean warm = COZY_ROOMS.contains(r.name());
+            for (BlockPos p : r.lights()) b.set(p.getX(), p.getY(), p.getZ(), want ? (warm ? WARM_ON : STAR) : (warm ? WARM_OFF : OFF));
+            if (occupied && was != null && !warm) sl.playSound(null, r.x1() + (r.x2() - r.x1()) / 2.0, r.y1() + 2, r.z1() + (r.z2() - r.z1()) / 2.0, SoundEvents.BEACON_POWER_SELECT, SoundSource.BLOCKS, 0.25f, 2f);
         }
     }
 

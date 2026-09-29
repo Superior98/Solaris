@@ -97,7 +97,32 @@ public class CityCommand {
                                     c.getSource().sendSuccess(() -> net.minecraft.network.chat.Component.literal("§8The Watcher leaves " + t.getName().getString() + " alone."), false);
                                     return 1;
                                 })))));
+        d.register(Commands.literal("sol")
+                .then(Commands.literal("gps").executes(c -> { Gps.menu(c.getSource().getPlayerOrException()); return 1; })
+                        .then(Commands.literal("off").executes(c -> { Gps.clear(c.getSource().getPlayerOrException(), true); return 1; }))
+                        .then(Commands.literal("here").executes(c -> { msg(c, Gps.here(c.getSource().getPlayerOrException())); return 1; }))
+                        .then(Commands.literal("player").then(Commands.argument("target", net.minecraft.commands.arguments.EntityArgument.player()).executes(c -> {
+                            msg(c, Gps.toPlayer(c.getSource().getPlayerOrException(), net.minecraft.commands.arguments.EntityArgument.getPlayer(c, "target")));
+                            return 1;
+                        })))
+                        .then(Commands.literal("xyz").then(Commands.argument("pos", net.minecraft.commands.arguments.coordinates.BlockPosArgument.blockPos()).executes(c -> {
+                            BlockPos p = net.minecraft.commands.arguments.coordinates.BlockPosArgument.getBlockPos(c, "pos");
+                            Gps.set(c.getSource().getPlayerOrException(), p, p.getX() + " " + p.getY() + " " + p.getZ());
+                            return 1;
+                        })))
+                        .then(Commands.argument("place", StringArgumentType.greedyString()).suggests((c, b) -> net.minecraft.commands.SharedSuggestionProvider.suggest(Gps.keys(), b)).executes(c -> {
+                            msg(c, Gps.to(c.getSource().getPlayerOrException(), StringArgumentType.getString(c, "place")));
+                            return 1;
+                        })))
+                .then(Commands.literal("base").executes(c -> { msg(c, StellarHome.baseInfo(c.getSource().getPlayerOrException())); return 1; })));
         d.register(Commands.literal("city").requires(s -> s.hasPermission(2))
+                .then(Commands.literal("garage")
+                        .then(Commands.literal("give").executes(c -> { msg(c, Vehicles.give(c.getSource().getPlayerOrException(), 0)); return 1; })
+                                .then(Commands.argument("paint", com.mojang.brigadier.arguments.IntegerArgumentType.integer(0, 5)).executes(c -> { msg(c, Vehicles.give(c.getSource().getPlayerOrException(), com.mojang.brigadier.arguments.IntegerArgumentType.getInteger(c, "paint"))); return 1; })))
+                        .then(Commands.literal("park").executes(c -> { msg(c, Vehicles.park(c.getSource().getPlayerOrException())); return 1; }))
+                        .then(Commands.literal("replace").executes(c -> { msg(c, Vehicles.replace(c.getSource().getPlayerOrException())); return 1; })))
+                .then(Commands.literal("hotel").executes(c -> { msg(c, Hotel.status(c.getSource().getLevel())); return 1; })
+                        .then(Commands.literal("movein").executes(c -> { msg(c, Hotel.moveIn(c.getSource().getLevel(), true)); return 1; })))
                 .then(Commands.literal("spawnall").executes(CityCommand::spawnAll))
                 .then(Commands.literal("census").executes(CityCommand::census))
                 .then(Commands.literal("event").executes(c -> { msg(c, Happenings.force(c.getSource().getLevel(), CityData.get(c.getSource().getLevel()), "")); return 1; })

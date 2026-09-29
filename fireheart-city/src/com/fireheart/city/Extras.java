@@ -246,6 +246,9 @@ public final class Extras {
         for (String[] ln : lines) desc.append(desc.length() == 0 ? "" : ", ").append(ln[1]).append("x ").append(Economy.label(ln[0]).replaceFirst("^(a|an|some) ", ""));
         Post.Letter l = Post.send(d, shop, k, "Hi " + pn + "!\n\nYour SolEats order from " + s[1] + " is here: " + desc + ".\n\n" + (tip > 0 ? "Thanks for the " + tip + " coin tip! " : "") + "Enjoy!", "parcel", Calendar.worldDay(sl));
         long cookedAt = sl.getGameTime() + Kitchen.cook(sl, d, s[0], lines.get(0)[0], pn);
+        l.placed = sl.getGameTime();
+        l.ready = cookedAt;
+        l.cook = Kitchen.lastCook;
         l.gift = lines.get(0)[0];
         l.giftCount = Integer.parseInt(lines.get(0)[1]);
         l.giftNbt = Dishes.nbt(l.gift, cookedAt);
@@ -253,7 +256,8 @@ public final class Extras {
         for (int i = 1; i < lines.size(); i++) ex.append(ex.length() == 0 ? "" : ",").append(Dishes.BY_SOURCE.containsKey(lines.get(i)[0]) ? "dish:" + lines.get(i)[0] + "@" + cookedAt : lines.get(i)[0]).append("*").append(lines.get(i)[1]);
         l.extras = ex.toString();
         if (tip > 0) for (CityData.Profile p : d.profiles.values()) if (p.job == Job.POSTMAN) p.coins += tip;
-        Phones.toast(pl, "SolEats", "Order placed at " + s[1] + " (" + price + "¢). Track it in SolEats!");
+        Phones.toast(pl, "SolEats", "Order placed at " + s[1] + " (" + price + "¢). " + (l.cook.isEmpty() ? "The kitchen's on it!" : l.cook + " is on it!"));
+        Phones.refreshPhone(pl);
         for (CityData.Profile p : d.profiles.values()) {
             if (p.job != Job.valueOf(s[2])) continue;
             Resident r = Phones.entity(sl, p);
@@ -266,16 +270,112 @@ public final class Extras {
     }
 
     public static List<String> orders(CityData d, String pn) {
+        return orders(d, pn, -1);
+    }
+
+    static int eatsStatus(Post.Letter l, long now) {
+        if (l.stage == 2) return 4;
+        if (l.ready <= 0 || now < 0) return l.stage == 1 ? 3 : 1;
+        if (now < l.ready) return now - l.placed < 60 ? 0 : 1;
+        return l.stage == 1 ? 3 : 2;
+    }
+
+    static String eatsDetail(Post.Letter l, long now, int st) {
+        String cook = l.cook.isEmpty() ? "The kitchen" : l.cook;
+        return switch (st) {
+            case 0 -> "Order received - " + cook + " is reading it";
+            case 1 -> cook + " is cooking" + (l.ready > now && now >= 0 ? " · ready in " + secs(l.ready - now) : "");
+            case 2 -> "Plated & packed - rider picking it up";
+            case 3 -> "Out for delivery" + (l.out > 0 && now >= 0 ? " · arriving in " + secs(Math.max(20, EATS_RIDER - (now - l.out))) : "");
+            default -> "Delivered - check your door!";
+        };
+    }
+
+    static String secs(long ticks) {
+        long s = Math.max(1, ticks / 20);
+        return s >= 60 ? (s / 60) + "m " + (s % 60) + "s" : s + "s";
+    }
+
+    public static List<String> orders(CityData d, String pn, long now) {
         List<String> out = new ArrayList<>();
         String k = Bank.playerKey(pn);
         for (Post.Letter l : d.civic.mail) {
             if (!l.kind.equals("parcel") || !l.to.equals(k)) continue;
             String shop = l.from;
             for (String[] s : SHOPS) if (s[0].equals(l.from)) shop = s[1];
-            out.add(l.id + "|" + shop + "|" + Economy.label(l.gift) + (l.extras.isEmpty() ? "" : " + more") + "|" + l.stage + "|" + l.day);
+            int st = eatsStatus(l, now);
+            out.add(l.id + "|" + shop + "|" + Economy.label(l.gift) + (l.extras.isEmpty() ? "" : " + more") + "|" + st + "|" + l.day + "|" + eatsDetail(l, now, st));
         }
         while (out.size() > 6) out.remove(0);
         return out;
+    }
+
+    static final int EATS_RIDER = 1200;
+
+    /** Moves SolEats orders along: cooking -> packed -> out for delivery -> at the door, with live phone updates. */
+    public static void eatsTick(ServerLevel sl, CityData d) {
+        long now = sl.getGameTime();
+        if (now % 20 != 3) return;
+        for (Post.Letter l : new ArrayList<>(d.civic.mail)) {
+            if (!l.kind.equals("parcel") || l.stage == 2 || !l.toPlayer()) continue;
+            if (l.ready <= 0) {
+                l.placed = now;
+                l.ready = now + 200;
+            }
+            ServerPlayer pl = sl.getServer().getPlayerList().getPlayerByName(l.to.substring(7));
+            String what = Economy.label(l.gift).replaceFirst("^(a|an|some) ", "");
+            if (now >= l.ready && l.stage == 0) {
+                l.stage = 1;
+                l.out = now;
+                d.setDirty();
+            }
+            int st = eatsStatus(l, now);
+            if (st > l.notified) {
+                l.notified = st;
+                d.setDirty();
+                if (pl != null) {
+                    switch (st) {
+                        case 1 -> Phones.toast(pl, "SolEats", (l.cook.isEmpty() ? "The kitchen" : l.cook) + " is cooking your " + what + ".");
+                        case 2 -> Phones.toast(pl, "SolEats", "Your " + what + " is plated and packed!");
+                        case 3 -> Phones.toast(pl, "SolEats", "Out for delivery! Your " + what + " is on its way.");
+                        default -> {}
+                    }
+                }
+            }
+            if (l.stage == 1 && l.out > 0 && now - l.out > EATS_RIDER) riderDeliver(sl, d, l, pl);
+            if (pl != null && now % 100 == 3) Phones.refreshPhone(pl);
+        }
+    }
+
+    static void riderDeliver(ServerLevel sl, CityData d, Post.Letter l, ServerPlayer pl) {
+        String name = l.to.substring(7);
+        BlockPos mb = null;
+        for (Map.Entry<Long, String> e : d.mailboxes.entrySet()) if (e.getValue().equalsIgnoreCase(name)) mb = BlockPos.of(e.getKey());
+        List<ItemStack> items = new ArrayList<>();
+        items.add(l.giftStack());
+        items.addAll(l.extraStacks());
+        items.add(Post.book(d, l));
+        items.removeIf(ItemStack::isEmpty);
+        String what = Economy.label(l.gift).replaceFirst("^(a|an|some) ", "");
+        if (pl != null && (mb == null || !pl.blockPosition().closerThan(mb, 24))) {
+            for (ItemStack st : items) if (!pl.getInventory().add(st)) pl.drop(st, false);
+            sl.playSound(null, pl.blockPosition(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.8f, 1.6f);
+            pl.sendSystemMessage(Component.literal("§6[SolEats] §eA rider zipped up and handed you your §f" + what + "§e. Enjoy it hot!"));
+        } else if (mb != null && sl.getBlockState(mb).getBlock() instanceof MailboxBlock) {
+            BlockPos at = Post.doorstep(sl, mb, mb);
+            if (at != null) ParcelBlock.leave(sl, d, at, sl.getBlockState(mb).getValue(MailboxBlock.FACING), name, items);
+            else MailboxBlock.deposit(sl, d, mb, items);
+            if (pl != null) Phones.toast(pl, "SolEats", "Your " + what + " was left at your front door.");
+        } else if (pl == null) {
+            return;
+        } else {
+            for (ItemStack st : items) if (!pl.getInventory().add(st)) pl.drop(st, false);
+        }
+        l.stage = 2;
+        l.notified = 4;
+        d.civic.delivered++;
+        d.setDirty();
+        if (pl != null) Phones.refreshPhone(pl);
     }
 
     /* ================================================================ group chats */
@@ -715,7 +815,7 @@ public final class Extras {
         o.settings = (dnd(d, pn) ? "1" : "0") + "|" + ringtone(d, pn) + "|" + (st.hasTag() ? st.getTag().getInt("Case") : 0) + "|" + (st.hasTag() ? Math.max(1, st.getTag().getInt("Model")) : 1) + "|" + d.setting(pn, "wall", "0") + "|" + d.setting(pn, "h24", "0") + "|" + d.setting(pn, "preview", "1") + "|" + d.setting(pn, "labels", "1");
         o.follows.addAll(follows(d, pn));
         o.menu.addAll(menu(pl.serverLevel(), d));
-        o.orders.addAll(orders(d, pn));
+        o.orders.addAll(orders(d, pn, pl.serverLevel().getGameTime()));
         o.gallery.addAll(gallery(d, pn));
         for (Group g : groups(d, pn)) o.residents.add(new String[]{g.id(), g.name(), "Group chat · " + g.members().size() + " members", "0", "1", "-1"});
     }

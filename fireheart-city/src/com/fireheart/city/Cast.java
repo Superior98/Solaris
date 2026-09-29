@@ -47,6 +47,10 @@ public final class Cast {
             new Member("hank", "Hank", Job.FIREFIGHTER, Trait.CHEERFUL, "fire_bunks", 31, ARNOLD),
             new Member("sofia", "Sofia", Job.FIREFIGHTER, Trait.ADVENTUROUS, "fire_bunks", 32, FREYA),
             new Member("gus", "Gus", Job.REPAIR, Trait.CHEERFUL, "apt5C", 33, GEORGE),
+            new Member("marco", "Marco", Job.CONCIERGE, Trait.FRIENDLY, "hotel5", 2, ANTONI),
+            new Member("finn", "Finn", Job.GARDENER, Trait.CHEERFUL, "hotel1", 7, ETHAN),
+            new Member("priya", "Priya", Job.CLERK, Trait.CURIOUS, "hotel2", 9, GRACE),
+            new Member("mateo", "Mateo", Job.DOCKMASTER, Trait.LAIDBACK, "hotel3", 14, JOSH),
     };
 
     public static boolean nightShift(String residentId) {

@@ -44,6 +44,9 @@ public final class Post {
         public int giftCount;
         public String giftNbt = "";
         public String extras = "";
+        public long placed, ready, out;
+        public String cook = "";
+        public int notified;
 
         public java.util.List<ItemStack> extraStacks() {
             java.util.List<ItemStack> out = new java.util.ArrayList<>();
@@ -92,6 +95,11 @@ public final class Post {
             t.putInt("giftCount", giftCount);
             t.putString("giftNbt", giftNbt);
             t.putString("extras", extras);
+            t.putLong("placed", placed);
+            t.putLong("ready", ready);
+            t.putLong("out", out);
+            t.putString("cook", cook);
+            t.putInt("notified", notified);
             return t;
         }
 
@@ -109,6 +117,11 @@ public final class Post {
             l.giftCount = t.getInt("giftCount");
             l.giftNbt = t.getString("giftNbt");
             l.extras = t.getString("extras");
+            l.placed = t.getLong("placed");
+            l.ready = t.getLong("ready");
+            l.out = t.getLong("out");
+            l.cook = t.getString("cook");
+            l.notified = t.getInt("notified");
             return l;
         }
 
