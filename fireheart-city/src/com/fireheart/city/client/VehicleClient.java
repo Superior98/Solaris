@@ -58,15 +58,53 @@ public final class VehicleClient {
             x = v.getX();
             y = v.getY();
             z = v.getZ();
-            float sp = Math.abs(v.speed) / Vehicle.maxSpeed(v.kind());
-            float gear = v.kind() == Vehicle.BOAT ? sp : (sp * 4) % 1;
-            pitch = 0.55f + sp * 0.9f + gear * 0.25f;
-            volume = 0.45f + sp * 0.55f;
+            float r = Mth.clamp(v.rpm, 0.1f, 1.05f);
+            float load = v.throttle ? 1f : 0.55f;
+            float tp = (v.kind() == Vehicle.BOAT ? 0.6f : 0.5f) + r * (v.kind() == Vehicle.BIKE ? 1.35f : 1.1f) - (v.shiftT > 0 ? 0.12f : 0);
+            pitch = Mth.lerp(0.35f, pitch, tp);
+            volume = Mth.lerp(0.3f, volume, 0.35f + r * 0.45f * load + (v.throttle ? 0.12f : 0));
         }
 
         void end() {
             stop();
         }
+    }
+
+    static final class Skid extends AbstractTickableSoundInstance {
+        final Vehicle v;
+
+        Skid(Vehicle v) {
+            super(ev("vehicle.skid_loop"), SoundSource.NEUTRAL, RandomSource.create());
+            this.v = v;
+            this.looping = true;
+            this.delay = 0;
+            this.volume = 0.01f;
+            this.x = v.getX();
+            this.y = v.getY();
+            this.z = v.getZ();
+        }
+
+        @Override
+        public void tick() {
+            if (v.isRemoved() || v.getPassengers().isEmpty()) {
+                stop();
+                return;
+            }
+            x = v.getX();
+            y = v.getY();
+            z = v.getZ();
+            float want = v.skidding ? Math.min(0.9f, 0.3f + Math.abs(v.speed) * 0.6f) : 0f;
+            volume = Mth.lerp(want > volume ? 0.5f : 0.25f, volume, want);
+            pitch = 0.85f + Math.abs(v.speed) * 0.2f;
+            if (volume < 0.02f && !v.skidding) stop();
+        }
+    }
+
+    static final Map<Integer, Skid> SKIDS = new HashMap<>();
+
+    @SubscribeEvent
+    public static void fov(net.minecraftforge.client.event.ComputeFovModifierEvent e) {
+        if (e.getPlayer().getVehicle() instanceof Vehicle v) e.setNewFovModifier(e.getNewFovModifier() * (1f + Math.min(1f, Math.abs(v.speed) / Vehicle.maxSpeed(v.kind())) * 0.12f));
     }
 
     @SubscribeEvent
@@ -87,6 +125,16 @@ public final class VehicleClient {
             }
         }
         ENGINES.values().removeIf(Engine::isStopped);
+        for (var ent : mc.level.entitiesForRendering()) {
+            if (!(ent instanceof Vehicle v) || !v.skidding || v.distanceToSqr(mc.player) > 40 * 40) continue;
+            Skid sk = SKIDS.get(v.getId());
+            if (sk == null || sk.isStopped()) {
+                sk = new Skid(v);
+                SKIDS.put(v.getId(), sk);
+                mc.getSoundManager().play(sk);
+            }
+        }
+        SKIDS.values().removeIf(Skid::isStopped);
         while (HORN.consumeClick()) if (mc.player.getVehicle() instanceof Vehicle) PcNet.CHANNEL.sendToServer(new PcNet.Act(BlockPos.ZERO, "vehicle", "horn", ""));
         while (LIGHTS.consumeClick()) if (mc.player.getVehicle() instanceof Vehicle) PcNet.CHANNEL.sendToServer(new PcNet.Act(BlockPos.ZERO, "vehicle", "lights", ""));
     }
@@ -96,23 +144,28 @@ public final class VehicleClient {
         if (mc.player == null || !(mc.player.getVehicle() instanceof Vehicle v) || mc.options.hideGui) return;
         var f = mc.font;
         int kmh = (int) (Math.abs(v.speed) * 20 * 3.6f);
-        int cx = w - 60, cy = h - 60, r = 36;
-        g.fill(cx - r - 4, cy - r / 2 - 8, cx + r + 4, cy + r / 2 + 14, 0x88000000);
+        int cx = w - 70, cy = h - 62, r = 40;
+        g.fill(cx - r - 6, cy - r / 2 - 12, cx + r + 6, cy + r / 2 + 18, 0x99000000);
         float max = Vehicle.maxSpeed(v.kind()) * 72;
-        for (int i = 0; i <= 20; i++) {
-            float a = Mth.PI * (0.85f + 1.3f * i / 20f);
+        for (int i = 0; i <= 24; i++) {
+            float a = Mth.PI * (0.85f + 1.3f * i / 24f);
             int x0 = cx + (int) (Mth.cos(a) * (r - 4)), y0 = cy + (int) (Mth.sin(a) * (r - 4)) / 2 + 8;
-            boolean lit = i / 20f <= kmh / max;
-            g.fill(x0 - 1, y0 - 1, x0 + 2, y0 + 2, lit ? (i > 16 ? 0xFFFF3B30 : 0xFF4CC9F0) : 0x55FFFFFF);
+            boolean lit = i / 24f <= Math.min(1, v.rpm);
+            g.fill(x0 - 1, y0 - 1, x0 + 2, y0 + 2, lit ? (i > 20 ? 0xFFFF3B30 : i > 16 ? 0xFFFFC23B : 0xFF4CC9F0) : 0x44FFFFFF);
         }
         g.pose().pushPose();
-        g.pose().translate(cx, cy - 2, 0);
-        g.pose().scale(1.8f, 1.8f, 1);
+        g.pose().translate(cx, cy - 4, 0);
+        g.pose().scale(1.9f, 1.9f, 1);
         g.drawCenteredString(f, String.valueOf(kmh), 0, 0, 0xFFFFFFFF);
         g.pose().popPose();
-        g.drawCenteredString(f, "§7km/h", cx, cy + 14, 0xFFFFFFFF);
-        String flags = (v.lights() ? "§e◉ " : "§8◉ ") + (v.speed < -0.01f ? "§cR" : "§aD");
-        g.drawCenteredString(f, flags, cx, cy - r / 2 - 4, 0xFFFFFFFF);
-        g.drawString(f, "§8H horn · L lights · Space handbrake", 6, h - 38, 0xFFFFFFFF, false);
+        g.drawCenteredString(f, "§7km/h", cx, cy + 12, 0xFFFFFFFF);
+        String gear = v.kind() == Vehicle.BOAT ? (v.speed < -0.01f ? "R" : Math.abs(v.speed) < 0.01f ? "N" : "F") : v.gear < 0 ? "R" : Math.abs(v.speed) < 0.01f && !v.throttle ? "N" : String.valueOf(v.gear);
+        g.drawString(f, "§e" + gear, cx + r - 6, cy + 10, 0xFFFFFFFF, false);
+        g.drawString(f, "§8" + (int) (v.rpm * (v.kind() == Vehicle.BIKE ? 11000 : 7000)) + " rpm", cx - r, cy + 10, 0xFFFFFFFF, false);
+        int bw = (int) ((r * 2) * Math.min(1, Math.abs(v.speed) / (max / 72)));
+        g.fill(cx - r, cy + r / 2 + 12, cx - r + bw, cy + r / 2 + 14, 0xFF4CC9F0);
+        String flags = (v.lights() ? "§e◉ " : "§8◉ ") + (v.drifting ? "§6DRIFT " : "") + (v.braking ? "§cBRAKE" : "");
+        g.drawCenteredString(f, flags, cx, cy - r / 2 - 8, 0xFFFFFFFF);
+        g.drawString(f, "§8W/S throttle/brake · A/D steer · Space handbrake · H horn · L lights", 6, h - 38, 0xFFFFFFFF, false);
     }
 }

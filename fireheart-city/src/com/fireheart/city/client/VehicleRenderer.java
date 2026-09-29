@@ -59,6 +59,11 @@ public class VehicleRenderer extends EntityRenderer<Vehicle> {
         out[2] = r.addOrReplaceChild("glass", CubeListBuilder.create(), PartPose.ZERO);
         out[3] = r.addOrReplaceChild("lamp", CubeListBuilder.create(), PartPose.ZERO);
         out[4] = r.addOrReplaceChild("tail", CubeListBuilder.create(), PartPose.ZERO);
+        out[5] = r.addOrReplaceChild("rev", CubeListBuilder.create(), PartPose.ZERO);
+        out[6] = r.addOrReplaceChild("ind", CubeListBuilder.create(), PartPose.ZERO);
+        out[6].addOrReplaceChild("ind_l", CubeListBuilder.create(), PartPose.ZERO);
+        out[6].addOrReplaceChild("ind_r", CubeListBuilder.create(), PartPose.ZERO);
+        out[7] = r.addOrReplaceChild("wheels", CubeListBuilder.create(), PartPose.ZERO);
     }
 
     static void wheel(PartDefinition trim, String name, float x, float y, float z, float r, float wdt) {
@@ -71,9 +76,9 @@ public class VehicleRenderer extends EntityRenderer<Vehicle> {
 
     public static LayerDefinition car() {
         MeshDefinition m = new MeshDefinition();
-        PartDefinition[] l = new PartDefinition[5];
+        PartDefinition[] l = new PartDefinition[8];
         layers(m.getRoot(), l);
-        PartDefinition p = l[0], t = l[1], g = l[2], lp = l[3], tl = l[4];
+        PartDefinition p = l[0], t = l[1], g = l[2], lp = l[3], tl = l[4], rv = l[5], il = l[6].getChild("ind_l"), ir = l[6].getChild("ind_r"), wh = l[7];
         p.addOrReplaceChild("body", paint().addBox(-14, -13, -25, 28, 8, 50), PartPose.ZERO);
         p.addOrReplaceChild("hood", paint().addBox(-13, -15, -25, 26, 2, 15), PartPose.ZERO);
         p.addOrReplaceChild("trunk", paint().addBox(-13, -15, 14, 26, 2, 11), PartPose.ZERO);
@@ -100,10 +105,28 @@ public class VehicleRenderer extends EntityRenderer<Vehicle> {
         t.addOrReplaceChild("seat_l", trim().addBox(-10, -16, -2, 8, 3, 7).addBox(-10, -24, 4, 8, 9, 2), PartPose.ZERO);
         t.addOrReplaceChild("seat_r", trim().addBox(2, -16, -2, 8, 3, 7).addBox(2, -24, 4, 8, 9, 2), PartPose.ZERO);
         t.addOrReplaceChild("wheel_base", CubeListBuilder.create(), PartPose.ZERO);
-        wheel(t, "wheel_fl", -12.5f, -5, -14, 5, 4);
-        wheel(t, "wheel_fr", 12.5f, -5, -14, 5, 4);
-        wheel(t, "wheel_rl", -12.5f, -5, 16, 5, 4);
-        wheel(t, "wheel_rr", 12.5f, -5, 16, 5, 4);
+        wheel(wh, "wheel_fl", -12.5f, -5, -14, 5, 4);
+        wheel(wh, "wheel_fr", 12.5f, -5, -14, 5, 4);
+        wheel(wh, "wheel_rl", -12.5f, -5, 16, 5, 4);
+        wheel(wh, "wheel_rr", 12.5f, -5, 16, 5, 4);
+        t.addOrReplaceChild("dash", trim().addBox(-12, -17, -9, 24, 3, 3), PartPose.ZERO);
+        PartDefinition sw = t.addOrReplaceChild("steering", CubeListBuilder.create(), PartPose.offsetAndRotation(-6, -18.5f, -6.5f, -0.45f, 0, 0));
+        sw.addOrReplaceChild("rim_h", trim().addBox(-2.5f, -0.4f, -0.4f, 5, 0.8f, 0.8f), PartPose.ZERO);
+        sw.addOrReplaceChild("rim_v", trim().addBox(-0.4f, -2.5f, -0.4f, 0.8f, 5, 0.8f), PartPose.ZERO);
+        sw.addOrReplaceChild("hub", chrome().addBox(-0.8f, -0.8f, -0.6f, 1.6f, 1.6f, 1), PartPose.ZERO);
+        t.addOrReplaceChild("exhaust", chrome().addBox(4, -7, 24.5f, 2, 2, 2).addBox(7, -7, 24.5f, 2, 2, 2), PartPose.ZERO);
+        t.addOrReplaceChild("plate_f", chrome().addBox(-3, -10, -26.8f, 6, 2, 0.3f), PartPose.ZERO);
+        t.addOrReplaceChild("plate_r", chrome().addBox(-3, -10, 26.6f, 6, 2, 0.3f), PartPose.ZERO);
+        t.addOrReplaceChild("handle_l", chrome().addBox(-14.6f, -14, 2, 0.4f, 0.8f, 3), PartPose.ZERO);
+        t.addOrReplaceChild("handle_r", chrome().addBox(14.2f, -14, 2, 0.4f, 0.8f, 3), PartPose.ZERO);
+        rv.addOrReplaceChild("rev_l", lamp().addBox(-11, -10.5f, 24.9f, 3, 1, 0.6f), PartPose.ZERO);
+        rv.addOrReplaceChild("rev_r", lamp().addBox(8, -10.5f, 24.9f, 3, 1, 0.6f), PartPose.ZERO);
+        il.addOrReplaceChild("f", lamp().addBox(-14.3f, -12.8f, -25.2f, 1.2f, 1.2f, 1.2f), PartPose.ZERO);
+        il.addOrReplaceChild("r", lamp().addBox(-14.3f, -12.8f, 24.2f, 1.2f, 1.2f, 1.2f), PartPose.ZERO);
+        il.addOrReplaceChild("m", lamp().addBox(-16.2f, -15.6f, -7.6f, 0.4f, 0.6f, 1.2f), PartPose.ZERO);
+        ir.addOrReplaceChild("f", lamp().addBox(13.1f, -12.8f, -25.2f, 1.2f, 1.2f, 1.2f), PartPose.ZERO);
+        ir.addOrReplaceChild("r", lamp().addBox(13.1f, -12.8f, 24.2f, 1.2f, 1.2f, 1.2f), PartPose.ZERO);
+        ir.addOrReplaceChild("m", lamp().addBox(15.8f, -15.6f, -7.6f, 0.4f, 0.6f, 1.2f), PartPose.ZERO);
         lp.addOrReplaceChild("head_l", lamp().addBox(-13, -13, -25.6f, 6, 2, 1), PartPose.ZERO);
         lp.addOrReplaceChild("head_r", lamp().addBox(7, -13, -25.6f, 6, 2, 1), PartPose.ZERO);
         lp.addOrReplaceChild("drl", lamp().addBox(-12, -14.2f, -25.3f, 24, 0.6f, 0.6f), PartPose.ZERO);
@@ -113,9 +136,9 @@ public class VehicleRenderer extends EntityRenderer<Vehicle> {
 
     public static LayerDefinition bike() {
         MeshDefinition m = new MeshDefinition();
-        PartDefinition[] l = new PartDefinition[5];
+        PartDefinition[] l = new PartDefinition[8];
         layers(m.getRoot(), l);
-        PartDefinition p = l[0], t = l[1], g = l[2], lp = l[3], tl = l[4];
+        PartDefinition p = l[0], t = l[1], g = l[2], lp = l[3], tl = l[4], rv = l[5], il = l[6].getChild("ind_l"), ir = l[6].getChild("ind_r"), wh = l[7];
         p.addOrReplaceChild("tank", paint().addBox(-3.5f, -17, -8, 7, 5, 10), PartPose.ZERO);
         p.addOrReplaceChild("fairing", paint().addBox(-4.5f, -19, -15, 9, 8, 5), PartPose.rotation(-0.3f, 0, 0));
         p.addOrReplaceChild("tail", paint().addBox(-3, -17, 7, 6, 3, 9), PartPose.rotation(0.12f, 0, 0));
@@ -126,8 +149,15 @@ public class VehicleRenderer extends EntityRenderer<Vehicle> {
         t.addOrReplaceChild("bars", trim().addBox(-7, -21, -12, 14, 1, 1), PartPose.ZERO);
         t.addOrReplaceChild("swingarm", chrome().addBox(-2.5f, -7, 4, 5, 2, 13), PartPose.ZERO);
         t.addOrReplaceChild("exhaust", chrome().addBox(3, -8, 2, 2, 2, 14), PartPose.ZERO);
-        wheel(t, "wheel_f", 0, -6, -17, 6, 3);
-        wheel(t, "wheel_r", 0, -6, 16, 6, 3.5f);
+        wheel(wh, "wheel_f", 0, -6, -17, 6, 3);
+        wheel(wh, "wheel_r", 0, -6, 16, 6, 3.5f);
+        t.addOrReplaceChild("disc", chrome().addBox(-2.2f, -9, -20, 0.4f, 6, 6), PartPose.ZERO);
+        t.addOrReplaceChild("mirrors", trim().addBox(-7.5f, -24, -12, 2, 1.5f, 1).addBox(5.5f, -24, -12, 2, 1.5f, 1).addBox(-6.8f, -22.5f, -11.8f, 0.5f, 1.5f, 0.5f).addBox(6.3f, -22.5f, -11.8f, 0.5f, 1.5f, 0.5f), PartPose.ZERO);
+        t.addOrReplaceChild("plate", chrome().addBox(-2, -14.5f, 16.5f, 4, 2.5f, 0.3f), PartPose.ZERO);
+        il.addOrReplaceChild("f", lamp().addBox(-4.5f, -17, -17.2f, 1, 1, 1), PartPose.ZERO);
+        il.addOrReplaceChild("r", lamp().addBox(-3.5f, -16, 15.5f, 1, 1, 1), PartPose.ZERO);
+        ir.addOrReplaceChild("f", lamp().addBox(3.5f, -17, -17.2f, 1, 1, 1), PartPose.ZERO);
+        ir.addOrReplaceChild("r", lamp().addBox(2.5f, -16, 15.5f, 1, 1, 1), PartPose.ZERO);
         g.addOrReplaceChild("screen", glass().addBox(-3.5f, -6, -0.5f, 7, 6, 1), PartPose.offsetAndRotation(0, -19, -14, -0.5f, 0, 0));
         lp.addOrReplaceChild("head", lamp().addBox(-2, -17, -18.2f, 4, 3, 1), PartPose.ZERO);
         tl.addOrReplaceChild("tail_light", tail().addBox(-2, -16, 16, 4, 1.5f, 1), PartPose.ZERO);
@@ -136,9 +166,9 @@ public class VehicleRenderer extends EntityRenderer<Vehicle> {
 
     public static LayerDefinition boat() {
         MeshDefinition m = new MeshDefinition();
-        PartDefinition[] l = new PartDefinition[5];
+        PartDefinition[] l = new PartDefinition[8];
         layers(m.getRoot(), l);
-        PartDefinition p = l[0], t = l[1], g = l[2], lp = l[3], tl = l[4];
+        PartDefinition p = l[0], t = l[1], g = l[2], lp = l[3], tl = l[4], rv = l[5], il = l[6].getChild("ind_l"), ir = l[6].getChild("ind_r"), wh = l[7];
         p.addOrReplaceChild("keel", paint().addBox(-6, -4, -30, 12, 4, 58), PartPose.ZERO);
         p.addOrReplaceChild("hull_l", paint().addBox(-1, -10, -26, 2, 10, 54), PartPose.offsetAndRotation(-12, 0, 0, 0, 0, -0.45f));
         p.addOrReplaceChild("hull_r", paint().addBox(-1, -10, -26, 2, 10, 54), PartPose.offsetAndRotation(12, 0, 0, 0, 0, 0.45f));
@@ -167,33 +197,62 @@ public class VehicleRenderer extends EntityRenderer<Vehicle> {
         ps.pushPose();
         float ry = Mth.rotLerp(pt, v.yRotO, v.getYRot());
         ps.mulPose(Axis.YP.rotationDegrees(180 - ry));
-        if (k == Vehicle.BIKE) ps.mulPose(Axis.ZP.rotation(Mth.lerp(pt, v.prevLean, v.lean)));
+        float pitch = Mth.lerp(pt, v.prevPitchVis, v.pitchVis), roll = Mth.lerp(pt, v.prevRollVis, v.rollVis), by = Mth.lerp(pt, v.prevBodyY, v.bodyY);
+        float spin = Mth.lerp(pt, v.prevWheelSpin, v.wheelSpin);
+        ModelPart wheels = root.getChild("wheels");
+        for (String w : new String[]{"wheel_fl", "wheel_fr", "wheel_rl", "wheel_rr", "wheel_f", "wheel_r"}) {
+            if (!wheels.hasChild(w)) continue;
+            ModelPart wp = wheels.getChild(w);
+            wp.xRot = spin;
+            wp.yRot = w.endsWith("fl") || w.endsWith("fr") || w.equals("wheel_f") ? -v.steerVis : 0;
+        }
+        int ov = OverlayTexture.NO_OVERLAY;
+        if (k == Vehicle.BIKE) {
+            float lean = Mth.lerp(pt, v.prevLean, v.lean);
+            if (pitch > 0.05f) {
+                ps.translate(0, 0, 1.06);
+                ps.mulPose(Axis.XP.rotation(pitch));
+                ps.translate(0, 0, -1.06);
+            } else ps.mulPose(Axis.XP.rotation(pitch));
+            ps.mulPose(Axis.ZP.rotation(lean));
+        }
         if (k == Vehicle.BOAT) {
             float t = v.tickCount + pt;
-            float sp = Math.abs(v.speed);
-            ps.translate(0, Mth.sin(t * 0.12f) * 0.03f, 0);
-            ps.mulPose(Axis.XP.rotation(-sp * 0.12f + Mth.sin(t * 0.09f) * 0.02f));
-            ps.mulPose(Axis.ZP.rotation(Mth.sin(t * 0.07f) * 0.025f));
+            ps.translate(0, Mth.sin(t * 0.12f) * 0.03f + by, 0);
+            ps.mulPose(Axis.XP.rotation(pitch + Mth.sin(t * 0.09f) * 0.02f));
+            ps.mulPose(Axis.ZP.rotation(roll + Mth.sin(t * 0.07f) * 0.025f));
+        }
+        if (k == Vehicle.CAR) {
+            ps.pushPose();
+            ps.scale(-1, -1, 1);
+            wheels.render(ps, buf.getBuffer(RenderType.entityCutoutNoCull(TEX)), light, ov);
+            ps.popPose();
+            ps.translate(0, by, 0);
+            ps.mulPose(Axis.XP.rotation(pitch));
+            ps.mulPose(Axis.ZP.rotation(roll));
         }
         ps.scale(-1, -1, 1);
-        float spin = Mth.lerp(pt, v.prevWheelSpin, v.wheelSpin);
+        if (k != Vehicle.CAR) wheels.render(ps, buf.getBuffer(RenderType.entityCutoutNoCull(TEX)), light, ov);
         ModelPart trim = root.getChild("trim");
-        for (String w : new String[]{"wheel_fl", "wheel_fr", "wheel_rl", "wheel_rr", "wheel_f", "wheel_r"}) {
-            if (!trim.hasChild(w)) continue;
-            ModelPart wp = trim.getChild(w);
-            wp.xRot = -spin;
-            wp.yRot = w.endsWith("fl") || w.endsWith("fr") || w.equals("wheel_f") ? -v.steerVis * 1.3f : 0;
-        }
+        if (trim.hasChild("steering")) trim.getChild("steering").zRot = v.steer * 2.4f;
         int c = Vehicle.PAINT_RGB[v.paint()];
         float r = ((c >> 16) & 255) / 255f, g = ((c >> 8) & 255) / 255f, b = (c & 255) / 255f;
-        int ov = OverlayTexture.NO_OVERLAY;
         root.getChild("paint").render(ps, buf.getBuffer(RenderType.entityCutoutNoCull(TEX)), light, ov, r, g, b, 1);
         trim.render(ps, buf.getBuffer(RenderType.entityCutoutNoCull(TEX)), light, ov);
         root.getChild("glass").render(ps, buf.getBuffer(RenderType.entityTranslucent(TEX)), light, ov, 1, 1, 1, 0.55f);
         boolean on = v.lights();
         root.getChild("lamp").render(ps, buf.getBuffer(on ? RenderType.eyes(TEX) : RenderType.entityCutoutNoCull(TEX)), on ? 0xF000F0 : light, ov);
-        boolean brake = v.braking || v.speed < -0.01f;
+        boolean brake = v.braking;
         root.getChild("tail").render(ps, buf.getBuffer(on || brake ? RenderType.eyes(TEX) : RenderType.entityCutoutNoCull(TEX)), on || brake ? 0xF000F0 : light, ov, 1, brake ? 1 : 0.6f, brake ? 1 : 0.6f, 1);
+        boolean rev = v.speed < -0.01f;
+        root.getChild("rev").render(ps, buf.getBuffer(rev ? RenderType.eyes(TEX) : RenderType.entityCutoutNoCull(TEX)), rev ? 0xF000F0 : light, ov, rev ? 1 : 0.7f, rev ? 1 : 0.7f, rev ? 1 : 0.7f, 1);
+        ModelPart ind = root.getChild("ind");
+        boolean flash = (v.tickCount / 5) % 2 == 0 && v.blink > 0;
+        for (int s = 0; s < 2; s++) {
+            ModelPart side = ind.getChild(s == 0 ? "ind_l" : "ind_r");
+            boolean lit = flash && (s == 0 ? v.steer < -0.5f : v.steer > 0.5f);
+            side.render(ps, buf.getBuffer(lit ? RenderType.eyes(TEX) : RenderType.entityCutoutNoCull(TEX)), lit ? 0xF000F0 : light, ov, 1f, lit ? 0.62f : 0.45f, lit ? 0.08f : 0.1f, 1);
+        }
         ps.popPose();
         super.render(v, yaw, pt, ps, buf, light);
     }

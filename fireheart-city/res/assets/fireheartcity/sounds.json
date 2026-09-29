@@ -93,58 +93,6 @@
    }
   ]
  },
- "vehicle.engine_car": {
-  "sounds": [
-   {
-    "name": "fireheartcity:vehicle/engine_car",
-    "stream": false
-   }
-  ]
- },
- "vehicle.engine_bike": {
-  "sounds": [
-   {
-    "name": "fireheartcity:vehicle/engine_bike",
-    "stream": false
-   }
-  ]
- },
- "vehicle.engine_boat": {
-  "sounds": [
-   {
-    "name": "fireheartcity:vehicle/engine_boat",
-    "stream": false
-   }
-  ]
- },
- "vehicle.horn_car": {
-  "sounds": [
-   {
-    "name": "fireheartcity:vehicle/horn_car"
-   }
-  ]
- },
- "vehicle.horn_bike": {
-  "sounds": [
-   {
-    "name": "fireheartcity:vehicle/horn_bike"
-   }
-  ]
- },
- "vehicle.start": {
-  "sounds": [
-   {
-    "name": "fireheartcity:vehicle/start"
-   }
-  ]
- },
- "vehicle.skid": {
-  "sounds": [
-   {
-    "name": "fireheartcity:vehicle/skid"
-   }
-  ]
- },
  "stalker.step": {
   "sounds": [
    {
@@ -184,6 +132,97 @@
   "sounds": [
    {
     "name": "fireheartcity:stalker/sting"
+   }
+  ]
+ },
+ "vehicle.engine_car": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/engine_car"
+   }
+  ]
+ },
+ "vehicle.engine_bike": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/engine_bike"
+   }
+  ]
+ },
+ "vehicle.engine_boat": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/engine_boat"
+   }
+  ]
+ },
+ "vehicle.horn_car": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/horn_car"
+   }
+  ]
+ },
+ "vehicle.horn_bike": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/horn_bike"
+   }
+  ]
+ },
+ "vehicle.start": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/start"
+   }
+  ]
+ },
+ "vehicle.skid": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/skid"
+   }
+  ]
+ },
+ "vehicle.skid_loop": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/skid_loop"
+   }
+  ]
+ },
+ "vehicle.crash": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/crash"
+   }
+  ]
+ },
+ "vehicle.backfire": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/backfire"
+   }
+  ]
+ },
+ "vehicle.shift": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/shift"
+   }
+  ]
+ },
+ "vehicle.indicator": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/indicator"
+   }
+  ]
+ },
+ "vehicle.land": {
+  "sounds": [
+   {
+    "name": "fireheartcity:vehicle/land"
    }
   ]
  }
